@@ -8,15 +8,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        // eslint-disable-next-line 
         sans: ['"Source Sans 3"', 'Source Sans 3', "Source Sans Pro", '"Source Sans Pro"', "sans-serif"],
         serif: ["Merriweather", "serif"],
       },
       boxShadow:{
-        "md": "15px 15px 10px black",
-      },
-      maxWidth: {
-        "mock": "600px",
+        'md': '15px 15px 10px black',
       },
       colors: {
         brand: {

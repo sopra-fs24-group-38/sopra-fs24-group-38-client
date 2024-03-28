@@ -1,6 +1,7 @@
 import React from "react";
-import Login from "../pages/Login";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Login from "../pages/Login";
+import Lobby from "../pages/Lobby";
 
 
 const AppRouter = () => {
@@ -9,6 +10,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/lobby" element={<Lobby />} />
 
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
