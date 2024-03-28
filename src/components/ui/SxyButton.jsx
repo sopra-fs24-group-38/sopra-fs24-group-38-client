@@ -19,9 +19,9 @@ const SxyButton = ({text="-", color, width="100%", func, disabled, position}) =>
         disabled:hover:transform-none
         transition
         ease-in-out`}
-        style={{backgroundColor: color, width: width}}
-        disabled={disabled}
-        onClick={() => func()}
+      style={{backgroundColor: color, width: width}}
+      disabled={disabled}
+      onClick={() => func()}
       >
         {text}
       </button>
