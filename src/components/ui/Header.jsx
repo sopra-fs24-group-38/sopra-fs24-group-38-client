@@ -7,7 +7,7 @@ const Header = ({leave=false}) => {
   const navigate = useNavigate();
 
   const logout = () => {
-    
+
     localStorage.removeItem("token");
     localStorage.removeItem("id");
     localStorage.removeItem("username");
@@ -27,13 +27,13 @@ const Header = ({leave=false}) => {
         func={showRules}
       />
       {leave ?
-      <SxyButton
-        text="Logout"
-        color={"#CC1F1D"}
-        func={logout}
-        width="100px"
-        position={"row-reverse"}
-      /> : <div />}
+        <SxyButton
+          text="Logout"
+          color={"#CC1F1D"}
+          func={logout}
+          width="100px"
+          position={"row-reverse"}
+        /> : <div />}
     </div>
   );
 };
