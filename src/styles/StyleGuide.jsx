@@ -1,15 +1,13 @@
 import React from "react";
-import useFeedback from "../hooks/useFeedback"
-import SxyButton from "../components/ui/SxyButton"
-
-import "./Boards.scss";
+import useFeedback from "../hooks/useFeedback";
+import SxyButton from "../components/ui/SxyButton";
 
 
 const StyleGuide = () => {
   const feedback = useFeedback();
 
   const handleClick = () => {
-    feedback.give("Hello Stefan", 2000, "success");
+    feedback.give("Hello Stefan\nWie stehts?", 2000, "success");
   }
 
   return(

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 const useFeedback = () => {
   /* Basic toast
   *  Parameters:
-  *  - message: a string that will be displayed
+  *  - message: a string that will be displayed (\n is supported)
   *  - duration: a number that dictates how long the toast should appear
   *    (in milliseconds, usually 3000 is fine)
   *  - mode: a string that sets the tone of the toast (with a fitting icon).
@@ -20,9 +20,9 @@ const useFeedback = () => {
   */
   const give = (message, duration, mode="") => {
     if(mode){
-      toast[mode](`${message}`, {
+      toast[mode](message, {
         autoClose: duration,
-        theme: "dark"
+        theme: "colored"
       });
     } else {
       toast(`${message}`, {

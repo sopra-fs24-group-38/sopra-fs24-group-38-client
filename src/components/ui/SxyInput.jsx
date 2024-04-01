@@ -1,6 +1,11 @@
 import React from "react";
 
-const SxyInput = ({label, value, color, func, type="text"}) => {
+const SxyInput = ({label, value, color, func, enterKey=null, type="text"}) => {
+  const handleKeyDown = (e) => {
+    if(e.key === "Enter"){
+      enterKey();
+    }
+  };
 
   return(
     <div className="flex flex-col justify-center">
@@ -11,6 +16,7 @@ const SxyInput = ({label, value, color, func, type="text"}) => {
         placeholder="enter here.."
         type={type}
         value={value}
+        onKeyDown={enterKey ? handleKeyDown : null}
         onChange={(e) => func(e.target.value)}
       />
     </div>
