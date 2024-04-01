@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import AuthContext from "../../context/AuthContext";
+// import AuthContext from "../../context/AuthContext";
 import SxyButton from "../ui/SxyButton";
 import SxyInput from "../ui/SxyInput";
 import { api, handleError } from "../../utils/api";
@@ -8,15 +8,19 @@ import Header from "../ui/Header";
 import "../../styles/Hero.scss";
 
 const Login = () => {
-  const authenticated = useContext(AuthContext);
+  const showPassword = "/assets/eye-password-show.svg";
+  const hidePassword = "/assets/eye-password-hide.svg";
+  // const authenticated = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordType, setPasswordType] = useState("password");
 
   const doLoginOrRegister = async () => {
     try {
-      const creation_date = new Date();
+      // const creation_date = new Date();
       const requestBody = JSON.stringify({ username, password });
 
       let response
@@ -25,14 +29,12 @@ const Login = () => {
       } else {
         response = await api.post("/users", requestBody);
       }
-      console.log(authenticated.token)
+
       // Store the token into the local storage.
-      authenticated.setToken(response.data.token);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("id", response.data.id);
       localStorage.setItem("username", username);
 
-      // Login successfully worked --> navigate to the route /game in the GameRouter
       navigate("/lobby");
     } catch (error) {
       alert(
@@ -42,9 +44,8 @@ const Login = () => {
   };
 
   return (
-    // TODO: change back to !authenticated
     <>
-      {!localStorage.getItem("token") ? //!authenticated ?
+      {!localStorage.getItem("token") ?
         <>
           <Header />
           <div className="w-full flex  justify-center items-center" id="hero">
@@ -56,12 +57,18 @@ const Login = () => {
                 color={"#ebe4d7"}
                 func={(un) => setUsername(un)}
               />
-              <SxyInput
-                label="Password"
-                value={password}
-                color={"#ebe4d7"}
-                func={(n) => setPassword(n)}
-              />
+              <div className="relative">
+                <SxyInput
+                  label="Password"
+                  value={password}
+                  color={"#ebe4d7"}
+                  type={passwordType ? "password" : "text"}
+                  func={(n) => setPassword(n)}
+                />
+                {passwordType ?
+                  <img src={showPassword} alt="Show" className="absolute aspect-square w-6 cursor-pointer -right-7 top-1/2 -translate-y-1/4" onClick={() => setPasswordType((prev) => !prev)}/>
+                  : <img src={hidePassword} alt="Hide" className="absolute aspect-square w-6 cursor-pointer -right-7 top-1/2 -translate-y-1/4" onClick={() => setPasswordType((prev) => !prev)}/> }
+              </div>
               <div className="flex mb-6 mt-2 justify-between w-80">
                 <SxyButton
                   text={isLogin ? "Login" : "Register"}
