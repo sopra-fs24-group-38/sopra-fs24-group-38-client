@@ -7,12 +7,10 @@ const Header = ({leave=false}) => {
   const navigate = useNavigate();
 
   const logout = () => {
-
     localStorage.removeItem("token");
     localStorage.removeItem("id");
     localStorage.removeItem("username");
     navigate("/login");
-
   }
 
   const showRules = () => {

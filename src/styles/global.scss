@@ -18,11 +18,17 @@ body {
 }
 
 :root {
-  --toastify-color-error: red;
-  --toastify-color-success: lightgreen;
+  --toastify-color-error: #A81714;
+  --toastify-color-success: #16BA34;
+
+  // adds newline functionality in toasts
+  .Toastify__toast-body {
+    white-space: pre-line;
+  }
 }
 
 $HEADER_HEIGHT: 100px;
+
 
 // font styles
 

@@ -12,7 +12,7 @@ module.exports = {
         serif: ["Merriweather", "serif"],
       },
       boxShadow:{
-        'md': '15px 15px 10px black',
+        "md": "15px 15px 10px black",
       },
       colors: {
         brand: {
