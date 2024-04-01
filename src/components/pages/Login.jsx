@@ -8,8 +8,8 @@ import useFeedback from "../../hooks/useFeedback";
 import "../../styles/Hero.scss";
 
 const Login = () => {
-  const showPassword = "/assets/eye-password-show.svg";
-  const hidePassword = "/assets/eye-password-hide.svg";
+  const showPassword = `${process.env.PUBLIC_URL}/assets/eye-password-show.svg`;
+  const hidePassword = `${process.env.PUBLIC_URL}/assets/eye-password-hide.svg`;
   const navigate = useNavigate();
   const feedback = useFeedback();
 

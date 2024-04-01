@@ -7,9 +7,6 @@ import "../../styles/Hero.scss";
 const Lobby = () => {
   const navigate = useNavigate();
   const [sessionToken, setSessionToken] = useState("")
-  const demo = () => {
-    navigate("/lobby2");
-  }
 
   return(
     <>
@@ -24,14 +21,12 @@ const Lobby = () => {
                 <SxyButton
                   text="Create Lobby"
                   color={"#72171D"}
-                  func={demo}
                   width="120px"
                 />
                 <div className="h-20"></div>
                 <SxyButton
                   text="Join Lobby"
                   color={"#72171D"}
-                  func={demo}
                   width="120px"
                 />
               </div>

@@ -3,6 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Lobby from "../pages/Lobby";
 import StyleGuide from "../../styles/StyleGuide";
+import NotFound from "../pages/NotFound";
 
 
 const AppRouter = () => {
@@ -14,6 +15,8 @@ const AppRouter = () => {
         <Route path="/lobby" element={<Lobby />} />
 
         <Route path="/" element={<Navigate to="/login" replace />} />
+
+        <Route path="*" element={<NotFound />} />
 
         <Route path="/style" element={<StyleGuide />} />
       </Routes>
