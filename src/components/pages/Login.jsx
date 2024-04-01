@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-// import AuthContext from "../../context/AuthContext";
 import SxyButton from "../ui/SxyButton";
 import SxyInput from "../ui/SxyInput";
 import { api, handleError } from "../../utils/api";
@@ -10,7 +9,6 @@ import "../../styles/Hero.scss";
 const Login = () => {
   const showPassword = "/assets/eye-password-show.svg";
   const hidePassword = "/assets/eye-password-hide.svg";
-  // const authenticated = useContext(AuthContext);
 
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
