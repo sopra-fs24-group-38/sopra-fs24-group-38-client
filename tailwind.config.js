@@ -14,6 +14,9 @@ module.exports = {
       boxShadow:{
         "md": "15px 15px 10px black",
       },
+      maxWidth: {
+        "sexy": "600px",
+      },
       colors: {
         brand: {
           100: "#FCEFE3",

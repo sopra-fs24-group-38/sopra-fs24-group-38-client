@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "../pages/Login";
 import Lobby from "../pages/Lobby";
+import LobbyWaiting from "../pages/LobbyWaiting";
 import StyleGuide from "../../styles/StyleGuide";
 
 
@@ -11,7 +12,9 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        
         <Route path="/lobby" element={<Lobby />} />
+        <Route path="/lobby/:id" element={<LobbyWaiting />} />
 
         <Route path="/" element={<Navigate to="/login" replace />} />
 
