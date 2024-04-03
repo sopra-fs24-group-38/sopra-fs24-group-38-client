@@ -14,6 +14,8 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         
         <Route path="/lobby" element={<Lobby />} />
+
+        {/* add route guard for/with WS checks. Include game paths here */}
         <Route path="/lobby/:id" element={<LobbyWaiting />} />
 
         <Route path="/" element={<Navigate to="/login" replace />} />

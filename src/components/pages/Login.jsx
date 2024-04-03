@@ -53,6 +53,7 @@ const Login = () => {
                 label="Username"
                 value={username}
                 color={"#ebe4d7"}
+                placeholder="TheLegend27"
                 func={(un) => setUsername(un)}
               />
               <div className="relative">
@@ -60,6 +61,7 @@ const Login = () => {
                   label="Password"
                   value={password}
                   color={"#ebe4d7"}
+                  placeholder="very secret"
                   type={passwordType ? "password" : "text"}
                   func={(n) => setPassword(n)}
                   enterKey={doLoginOrRegister}

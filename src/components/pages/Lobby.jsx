@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import SxyButton from "../ui/SxyButton";
@@ -10,8 +10,21 @@ import useFeedback from "../../hooks/useFeedback";
 const Lobby = () => {
   const navigate = useNavigate();
   const feedback = useFeedback();
+  const { wsClient, isRunning, setIsRunning } = useContext(WebSocketContext);
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
+
+  useEffect(() => {
+    if(!isRunning){
+      wsClient.onConnect = function(frame){
+        // logic for socket calls
+        // are there even any basic calls?!
+      };
+
+      setIsRunning(true);
+    }
+  }, [])
+
 
   const createLobby = async () => {
     try{
