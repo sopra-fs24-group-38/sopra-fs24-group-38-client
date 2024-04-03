@@ -12,6 +12,16 @@
   background-image: url("../../public/assets/nbp.png");
 }
 
+#lobbypin {
+  width: 120px;
+
+  > :nth-child(3) {
+    position: absolute;
+    top: 48px;
+    left: -3px;
+    width: 125px;
+  }
+}
 
 .login {
   position: fixed;

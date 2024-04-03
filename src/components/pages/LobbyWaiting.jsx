@@ -23,6 +23,8 @@ const LobbyWaiting = () => {
           <Header leave />
           <div className="bg-neutral-400" id="hero">
             <div className="bg-neutral-100 max-w-sexy h-auto shadow-md rounded-lg">
+              {/* TODO: add dynamic PIN */}
+              <h1>PIN: XXXX</h1>
               <h1 className="font-bold text-center m-10 text-2xl">Game master is {localStorage.getItem("username")}</h1>
               <div className="flex flex-col h-1/1 m-20 justify-evenly items-center">
                 <SxyButton
@@ -33,6 +35,7 @@ const LobbyWaiting = () => {
                   width="120px"
                 />
                 <div className="h-20"></div>
+                {/* TODO: add LobbySettings overlay */}
                 <SxyButton
                   text="Settings"
                   color={"#72171D"}
