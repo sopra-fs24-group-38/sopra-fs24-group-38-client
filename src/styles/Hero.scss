@@ -12,6 +12,7 @@
   background-image: url("../../public/assets/nbp.png");
 }
 
+// lobby
 #lobbypin {
   width: 120px;
 
@@ -27,6 +28,14 @@
   }
 }
 
+#settings {
+  width: 90vw;
+  height: 95%;
+  border-radius: 8px;
+  border: solid black 2px;
+}
+
+// login
 .login {
   position: fixed;
   z-index: 3;
