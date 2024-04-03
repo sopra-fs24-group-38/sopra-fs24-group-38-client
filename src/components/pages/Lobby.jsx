@@ -69,7 +69,7 @@ const Lobby = () => {
                     color={"#ebe4d7"}
                     inputMode={"numeric"}
                     maxLength={"4"}
-                    placeholder="XXXX"
+                    placeholder="1234"
                     func={(n) => setPin(n)}
                     enterKey={joinLobby}/>
                 </div>

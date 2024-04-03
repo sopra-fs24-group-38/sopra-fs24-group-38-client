@@ -20,6 +20,10 @@
     top: 48px;
     left: -3px;
     width: 125px;
+
+    > input {
+      border: solid black 1.5px;
+    }
   }
 }
 
