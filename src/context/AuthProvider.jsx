@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import AuthContext from "./AuthContext";
 
 const AuthProvider = ({children}) => {
-  const [token, setToken] = useState("");
+  const [loginToken, setLoginToken] = useState("");
+  const [sessionToken, setSessionToken] = useState("");
 
   return(
-    <AuthContext.Provider value={{token,setToken}}>
+    <AuthContext.Provider value={{loginToken, setLoginToken, sessionToken, setSessionToken}}>
       {children}
     </AuthContext.Provider>
   );

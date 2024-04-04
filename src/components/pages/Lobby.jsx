@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import SxyButton from "../ui/SxyButton";
 import SxyInput from "../ui/SxyInput";
+import WebSocketContext from "../../context/WebSocketContext";
 import "../../styles/Hero.scss";
 import { api, handleError } from "../../utils/api";
 import useFeedback from "../../hooks/useFeedback";

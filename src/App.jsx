@@ -6,9 +6,11 @@ import WebSocketProvider from "./context/WebSocketProvider";
 
 const App = () => {
   return(
-    <WebSocketProvider>
-      <AppRouter />
-    </WebSocketProvider>
+    <div className="h-dvh w-screen">
+      <WebSocketProvider>
+        <AppRouter />
+      </WebSocketProvider>
+    </div>
   );
 };
 

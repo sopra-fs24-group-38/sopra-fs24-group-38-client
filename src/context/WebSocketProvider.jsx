@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WebSocketContext from "./WebSocketContext";
-import { getWsUrl } from "./utils/getDomain";
+import { getWsUrl } from "../utils/getDomain";
 import { Client } from "@stomp/stompjs";
-require("./utils/websockets");
 
 
 const WebSocketProvider = ({children}) => {
   const [isRunning, setIsRunning] = useState(false);
   // not entirely sure about the missing credentials, could be added later if needed
   const wsClient = new Client({
-    brokerURL: getWsUrl() + "ws",
+    brokerURL: getWsUrl() + "websockets",
     debug: function (str) {
       console.log(str);
     },

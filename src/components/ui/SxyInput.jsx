@@ -1,6 +1,6 @@
 import React from "react";
 
-const SxyInput = ({label, value, color, func, enterKey=null, type="text", inputMode, maxLength, placeholder="enter here.."}) => {
+const SxyInput = ({label, value, color, func, enterKey=null, type="text", inputMode, maxLength, placeholder="enter here..", max, min}) => {
   const handleKeyDown = (e) => {
     if(e.key === "Enter"){
       enterKey();
@@ -18,6 +18,8 @@ const SxyInput = ({label, value, color, func, enterKey=null, type="text", inputM
         value={value}
         inputMode={inputMode}
         maxLength={maxLength}
+        max={max}
+        min={min}
         onKeyDown={enterKey ? handleKeyDown : null}
         onChange={(e) => func(e.target.value)}
       />
