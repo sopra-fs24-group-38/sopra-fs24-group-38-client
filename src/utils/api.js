@@ -14,7 +14,7 @@ export const handleError = error => {
     let info = "";
 
     if (response.data.status) {
-      info += `\nStatus code: ${response.data.status}`;
+      info += `Status code: ${response.data.status}`;
       info += `\nError: ${response.data.error}`;
       info += `\nError message: ${response.data.message}`;
     } else {

@@ -12,7 +12,31 @@
   background-image: url("../../public/assets/nbp.png");
 }
 
+// lobby
+#lobbypin {
+  width: 120px;
 
+  > :nth-child(3) {
+    position: absolute;
+    top: 48px;
+    left: -3px;
+    width: 125px;
+
+    > input {
+      border: solid black 1.5px;
+    }
+  }
+}
+
+#settings {
+  width: 90vw;
+  height: 95%;
+  border-radius: 8px;
+  border: solid black 2px;
+  z-index: 9001;
+}
+
+// login
 .login {
   position: fixed;
   z-index: 3;
