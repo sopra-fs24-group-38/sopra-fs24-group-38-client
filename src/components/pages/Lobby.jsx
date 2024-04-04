@@ -15,16 +15,16 @@ const Lobby = () => {
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
 
-  useEffect(() => {
-    if(!isRunning){
-      wsClient.onConnect = function(frame){
-        // logic for socket calls
-        // are there even any basic calls?!
-      };
+  // useEffect(() => {
+  //   if(!isRunning){
+  //     wsClient.onConnect = function(frame){
+  //       // logic for socket calls
+  //       // are there even any basic calls?!
+  //     };
 
-      setIsRunning(true);
-    }
-  }, [])
+  //     setIsRunning(true);
+  //   }
+  // }, [])
 
 
   const createLobby = async () => {
@@ -32,7 +32,7 @@ const Lobby = () => {
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.post("/lobbies", {}, { headers });
 
-      // navigate(`/lobby/${response.data.game_pin}`);
+      navigate(`/lobby/${response.data.game_pin}`);
 
     } catch(error) {
       feedback.give(handleError(error), 3000, "error");
@@ -44,7 +44,7 @@ const Lobby = () => {
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.put(`/lobbies/users/${pin}`, {pin}, {headers}); // why double pin neccessary?
 
-      // navigate(`/lobby/${pin}`);
+      navigate(`/lobby/${pin}`);
 
     } catch(error){
       feedback.give(handleError(error), 3000, "error");
@@ -57,7 +57,7 @@ const Lobby = () => {
       <div className="bg-neutral-400" id="hero">
         <div className="bg-neutral-100 max-w-sexy p-10 shadow-md rounded-lg">
           <h1 className="font-bold text-center mt-4 text-2xl">Welcome {localStorage.getItem("username")}</h1>
-          <div className="flex flex-col m-10 h-32 justify-between items-center">
+          <div className="flex flex-col m-10 gap-y-10 justify-between items-center">
             <SxyButton
               text="Create Lobby"
               color={"#72171D"}

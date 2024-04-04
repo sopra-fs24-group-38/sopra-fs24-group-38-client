@@ -17,7 +17,6 @@ const LobbyWaiting = () => {
 
   const [players, setPlayers] = useState([
     { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
-    { name: "Player 2", features: ["/assets/Ava2.jpg", "Elia", "+2", "18"] },
   ]);
 
   const leaveLobby = async () => {
@@ -42,7 +41,7 @@ const LobbyWaiting = () => {
               <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
               {/* TODO: switch to actual dynamic host name from lobby information */}
               <h1 className="font-semibold text-center text-2xl"><b>{localStorage.getItem("username")}</b> is the host</h1>
-              <div className="flex flex-col h-44 mx-4 mt-2 justify-evenly items-center">
+              <div className="flex flex-col gap-y-5 mx-4 mt-6 items-center">
                 <SxyButton
                   text="Start Game"
                   color={"#72171D"}

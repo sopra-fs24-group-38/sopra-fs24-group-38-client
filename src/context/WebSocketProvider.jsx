@@ -29,7 +29,7 @@ const WebSocketProvider = ({children}) => {
 
   useEffect(() => {
     // activate the stomp connection, only need to call once
-    wsClient.activate();
+    // wsClient.activate();
   }, []);
 
 
