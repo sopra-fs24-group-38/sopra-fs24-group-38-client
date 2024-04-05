@@ -17,6 +17,10 @@ const LobbyWaiting = () => {
 
   const [players, setPlayers] = useState([
     { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
+    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
+    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
+    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
+    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
   ]);
 
   const leaveLobby = async () => {
@@ -37,7 +41,7 @@ const LobbyWaiting = () => {
         <>
           <Header />
           <div className="bg-neutral-400 flex flex-col relative" id="hero">
-            <div className="bg-neutral-100 max-w-sexy p-10 mb-10 shadow-md rounded-lg">
+            <div className="bg-neutral-100 max-w-sexy p-10 mb-6 shadow-md rounded-lg">
               <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
               {/* TODO: switch to actual dynamic host name from lobby information */}
               <h1 className="font-semibold text-center text-2xl"><b>{localStorage.getItem("username")}</b> is the host</h1>
@@ -68,8 +72,19 @@ const LobbyWaiting = () => {
                 />
               </div>
             </div>
-            <div className="bg-neutral-400 w-96 h-96 rounded-lg shadow-md" >
-              <h1 className="text-center mt-4">Your favorite players soon in here</h1>
+            <div className="bg-neutral-400 p-8 rounded-lg shadow-md relative" >
+              <div id="lobbyplayas">
+                {players.length < 2 ? <img alt=""/> : <img src="/assets/Ava2.jpg" alt="player 2" />}
+                {players.length < 3 ? <img alt=""/> : <img src="/assets/Ava3.jpg" alt="player 3" />}
+                <img src="/assets/Ava1.jpg" alt="player 1" />
+                {players.length < 4 ? <img alt=""/> : <img src="/assets/Ava4.jpg" alt="player 4" />}
+                {players.length < 5 ? <img alt=""/> : <img src="/assets/Ava5.jpg" alt="player 5" />}
+              </div>
+              {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">Player 2</p>}
+              {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">Player 3</p>}
+              <p className="absolute top-48 left-4 font-bold text-lg z-20">Player 1</p>
+              {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">Player 4</p>}
+              {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">Player 5</p>}
             </div>
 
             {showSettings ?

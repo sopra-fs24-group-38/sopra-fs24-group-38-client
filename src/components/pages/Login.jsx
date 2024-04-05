@@ -23,8 +23,10 @@ const Login = () => {
       let response;
       if (isLogin) {
         response = await api.post("/users/login", requestBody);
+        feedback.give(`Welcome back ${localStorage.getItem("username")}`, 2000, "info");
       } else {
         response = await api.post("/users", requestBody);
+        feedback.give(`Welcome to the party ${localStorage.getItem("username")}!`, 2000, "success");
       }
 
       // Store the token into the local storage.
@@ -32,7 +34,6 @@ const Login = () => {
       localStorage.setItem("id", response.data.id);
       localStorage.setItem("username", username);
 
-      feedback.give(`Welcome ${localStorage.getItem("username")}`, 2000, "info");
       navigate("/lobby");
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
@@ -51,6 +52,7 @@ const Login = () => {
                 label="Username"
                 value={username}
                 color={"#ebe4d7"}
+                maxLength={12}
                 placeholder="TheLegend27"
                 func={(un) => setUsername(un)}
               />
