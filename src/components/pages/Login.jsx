@@ -23,10 +23,10 @@ const Login = () => {
       let response;
       if (isLogin) {
         response = await api.post("/users/login", requestBody);
-        feedback.give(`Welcome back ${localStorage.getItem("username")}`, 2000, "info");
+        feedback.give(`Welcome back ${username}`, 2000, "info");
       } else {
         response = await api.post("/users", requestBody);
-        feedback.give(`Welcome to the party ${localStorage.getItem("username")}!`, 2000, "success");
+        feedback.give(`Welcome to the party ${username}!`, 2000, "success");
       }
 
       // Store the token into the local storage.
