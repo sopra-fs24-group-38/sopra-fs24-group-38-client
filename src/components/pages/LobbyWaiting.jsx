@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Header from "../ui/Header";
 import LobbySettings from "../ui/LobbySettings";
@@ -6,11 +6,14 @@ import SxyButton from "../ui/SxyButton";
 import { api, handleError } from "../../utils/api";
 import "../../styles/Hero.scss";
 import useFeedback from "../../hooks/useFeedback";
+import useWebSocket from "react-use-websocket";
 
 const LobbyWaiting = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
   const pin = useParams().id;
+  const socketUrl = 'ws://localhost:8080/websockets';
+
   const [sessionToken, setSessionToken] = useState("");
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState(true);
@@ -19,7 +22,21 @@ const LobbyWaiting = () => {
     { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
     { name: "Player 2", features: ["/assets/Ava2.jpg", "Elia", "+2", "18"] },
   ]);
+  const {
+      sendMessage,
+      sendJsonMessage,
+      lastMessage,
+      lastJsonMessage,
+      readyState,
+      getWebSocket,
+  } = useWebSocket(socketUrl, {
+      onOpen: () => console.log('WebSocket opened'),
+      shouldReconnect: (closeEvent) => true,
+  });
 
+  useEffect(() => {
+      console.log('Received message:', lastJsonMessage);
+  }, [lastJsonMessage]);
   const leaveLobby = async () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
@@ -75,7 +92,7 @@ const LobbyWaiting = () => {
 
             {showSettings ?
               <LobbySettings out={setShowSettings} />
-              : null 
+              : null
             }
           </div>
         </>

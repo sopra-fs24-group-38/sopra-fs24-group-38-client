@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import SxyButton from "../ui/SxyButton";
 import SxyInput from "../ui/SxyInput";
-import WebSocketContext from "../../context/WebSocketContext";
+import useWebSocket from 'react-use-websocket';
 import "../../styles/Hero.scss";
 import { api, handleError } from "../../utils/api";
 import useFeedback from "../../hooks/useFeedback";
@@ -11,28 +11,39 @@ import useFeedback from "../../hooks/useFeedback";
 const Lobby = () => {
   const navigate = useNavigate();
   const feedback = useFeedback();
-  const { wsClient, isRunning, setIsRunning } = useContext(WebSocketContext);
+  const socketUrl = 'ws://localhost:8080/websockets';
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
 
+    const {
+      sendMessage,
+      sendJsonMessage,
+      lastMessage,
+      lastJsonMessage,
+      readyState,
+      getWebSocket,
+  } = useWebSocket(socketUrl, {
+      onOpen: () => console.log('WebSocket opened'),
+      shouldReconnect: (closeEvent) => true,
+  });
+
   useEffect(() => {
-    if(!isRunning){
-      wsClient.onConnect = function(frame){
-        // logic for socket calls
-        // are there even any basic calls?!
-      };
-
-      setIsRunning(true);
-    }
-  }, [])
-
-
+      console.log('Received message:', lastJsonMessage);
+  }, [lastJsonMessage]);
   const createLobby = async () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.post("/lobbies", {}, { headers });
+      sendJsonMessage(
+          {
 
-      // navigate(`/lobby/${response.data.game_pin}`);
+            "action": "init",
+            "userId": localStorage.getItem("id"),
+            "lobbyId": `${response.data.game_pin}`
+
+          }
+      )
+      //navigate(`/lobby/${response.data.game_pin}`);
 
     } catch(error) {
       feedback.give(handleError(error), 3000, "error");
