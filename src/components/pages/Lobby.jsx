@@ -7,6 +7,7 @@ import useWebSocket from 'react-use-websocket';
 import "../../styles/Hero.scss";
 import { api, handleError } from "../../utils/api";
 import useFeedback from "../../hooks/useFeedback";
+import { useWebSocketContext } from '../../context/WebSocketContext';
 
 const Lobby = () => {
   const navigate = useNavigate();
@@ -14,22 +15,8 @@ const Lobby = () => {
   const socketUrl = 'ws://localhost:8080/websockets';
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
+  const { sendJsonMessage } = useWebSocketContext();
 
-    const {
-      sendMessage,
-      sendJsonMessage,
-      lastMessage,
-      lastJsonMessage,
-      readyState,
-      getWebSocket,
-  } = useWebSocket(socketUrl, {
-      onOpen: () => console.log('WebSocket opened'),
-      shouldReconnect: (closeEvent) => true,
-  });
-
-  useEffect(() => {
-      console.log('Received message:', lastJsonMessage);
-  }, [lastJsonMessage]);
   const createLobby = async () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
@@ -43,7 +30,7 @@ const Lobby = () => {
 
           }
       )
-      //navigate(`/lobby/${response.data.game_pin}`);
+      navigate(`/lobby/${response.data.game_pin}`);
 
     } catch(error) {
       feedback.give(handleError(error), 3000, "error");
@@ -54,8 +41,14 @@ const Lobby = () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.put(`/lobbies/users/${pin}`, {pin}, {headers}); // why double pin neccessary?
-
-      // navigate(`/lobby/${pin}`);
+      sendJsonMessage(
+          {
+              "action": "init",
+              "userId": localStorage.getItem("id"),
+              "lobbyId": `${response.data.game_pin}`
+           }
+        )
+      navigate(`/lobby/${pin}`);
 
     } catch(error){
       feedback.give(handleError(error), 3000, "error");

@@ -6,13 +6,13 @@ import SxyButton from "../ui/SxyButton";
 import { api, handleError } from "../../utils/api";
 import "../../styles/Hero.scss";
 import useFeedback from "../../hooks/useFeedback";
-import useWebSocket from "react-use-websocket";
+import { useWebSocketContext } from '../../context/WebSocketContext';
 
 const LobbyWaiting = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
   const pin = useParams().id;
-  const socketUrl = 'ws://localhost:8080/websockets';
+  const { lastMessage } = useWebSocketContext();
 
   const [sessionToken, setSessionToken] = useState("");
   const [showSettings, setShowSettings] = useState(false);
@@ -22,21 +22,11 @@ const LobbyWaiting = () => {
     { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
     { name: "Player 2", features: ["/assets/Ava2.jpg", "Elia", "+2", "18"] },
   ]);
-  const {
-      sendMessage,
-      sendJsonMessage,
-      lastMessage,
-      lastJsonMessage,
-      readyState,
-      getWebSocket,
-  } = useWebSocket(socketUrl, {
-      onOpen: () => console.log('WebSocket opened'),
-      shouldReconnect: (closeEvent) => true,
-  });
 
   useEffect(() => {
-      console.log('Received message:', lastJsonMessage);
-  }, [lastJsonMessage]);
+      console.log('Received message:', lastMessage);
+  }, [lastMessage]);
+
   const leaveLobby = async () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
