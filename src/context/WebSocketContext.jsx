@@ -20,9 +20,7 @@ export const WebSocketProvider = ({ children }) => {
         shouldReconnect: (closeEvent) => true,
     });
 
-    useEffect(() => {
-        console.log('Received message:', lastMessage);
-    }, [lastMessage]);
+
 
 
     return (
