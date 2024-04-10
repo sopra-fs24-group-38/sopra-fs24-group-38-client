@@ -8,8 +8,8 @@ export const getDomain = () => {
 }
 
 export const getWsUrl = () => {
-  const prodUrl = "wss://sopra-fs24-group-38-server.oa.r.appspot.com/"
-  const devUrl = "ws://localhost:8080/"
-  
+  const prodUrl = "wss://sopra-fs24-group-38-server.oa.r.appspot.com/websockets"
+  const devUrl = "ws://localhost:8080/websockets"
+
   return isProduction() ? prodUrl : devUrl
 }

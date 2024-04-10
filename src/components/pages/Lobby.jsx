@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import SxyButton from "../ui/SxyButton";
 import SxyInput from "../ui/SxyInput";
-import WebSocketContext from "../../context/WebSocketContext";
 import "../../styles/Hero.scss";
 import { api, handleError } from "../../utils/api";
 import useFeedback from "../../hooks/useFeedback";
+import { useWebSocketContext } from '../../context/WebSocketContext';
 
 const Lobby = () => {
   const navigate = useNavigate();
   const feedback = useFeedback();
-  const { wsClient, isRunning, setIsRunning } = useContext(WebSocketContext);
+  const socketUrl = 'ws://localhost:8080/websockets';
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
 
@@ -26,12 +26,21 @@ const Lobby = () => {
   //   }
   // }, [])
 
+  const { sendJsonMessage } = useWebSocketContext();
 
   const createLobby = async () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.post("/lobbies", {}, { headers });
+      sendJsonMessage(
+          {
 
+            "action": "init",
+            "userId": localStorage.getItem("id"),
+            "lobbyId": `${response.data.game_pin}`
+
+          }
+      )
       navigate(`/lobby/${response.data.game_pin}`);
 
     } catch(error) {
@@ -43,7 +52,13 @@ const Lobby = () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.put(`/lobbies/users/${pin}`, {pin}, {headers}); // why double pin neccessary?
-
+      sendJsonMessage(
+          {
+              "action": "init",
+              "userId": localStorage.getItem("id"),
+              "lobbyId": `${response.data.game_pin}`
+           }
+        )
       navigate(`/lobby/${pin}`);
 
     } catch(error){
