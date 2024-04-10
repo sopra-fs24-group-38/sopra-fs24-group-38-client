@@ -12,6 +12,7 @@
     "react-router-dom": "^6.21.3",
     "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.4",
+    "react-use-websocket": "^4.8.1",
     "serve": "^14.2.1"
   },
   "scripts": {
