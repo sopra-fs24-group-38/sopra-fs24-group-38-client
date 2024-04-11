@@ -5,6 +5,9 @@ import Lobby from "../pages/Lobby";
 import LobbyWaiting from "../pages/LobbyWaiting";
 import StyleGuide from "../../styles/StyleGuide";
 import NotFound from "../pages/NotFound";
+import Game from "../pages/Game";
+import GameVoting from "../pages/GameVoting";
+import GameScores from "../pages/GameScores";
 
 
 const AppRouter = () => {
@@ -16,6 +19,9 @@ const AppRouter = () => {
         
         <Route path="/lobby" element={<Lobby />} />
 
+        <Route path="/game" element={<Game />} />
+        <Route path="/game2" element={<GameVoting />} />
+        <Route path="/game3" element={<GameScores />} />
         {/* add route guard for/with WS checks. Include game paths here */}
         <Route path="/lobby/:id" element={<LobbyWaiting />} />
 

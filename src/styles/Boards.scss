@@ -1,0 +1,29 @@
+@import "./global.scss";
+
+#gameScores > div > div:nth-child(9),
+#gameScores > div > div:nth-child(10),
+#gameScores > div > div:nth-child(11),
+#gameScores > div > div:nth-child(12) {
+  background-color: #F29544;
+}
+
+#endscreen > div > div:nth-child(1),
+#endscreen > div > div:nth-child(2),
+#endscreen > div > div:nth-child(3),
+#endscreen > div > div:nth-child(4) {
+  background-color: gold;
+}
+
+#endscreen > div > div:nth-child(5),
+#endscreen > div > div:nth-child(6),
+#endscreen > div > div:nth-child(7),
+#endscreen > div > div:nth-child(8) {
+  background-color: silver;
+}
+
+#endscreen > div > div:nth-child(9),
+#endscreen > div > div:nth-child(10),
+#endscreen > div > div:nth-child(11),
+#endscreen > div > div:nth-child(12) {
+  background-color: rgb(205, 127, 50);
+}
