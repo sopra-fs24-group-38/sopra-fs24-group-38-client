@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Header from "../ui/Header";
 import LobbySettings from "../ui/LobbySettings";
@@ -6,13 +6,13 @@ import SxyButton from "../ui/SxyButton";
 import { api, handleError } from "../../utils/api";
 import "../../styles/Hero.scss";
 import useFeedback from "../../hooks/useFeedback";
-import { useWebSocketContext } from '../../context/WebSocketContext';
+import WebSocketContext from "../../context/WebSocketContext";
 
 const LobbyWaiting = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
   const pin = useParams().id;
-  const { lastMessage } = useWebSocketContext();
+  const { lastMessage } = useContext(WebSocketContext);
 
   const [sessionToken, setSessionToken] = useState("");
   const [showSettings, setShowSettings] = useState(false);
@@ -27,7 +27,7 @@ const LobbyWaiting = () => {
   ]);
 
   useEffect(() => {
-      console.log('Received message:', lastMessage);
+    console.log("Received message: ", lastMessage);
   }, [lastMessage]);
 
   const leaveLobby = async () => {

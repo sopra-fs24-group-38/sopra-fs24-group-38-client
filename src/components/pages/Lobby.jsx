@@ -6,40 +6,25 @@ import SxyInput from "../ui/SxyInput";
 import "../../styles/Hero.scss";
 import { api, handleError } from "../../utils/api";
 import useFeedback from "../../hooks/useFeedback";
-import { useWebSocketContext } from '../../context/WebSocketContext';
+import WebSocketContext from "../../context/WebSocketContext";
 
 const Lobby = () => {
   const navigate = useNavigate();
   const feedback = useFeedback();
-  const socketUrl = 'ws://localhost:8080/websockets';
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
-
-  // useEffect(() => {
-  //   if(!isRunning){
-  //     wsClient.onConnect = function(frame){
-  //       // logic for socket calls
-  //       // are there even any basic calls?!
-  //     };
-
-  //     setIsRunning(true);
-  //   }
-  // }, [])
-
-  const { sendJsonMessage } = useWebSocketContext();
+  const { sendJsonMessage } = useContext(WebSocketContext);
 
   const createLobby = async () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.post("/lobbies", {}, { headers });
       sendJsonMessage(
-          {
-
-            "action": "init",
-            "userId": localStorage.getItem("id"),
-            "lobbyId": `${response.data.game_pin}`
-
-          }
+        {
+          "action": "init",
+          "userId": localStorage.getItem("id"),
+          "lobbyId": `${response.data.game_pin}`
+        }
       )
       navigate(`/lobby/${response.data.game_pin}`);
 
@@ -53,18 +38,19 @@ const Lobby = () => {
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.put(`/lobbies/users/${pin}`, {pin}, {headers}); // why double pin neccessary?
       sendJsonMessage(
-          {
-              "action": "init",
-              "userId": localStorage.getItem("id"),
-              "lobbyId": `${response.data.game_pin}`
-           }
-        )
+        {
+          "action": "init",
+          "userId": localStorage.getItem("id"),
+          "lobbyId": `${response.data.game_pin}`
+        }
+      )
       navigate(`/lobby/${pin}`);
 
     } catch(error){
       feedback.give(handleError(error), 3000, "error");
     }
   }
+  
 
   return(
     <>

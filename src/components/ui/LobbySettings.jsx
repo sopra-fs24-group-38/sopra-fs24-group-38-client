@@ -45,15 +45,18 @@ const LobbySettings = ({out}) => {
             color={modes.includes("DEFINITIONS") ? "#8227B3" : "#B479D4"}
             width="120px"
             func={() => modeSelection("DEFINITIONS")}/>
+          {/* currently disabled */}
           <SxyButton
             text="Dutch"
             color={modes.includes("DUTCH") ? "#8227B3" : "#B479D4"}
             width="120px"
+            disabled={true}
             func={() => modeSelection("DUTCH")}/>
           <SxyButton
             text="Urban Dict"
             color={modes.includes("URBAN") ? "#8227B3" : "#B479D4"}
             width="120px"
+            disabled={true}
             func={() => modeSelection("URBAN")}/>
         </div>
       </div>
