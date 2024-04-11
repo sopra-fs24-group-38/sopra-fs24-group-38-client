@@ -20,6 +20,7 @@ const Lobby = () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.post("/lobbies", {}, { headers });
+      localStorage.setItem("pin", response.data.game_pin)
       sendJsonMessage(
           {
 
@@ -40,6 +41,7 @@ const Lobby = () => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.put(`/lobbies/users/${pin}`, {pin}, {headers}); // why double pin neccessary?
+      localStorage.setItem("pin", response.data.game_pin)
       sendJsonMessage(
           {
               "action": "init",
