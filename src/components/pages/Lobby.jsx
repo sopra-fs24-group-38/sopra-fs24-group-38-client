@@ -13,12 +13,12 @@ const Lobby = () => {
   const feedback = useFeedback();
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
+  const headers = { "Authorization": localStorage.getItem("token") };
   const { sendJsonMessage } = useContext(WebSocketContext);
 
   const createLobby = async () => {
     try{
-      const headers = { "Authorization": localStorage.getItem("token") };
-      const response = await api.post("/lobbies", {}, { headers });
+      const response = await api.post("/lobbies", { headers });
       sendJsonMessage(
         {
           "action": "init",
@@ -35,8 +35,7 @@ const Lobby = () => {
 
   const joinLobby = async () => {
     try{
-      const headers = { "Authorization": localStorage.getItem("token") };
-      const response = await api.put(`/lobbies/users/${pin}`, {pin}, {headers}); // why double pin neccessary?
+      const response = await api.put(`/lobbies/users/${pin}`, { headers });
       sendJsonMessage(
         {
           "action": "init",

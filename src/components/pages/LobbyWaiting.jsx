@@ -35,6 +35,8 @@ const LobbyWaiting = () => {
         goodbye();
       } else if(lastMessage.data === "new_gamehost"){
         goodbye(true);
+      } else if(lastMessage.data === "game_start"){
+        navigate(`/game/${pin}`);
       }
     }
   }, [lastMessage]);
@@ -91,6 +93,15 @@ const LobbyWaiting = () => {
   //   return `/assets/Ava${avatarIndex}.jpg`;
   // }
 
+  const startGame = async() => {
+    try{
+      const response = await api.post("/lobbies/start", { headers });
+      feedback.give("The game is starting now\n╰( ^o^)╮╰( ^o^)╮", 3000, "success");
+    } catch(e){
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
+
   const leaveLobby = async () => {
     try{
       const response = await api.delete(`/lobbies/users/${pin}`, { headers });
@@ -115,7 +126,7 @@ const LobbyWaiting = () => {
                 <SxyButton
                   text="Start Game"
                   color={"#72171D"}
-                  func={() => {}}
+                  func={startGame}
                   disabled={players.length < 2 || isGameMaster !== localStorage.getItem("username")}
                   width="120px"
                 />
