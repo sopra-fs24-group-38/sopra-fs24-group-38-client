@@ -19,6 +19,7 @@ const Lobby = () => {
   const createLobby = async () => {
     try{
       const response = await api.post("/lobbies", {}, { headers });
+      localStorage.setItem("pin", response.data.game_pin)
       sendJsonMessage(
         {
           "action": "init",
