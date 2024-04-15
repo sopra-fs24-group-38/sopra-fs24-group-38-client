@@ -17,50 +17,79 @@ const LobbyWaiting = () => {
 
   const [sessionToken, setSessionToken] = useState("");
   const [showSettings, setShowSettings] = useState(false);
-  const [isGameMaster, setIsGameMaster] = useState(true);
+  const [isGameMaster, setIsGameMaster] = useState("");
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    playerDelta();
+    playerDelta(true);
   }, []);
 
   useEffect(() => {
     console.log("Received message: ", lastMessage);
     if(lastMessage && lastMessage.data){
       if(lastMessage.data === "user_joined"){
-        console.log("Leggo");
         playerDelta();
+        console.log(lastMessage.data);
+      } else if(lastMessage.data === "user_left"){
+        // TODO: include username from message in parameter
+        goodbye();
+      } else if(lastMessage.data === "new_gamehost"){
+        goodbye(true);
       }
     }
   }, [lastMessage]);
 
 
-  const playerDelta = async() => {
+  const playerDelta = async(defineMaster=false) => {
     try{
       const response = await api.get(`/lobbies/${pin}`, { headers });
+      if(defineMaster){
+        response.data.game_details.game_master_username === localStorage.getItem("username") ?
+          setIsGameMaster(localStorage.getItem("username"))
+          : setIsGameMaster(response.data.game_details.game_master_username);
+      }
+
       if (response.data.game_details.players.length > players.length){
-        for(let i = players.length; i < response.data.game_details.players.length; i++ ){
-          setPlayers(prevPlayers => [...prevPlayers,
-            { name: response.data.game_details.players[i].name, avatar: generateUniqueAvatar()}]
-          )
-        }
+        const newPlayers = response.data.game_details.players.slice(players.length).map(player => ({
+          name: player.username,
+          avatar: `/assets/Ava${player.avatarId}.jpg`,
+        }));
+
+        setPlayers(prevPlayers => [...prevPlayers, ...newPlayers]);
+      }
+      console.log(response.data)
+    } catch(e){
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
+
+  const goodbye = async(hostLeft=false, username) => {
+    try{
+      setPlayers(prevPlayers => prevPlayers.filter(player => player.name !== username));
+
+      if(hostLeft){
+        playerDelta(true);
+        // TODO: might need to do a functional state update in playerDelta
+        feedback.give(`${username} has left the party, ${isGameMaster} is now the host`, 3000, "info");
+      } else {
+        feedback.give(`${username} has left the party`, 3000, "info");
       }
     } catch(e){
       feedback.give(handleError(e), 3000, "error");
     }
   };
 
-  const generateUniqueAvatar = () => {
-    let avatarIndex;
-    let isUnique = false;
+  // const generateUniqueAvatar = () => {
+  //   let avatarIndex;
+  //   let isUnique = false;
 
-    while (!isUnique) {
-      avatarIndex = Math.floor(Math.random() * 6) + 1;
-      isUnique = players.every(player => !player.features[0].includes(`Ava${avatarIndex}`));
-    }
+  //   while (!isUnique) {
+  //     avatarIndex = Math.floor(Math.random() * 6) + 1;
+  //     isUnique = players.every(player => !player.features[0].includes(`Ava${avatarIndex}`));
+  //   }
 
-    return `/assets/Ava${avatarIndex}.jpg`;
-  }
+  //   return `/assets/Ava${avatarIndex}.jpg`;
+  // }
 
   const leaveLobby = async () => {
     try{
@@ -81,18 +110,17 @@ const LobbyWaiting = () => {
           <div className="bg-neutral-400 flex flex-col relative" id="hero">
             <div className="bg-neutral-100 max-w-sexy p-10 mb-6 shadow-md rounded-lg">
               <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
-              {/* TODO: switch to actual dynamic host name from lobby information */}
-              <h1 className="font-semibold text-center text-2xl"><b>{localStorage.getItem("username")}</b> is the host</h1>
+              <h1 className="font-semibold text-center text-2xl"><b>{isGameMaster}</b> is the host</h1>
               <div className="flex flex-col gap-y-5 mx-4 mt-6 items-center">
                 <SxyButton
                   text="Start Game"
                   color={"#72171D"}
                   func={() => {}}
-                  disabled={players.length < 2 || !isGameMaster}
+                  disabled={players.length < 2 || isGameMaster !== localStorage.getItem("username")}
                   width="120px"
                 />
 
-                {isGameMaster ?
+                {isGameMaster === localStorage.getItem("username") ?
                   <SxyButton
                     text="Settings"
                     color={"#72171D"}
@@ -112,11 +140,11 @@ const LobbyWaiting = () => {
             </div>
             <div className="bg-neutral-400 p-8 rounded-lg shadow-md relative" >
               <div id="lobbyplayas">
-                {players.length < 2 ? <img alt=""/> : <img src={players[1].avatar} alt="player 2" />}
-                {players.length < 3 ? <img alt=""/> : <img src={players[2].avatar} alt="player 3" />}
-                {players.length < 1 ? <img alt=""/> : <img src={players[0].avatar} alt="player 1" />}
-                {players.length < 4 ? <img alt=""/> : <img src={players[3].avatar} alt="player 4" />}
-                {players.length < 5 ? <img alt=""/> : <img src={players[4].avatar} alt="player 5" />}
+                {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
+                {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
+                {players.length < 1 ? <p></p> : <img src={players[0].avatar} alt="player 1" />}
+                {players.length < 4 ? <p></p> : <img src={players[3].avatar} alt="player 4" />}
+                {players.length < 5 ? <p></p> : <img src={players[4].avatar} alt="player 5" />}
               </div>
               {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
               {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}
