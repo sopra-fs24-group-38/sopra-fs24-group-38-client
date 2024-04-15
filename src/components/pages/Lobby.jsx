@@ -56,7 +56,7 @@ const Lobby = () => {
       {localStorage.getItem("token") ?
         <>
           <Header leave />
-          <div className="bg-neutral-400" id="hero">
+          <div className="bg-neutral-400 justify-center" id="hero">
             <div className="bg-neutral-100 max-w-sexy p-10 shadow-md rounded-lg">
               <h1 className="font-bold text-center mt-4 text-2xl">Welcome {localStorage.getItem("username")}</h1>
               <div className="flex flex-col m-10 gap-y-10 justify-between items-center">
