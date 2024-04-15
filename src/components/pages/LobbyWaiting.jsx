@@ -15,7 +15,7 @@ const LobbyWaiting = () => {
   const pin = useParams().id;
   const { lastMessage } = useContext(WebSocketContext);
 
-  const [sessionToken, setSessionToken] = useState("");
+  const [sessionToken, setSessionToken] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState("");
   const [players, setPlayers] = useState([]);
@@ -49,6 +49,8 @@ const LobbyWaiting = () => {
         response.data.game_details.game_master_username === localStorage.getItem("username") ?
           setIsGameMaster(localStorage.getItem("username"))
           : setIsGameMaster(response.data.game_details.game_master_username);
+        
+        setSessionToken(response.data.game_details.players.some(obj => obj.username.includes(localStorage.getItem("username"))));
       }
 
       if (response.data.game_details.players.length > players.length){
@@ -81,18 +83,6 @@ const LobbyWaiting = () => {
     }
   };
 
-  // const generateUniqueAvatar = () => {
-  //   let avatarIndex;
-  //   let isUnique = false;
-
-  //   while (!isUnique) {
-  //     avatarIndex = Math.floor(Math.random() * 6) + 1;
-  //     isUnique = players.every(player => !player.features[0].includes(`Ava${avatarIndex}`));
-  //   }
-
-  //   return `/assets/Ava${avatarIndex}.jpg`;
-  // }
-
   const startGame = async() => {
     try{
       const response = await api.post("/lobbies/start", { headers });
@@ -115,7 +105,7 @@ const LobbyWaiting = () => {
 
   return (
     <>
-      {!sessionToken ?
+      {sessionToken ?
         <>
           <Header />
           <div className="bg-neutral-400 flex flex-col relative" id="hero">
@@ -171,7 +161,7 @@ const LobbyWaiting = () => {
           </div>
         </>
         // session guard
-        : <Navigate to={`/game/${pin}`} />}
+        : <Navigate to={"/lobby"} />}
     </>
   );
 };

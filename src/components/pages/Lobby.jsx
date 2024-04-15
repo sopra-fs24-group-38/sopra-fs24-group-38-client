@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import Header from "../ui/Header";
 import SxyButton from "../ui/SxyButton";
 import SxyInput from "../ui/SxyInput";
@@ -18,7 +18,7 @@ const Lobby = () => {
 
   const createLobby = async () => {
     try{
-      const response = await api.post("/lobbies", { headers });
+      const response = await api.post("/lobbies", {}, { headers });
       sendJsonMessage(
         {
           "action": "init",
@@ -35,7 +35,7 @@ const Lobby = () => {
 
   const joinLobby = async () => {
     try{
-      const response = await api.put(`/lobbies/users/${pin}`, { headers });
+      const response = await api.put(`/lobbies/users/${pin}`, {}, { headers });
       sendJsonMessage(
         {
           "action": "init",
@@ -53,52 +53,56 @@ const Lobby = () => {
 
   return(
     <>
-      <Header leave />
-      <div className="bg-neutral-400" id="hero">
-        <div className="bg-neutral-100 max-w-sexy p-10 shadow-md rounded-lg">
-          <h1 className="font-bold text-center mt-4 text-2xl">Welcome {localStorage.getItem("username")}</h1>
-          <div className="flex flex-col m-10 gap-y-10 justify-between items-center">
-            <SxyButton
-              text="Create Lobby"
-              color={"#72171D"}
-              func={createLobby}
-              width="120px"
-            />
+      {localStorage.getItem("token") ?
+        <>
+          <Header leave />
+          <div className="bg-neutral-400" id="hero">
+            <div className="bg-neutral-100 max-w-sexy p-10 shadow-md rounded-lg">
+              <h1 className="font-bold text-center mt-4 text-2xl">Welcome {localStorage.getItem("username")}</h1>
+              <div className="flex flex-col m-10 gap-y-10 justify-between items-center">
+                <SxyButton
+                  text="Create Lobby"
+                  color={"#72171D"}
+                  func={createLobby}
+                  width="120px"
+                />
 
-            {showPin ?
-              <>
-                <div className="flex justify-between relative" id="lobbypin">
+                {showPin ?
+                  <>
+                    <div className="flex justify-between relative" id="lobbypin">
+                      <SxyButton
+                        text="Send"
+                        color={"#72171D"}
+                        func={joinLobby}
+                        width="50px"/>
+                      <SxyButton
+                        text="Cancel"
+                        color={"red"}
+                        func={() => setShowPin(false)}
+                        width="55px" />
+                      <SxyInput
+                        value={pin}
+                        color={"#ebe4d7"}
+                        inputMode={"numeric"}
+                        maxLength={"4"}
+                        placeholder="1234"
+                        func={(n) => setPin(n)}
+                        enterKey={joinLobby}/>
+                    </div>
+                  </>
+                  :
                   <SxyButton
-                    text="Send"
+                    text="Join Lobby"
                     color={"#72171D"}
-                    func={joinLobby}
-                    width="50px"/>
-                  <SxyButton
-                    text="Cancel"
-                    color={"red"}
-                    func={() => setShowPin(false)}
-                    width="55px" />
-                  <SxyInput
-                    value={pin}
-                    color={"#ebe4d7"}
-                    inputMode={"numeric"}
-                    maxLength={"4"}
-                    placeholder="1234"
-                    func={(n) => setPin(n)}
-                    enterKey={joinLobby}/>
-                </div>
-              </>
-              :
-              <SxyButton
-                text="Join Lobby"
-                color={"#72171D"}
-                func={() => setShowPin(true)}
-                width="120px"
-              />
-            }
+                    func={() => setShowPin(true)}
+                    width="120px"
+                  />
+                }
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+        : <Navigate to={"/login"} />}
     </>
   );
 };
