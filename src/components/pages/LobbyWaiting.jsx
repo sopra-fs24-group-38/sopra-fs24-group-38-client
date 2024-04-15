@@ -11,35 +11,66 @@ import WebSocketContext from "../../context/WebSocketContext";
 const LobbyWaiting = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
+  const headers = { "Authorization": localStorage.getItem("token") };
   const pin = useParams().id;
   const { lastMessage } = useContext(WebSocketContext);
 
   const [sessionToken, setSessionToken] = useState("");
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState(true);
+  const [players, setPlayers] = useState([]);
 
-  const [players, setPlayers] = useState([
-    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
-    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
-    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
-    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
-    { name: "Player 1", features: ["/assets/Ava1.jpg", "Samuel", "+5", "20"] },
-  ]);
+  useEffect(() => {
+    playerDelta();
+  }, []);
 
   useEffect(() => {
     console.log("Received message: ", lastMessage);
+    if(lastMessage && lastMessage.data){
+      if(lastMessage.data === "user_joined"){
+        console.log("Leggo");
+        playerDelta();
+      }
+    }
   }, [lastMessage]);
+
+
+  const playerDelta = async() => {
+    try{
+      const response = await api.get(`/lobbies/${pin}`, { headers });
+      if (response.data.game_details.players.length > players.length){
+        for(let i = players.length; i < response.data.game_details.players.length; i++ ){
+          setPlayers(prevPlayers => [...prevPlayers,
+            { name: response.data.game_details.players[i].name, avatar: generateUniqueAvatar()}]
+          )
+        }
+      }
+    } catch(e){
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
+
+  const generateUniqueAvatar = () => {
+    let avatarIndex;
+    let isUnique = false;
+
+    while (!isUnique) {
+      avatarIndex = Math.floor(Math.random() * 6) + 1;
+      isUnique = players.every(player => !player.features[0].includes(`Ava${avatarIndex}`));
+    }
+
+    return `/assets/Ava${avatarIndex}.jpg`;
+  }
 
   const leaveLobby = async () => {
     try{
-      const headers = { "Authorization": localStorage.getItem("token") };
-      // const response = api.put("/lobby/users/leave", {}, { headers });
+      const response = await api.delete(`/lobbies/users/${pin}`, { headers });
 
       navigate("/lobby");
     } catch(error){
       feedback.give(handleError(error), 3000, "error");
     }
-  }
+  };
 
 
   return (
@@ -81,17 +112,17 @@ const LobbyWaiting = () => {
             </div>
             <div className="bg-neutral-400 p-8 rounded-lg shadow-md relative" >
               <div id="lobbyplayas">
-                {players.length < 2 ? <img alt=""/> : <img src="/assets/Ava2.jpg" alt="player 2" />}
-                {players.length < 3 ? <img alt=""/> : <img src="/assets/Ava3.jpg" alt="player 3" />}
-                <img src="/assets/Ava1.jpg" alt="player 1" />
-                {players.length < 4 ? <img alt=""/> : <img src="/assets/Ava4.jpg" alt="player 4" />}
-                {players.length < 5 ? <img alt=""/> : <img src="/assets/Ava5.jpg" alt="player 5" />}
+                {players.length < 2 ? <img alt=""/> : <img src={players[1].avatar} alt="player 2" />}
+                {players.length < 3 ? <img alt=""/> : <img src={players[2].avatar} alt="player 3" />}
+                {players.length < 1 ? <img alt=""/> : <img src={players[0].avatar} alt="player 1" />}
+                {players.length < 4 ? <img alt=""/> : <img src={players[3].avatar} alt="player 4" />}
+                {players.length < 5 ? <img alt=""/> : <img src={players[4].avatar} alt="player 5" />}
               </div>
-              {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">Player 2</p>}
-              {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">Player 3</p>}
-              <p className="absolute top-48 left-4 font-bold text-lg z-20">Player 1</p>
-              {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">Player 4</p>}
-              {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">Player 5</p>}
+              {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
+              {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}
+              {players.length < 1 ? null : <p className="absolute top-48 left-4 font-bold text-lg z-20">{players[0].name}</p>}
+              {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">{players[3].name}</p>}
+              {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">{players[4].name}</p>}
             </div>
 
             {showSettings ?
