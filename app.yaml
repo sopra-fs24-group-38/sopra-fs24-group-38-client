@@ -16,6 +16,9 @@ handlers:
     upload: build/.*\.(json|ico)$
   - url: /assets
     static_dir: build/assets
+  - url: /favicon.ico
+    static_files: build/favicon.ico
+    upload: build/favicon.ico
   - url: /
     static_files: build/index.html
     upload: build/index.html
