@@ -20,6 +20,5 @@ handlers:
   - url: /.*
     static_files: build/index.html
     upload: build/index.html
-  - url: /assets/(.*)
-    static_files: build/assets/\1
-    upload: build/assets/(.*)
+  - url: /assets
+    static_dir: build/assets
