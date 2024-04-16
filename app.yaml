@@ -14,11 +14,12 @@ handlers:
   - url: /(.*\.(json|ico))$
     static_files: build/\1
     upload: build/.*\.(json|ico)$
+  - url: /assets
+    static_dir: build/assets
   - url: /
     static_files: build/index.html
     upload: build/index.html
   - url: /.*
     static_files: build/index.html
     upload: build/index.html
-  - url: /assets
-    static_dir: build/assets
+
