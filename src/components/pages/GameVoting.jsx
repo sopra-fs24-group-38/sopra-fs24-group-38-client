@@ -38,14 +38,14 @@ const GameVoting = () => {
               <AnswerBlock answer="A fancy hat" func={() => {}}/>
               <AnswerBlock answer="None of your business" func={() => {}}/>
               <AnswerBlock answer="Banana" func={() => {}}/>
-              </> : <>
+            </> : <>
               <AnswerBlock answer="Don de la Vega" func={() => navigate("/game3")} />
-              <AnswerBlock answer="Grilled Cheese" votingPlayers={[{name: "Hu", feature: '/assets/Ava3.jpg'}]} func={() => {}}/>
-              <AnswerBlock answer="Spanish Inquisition" style={{backgroundColor: "green", border: "solid black 2px",}} votingPlayers={[{name: "Juan", feature: '/assets/Ava1.jpg'}, {name: "Hans", feature: '/assets/Ava2.jpg'}]} func={() => {}} />
+              <AnswerBlock answer="Grilled Cheese" votingPlayers={[{name: "Hu", feature: "/assets/Ava3.jpg"}]} func={() => {}}/>
+              <AnswerBlock answer="Spanish Inquisition" style={{backgroundColor: "green", border: "solid black 2px",}} votingPlayers={[{name: "Juan", feature: "/assets/Ava1.jpg"}, {name: "Hans", feature: "/assets/Ava2.jpg"}]} func={() => {}} />
               <AnswerBlock answer="A fancy hat" func={() => {}}/>
               <AnswerBlock answer="None of your business" func={() => {}}/>
-              <AnswerBlock answer="Banana" votingPlayers={[{name: "Han", feature: '/assets/Ava4.jpg'}, {name: "H", feature: '/assets/Ava6.jpg'}]} func={() => {}} />
-              </>
+              <AnswerBlock answer="Banana" votingPlayers={[{name: "Han", feature: "/assets/Ava4.jpg"}, {name: "H", feature: "/assets/Ava6.jpg"}]} func={() => {}} />
+            </>
             }
           </div>
         </div>
