@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import SxyInput from "../ui/SxyInput";
 import SxyButton from "../ui/SxyButton";
 import useFeedback from "../../hooks/useFeedback";
-import { useWebSocketContext } from '../../context/WebSocketContext';
+import WebSocketContext from "../../context/WebSocketContext";
 import { api, handleError } from "../../utils/api";
 
 
 const Game = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
-  const { lastMessage, sendJsonMessage } = useWebSocketContext();
+  const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const [submission, setSubmission] = useState("");
   const [lobby, setLobby] = useState({
     "game_pin": localStorage.getItem("pin"),
@@ -36,7 +36,7 @@ const Game = () => {
 
   // Use Effect to render new Lobbyinformation
   useEffect(() => {
-    console.log('Received message:', lastMessage);
+    console.log("Received message:", lastMessage);
     getLobby();
     if (lobby.game_details.game_state ==="VOTE" || (lastMessage && lastMessage.data === "HELLO")) { // Testzweck bei HELLO weiter zu Game 2
       navigate("/game2");
@@ -58,7 +58,7 @@ const Game = () => {
   const sendDefinition = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
-      const response = await api.put(`/lobbies/users/definitions`, { definition: submission }, { headers }); //${localStorage.getItem("pin")}
+      const response = await api.put("/lobbies/users/definitions", { definition: submission }, { headers }); //${localStorage.getItem("pin")}
       console.log(response.data)
 
     } catch (error) {

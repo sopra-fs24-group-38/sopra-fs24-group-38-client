@@ -3,13 +3,16 @@
 #hero {
   height: calc(100dvh - $HEADER_HEIGHT);
   width: 100%;
+  overflow-y: scroll;
   display: flex;
-  justify-content: center;
   align-items: center;
 
   background-color: #ece4d7;
   
-  background-image: url("../../public/assets/nbp.png");
+  background-image: url("../../public/assets/4xbg.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 // lobby
@@ -35,6 +38,50 @@
   border: solid black 2px;
   z-index: 9001;
 }
+
+// intricate shit for player pics in lobbyWaiting
+#lobbyplayas {
+  --size: 75px;
+  display: grid;
+  grid-template-columns: repeat(4, var(--size));
+  grid-auto-rows: var(--size);
+  margin-bottom: var(--size);
+  place-items: start center;
+  gap: 5px;
+
+  img {
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    width: calc(var(--size) * 2);
+    clip-path: path("M 67.5 7.5 C 75 0 75 0 82.5 7.5 C 142.5 67.5 142.5 67.5 142.5 67.5 C 150 75 150 75 142.5 82.5 C 142.5 82.5 82.5 142.5 82.5 142.5 C 75 150 75 150 67.5 142.5 C 67.5 142.5 7.5 82.5 7.5 82.5 C 0 75 0 75 7.5 67.5 Z");
+    transition: clip-path 0.25s, filter 0.75s;
+    grid-column: auto / span 2;
+    border-radius: 5px;
+
+    &:hover,
+    &:focus {
+      clip-path: path("M 0 0 C 0 0 150 0 150 0 C 150 0 150 75 150 75 C 150 75 150 150 150 150 C 150 150 75 150 75 150 C 75 150 75 150 0 150 C 0 150 0 75 0 75 C 0 75 0 75 0 75 Z");
+      z-index: 10;
+      transition: clip-path 0.25s, filter 0.25s;
+    }
+
+    // &:focus {
+    //   outline: 1px dashed black;
+    //   outline-offset: -5px;
+    // }
+  }
+  :nth-child(3) {
+    grid-column: 2 / span 2;
+  }
+
+  &:has(img:hover) img:not(:hover) {
+    filter: brightness(0.75) contrast(0.75);
+  }
+  > img:hover {
+    filter: brightness(1) saturate(1);
+  }
+}
+
 
 // login
 .login {
