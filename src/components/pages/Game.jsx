@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import useFeedback from "../../hooks/useFeedback";
+
 import WebSocketContext from "../../context/WebSocketContext";
 import { api, handleError } from "../../utils/api";
 import Definition from "../game/Definiton";
 import Voting from "../game/Voting";
+import Score from "../game/Score";
 
 
 const Game = () => {
@@ -32,18 +34,19 @@ const Game = () => {
       }
     )
   }, [])
+
   // check lobby_state
   useEffect(() => {
-    // if (lobby.game_details.game_state === "WAITING" || (lastMessage && lastMessage.data === "definitions_finished")) { // Testzweck bei HELLO weiter zu Game 2
-    //   navigate(`/lobby/${localStorage.getItem("pin")}`);
-    // }
+    if (lobby.game_details.game_state === "WAITING") { 
+      navigate(`/lobby/${localStorage.getItem("pin")}`);
+    }
   }, [lobby])
   
   // Use Effect to render new Lobbyinformation
   useEffect(() => {
     console.log("Received message:", lastMessage);
     getLobby();
-  }, [lastMessage]);
+  }, [lastMessage, ]);
 
   const getLobby = async () => {
     try {
@@ -69,7 +72,7 @@ const Game = () => {
       {/* Produktiv */}
       {lobby.game_details.game_state === "DEFINITION" && <Definition lobby={lobby}/>}
       {lobby.game_details.game_state === "VOTE" && <Voting lobby={lobby}/>}
-      {lobby.game_details.game_state === "EVALUATION" && <Definition lobby={lobby}/>}
+      {lobby.game_details.game_state === "EVALUATION" && <Score lobby={lobby}/>}
       {lobby.game_details.game_state === "GAMEOVER" && <Definition lobby={lobby}/>}
 
 

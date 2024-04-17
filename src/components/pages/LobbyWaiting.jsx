@@ -13,7 +13,7 @@ const LobbyWaiting = () => {
   const feedback = useFeedback()
   const headers = { "Authorization": localStorage.getItem("token") };
   const pin = useParams().id;
-  const { lastMessage } = useContext(WebSocketContext);
+  const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
 
   const [sessionToken, setSessionToken] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
@@ -22,6 +22,12 @@ const LobbyWaiting = () => {
 
   useEffect(() => {
     playerDelta(true);
+    sendJsonMessage(
+      {
+        "action": "init",
+        "userId": localStorage.getItem("id")
+      }
+    )
   }, []);
 
   useEffect(() => {
@@ -37,7 +43,7 @@ const LobbyWaiting = () => {
         goodbye(JSON.parse(lastMessage.data).gamehost_left, true);
 
       } else if(lastMessage.data === "game_start"){
-        navigate(`/game/${pin}`);
+        navigate("/game");
       }
     }
   }, [lastMessage]);
@@ -98,7 +104,7 @@ const LobbyWaiting = () => {
 
   const leaveLobby = async () => {
     try{
-      const response = await api.delete(`/lobbies/users/${pin}`, { headers });
+      const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
       navigate("/lobby");
     } catch(error){

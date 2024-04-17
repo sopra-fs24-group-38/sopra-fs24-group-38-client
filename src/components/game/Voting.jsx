@@ -3,46 +3,71 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import AnswerBlock from "../ui/AnswerBlock";
+import useFeedback from "../../hooks/useFeedback";
+import { api, handleError } from "../../utils/api";
 
 
 const Voting = (props) => {
-  const { lobby } = props;
+  const { lobby, } = props;
   const navigate = useNavigate();
-  const [chosenOne, setChosenOne] = useState(0);
+  const feedback = useFeedback()
+  const [chosenOne, setChosenOne] = useState(-1);
   const [answers, setAnswers] = useState([]);
+  const [player, setPlayer] = useState({});
   const [selectedStyle, setSelectedStyle] = useState({
     border: "solid black 2px",
   });
-  const [nextView, setNextView] = useState(false);
 
   useEffect(() => {
-    console.log(updateAnswers())
+    console.log(player)
     setAnswers(updateAnswers());
+    setPlayer(lobby.game_details.players.find(p => p.id === parseInt(localStorage.getItem("id"))))
   }, [lobby])
 
+  useEffect(() => {
+    console.log(player.votedForUserId)
+    setChosenOne(Object.is(player.votedForUserId, null) ? -1 : player.votedForUserId);
+  }, [player])
 
   const handleClick = (number) => {
-    setChosenOne(number);
+    console.log(player)
+    // if player didnt vote yet
+    if (player && player.votedForUserId === null) {
+      if (player.id !== number) {
+        setChosenOne(number);
+        sendVote(number)
 
-    setTimeout(() => setNextView(true), 3000);
+      }
+    }
   }
+
+  const sendVote = async (number) => {
+    try {
+      const headers = { "Authorization": localStorage.getItem("token") };
+      const response = await api.put("/lobbies/users/votes", { vote: number }, { headers }); //${localStorage.getItem("pin")}
+      console.log(response.data)
+    } catch (error) {
+      feedback.give(handleError(error), 3000, "error");
+    }
+  }
+
 
   const updateAnswers = () => {
     let allAnswers = [];
 
     // Add the main answer to the array
-    allAnswers.push({id: 0, solution: lobby.game_details.solution});
+    allAnswers.push({ id: 0, solution: lobby.game_details.solution });
 
     // Loop through each player in the lobby
     for (let i = 0; i < lobby.game_details.players.length; i++) {
       // Add each player's single answer to the array
-      allAnswers.push(lobby.game_details.players[i].definition);
+      allAnswers.push({ id: lobby.game_details.players[i].id, solution: lobby.game_details.players[i].definition });
     }
     return _.shuffle(allAnswers)
   }
 
   return (
-    <div id="hero">
+    <div className="bg-neutral-400 justify-center" id="hero">
       <div className="flex flex-col bg-neutral-100 shadow-md w-2/3 h-4/5 p-5 rounded-lg" id="gameVoting">
         <div className="flex mb-10 h-1/6 bg-supporange-200 rounded-md p-4 justify-center items-center">
           <p className="text-center text-xl">
@@ -50,10 +75,14 @@ const Voting = (props) => {
           </p>
         </div>
         <h1 className="text-xl">Select an answer:</h1>
-        <div className="grow grid grid-cols-2 grid-rows-3 gap-8 mt-6" key={nextView}>
-          {answers.map((answer, index) => (
-            <AnswerBlock key={index} answer={answer} func={() => handleAnswerClick(answer)} />
-          ))}
+        <div className="grow grid grid-cols-2 grid-rows-3 gap-8 mt-6" >
+          {answers.map((answer, index) => {
+            console.log(chosenOne)
+            return (
+              <AnswerBlock key={index} answer={answer.solution} func={() => handleClick(answer.id)} style={chosenOne === answer.id ? selectedStyle : null} />
+            )
+          }
+          )}
           {/* {!nextView ? <>
             <AnswerBlock answer="Don de la Vega" func={() => { }} />
             <AnswerBlock answer="Grilled Cheese" func={() => { }} />
