@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import useFeedback from "../../hooks/useFeedback";
-import { useWebSocketContext } from "../../context/WebSocketContext";
+import WebSocketContext from "../../context/WebSocketContext";
 import { api, handleError } from "../../utils/api";
 import Definition from "../game/Definiton";
 import Voting from "../game/Voting";
@@ -11,7 +11,7 @@ import Voting from "../game/Voting";
 const Game = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
-  const { lastMessage, sendJsonMessage } = useWebSocketContext();
+  const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const [lobby, setLobby] = useState({
     "game_pin": localStorage.getItem("pin"),
     "game_details": {

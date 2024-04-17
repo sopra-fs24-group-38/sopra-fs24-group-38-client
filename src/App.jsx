@@ -5,13 +5,13 @@ import "./styles/global.scss";
 import { WebSocketProvider } from "./context/WebSocketContext"; 
 
 const App = () => {
-    return (
-        <div className="h-dvh w-screen">
-            <WebSocketProvider>
-                <AppRouter />
-            </WebSocketProvider>
-        </div>
-    );
+  return (
+    <div className="h-dvh w-screen">
+      <WebSocketProvider>
+        <AppRouter />
+      </WebSocketProvider>
+    </div>
+  );
 };
 
 export default App;

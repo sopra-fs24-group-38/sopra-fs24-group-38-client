@@ -18,7 +18,7 @@ const NotFound = () => {
             color={"#72171D"}
             width="120px"
             func={() => navigate("/")}
-          ></SxyButton>
+          />
         </div>
       </div>
     </div>
