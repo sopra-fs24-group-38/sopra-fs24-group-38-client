@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Header from "../ui/Header";
 import LobbySettings from "../ui/LobbySettings";
@@ -19,7 +19,7 @@ const LobbyWaiting = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState("");
   const [players, setPlayers] = useState([]);
-  const [playerNames, setPlayerNames] = useState(new Set());
+  const playerNamesRef = useRef(new Set());
 
   useEffect(() => {
     playerDelta(true);
@@ -38,7 +38,7 @@ const LobbyWaiting = () => {
         goodbye(JSON.parse(lastMessage.data).gamehost_left, true);
 
       } else if(lastMessage.data === "game_start"){
-        navigate(`/game/${pin}`);
+        navigate("/game/");
       }
     }
   }, [lastMessage]);
@@ -57,7 +57,7 @@ const LobbyWaiting = () => {
 
       if (response.data.game_details.players.length > players.length){
         const newPlayers = response.data.game_details.players.slice(players.length)
-          .filter(player => !playerNames.has(player.username))
+          .filter(player => !playerNamesRef.current.has(player.username))
           .map(player => ({
             name: player.username,
             avatar: `/assets/Ava${player.avatarId}.jpg`,
@@ -66,7 +66,7 @@ const LobbyWaiting = () => {
         newPlayers.forEach(element => {
           feedback.give(`${element.name} has joined`, 3000, "success");
 
-          setPlayerNames(prevNames => new Set([...prevNames, element.name]));
+          playerNamesRef.current.add(element.name);
         });
 
         setPlayers(prevPlayers => [...prevPlayers, ...newPlayers]);
@@ -79,6 +79,7 @@ const LobbyWaiting = () => {
   const goodbye = async(username, hostLeft=false) => {
     try{
       setPlayers(prevPlayers => prevPlayers.filter(player => player.name !== username));
+      playerNamesRef.current.delete(username);
 
       if(hostLeft){
         playerDelta(true);
@@ -117,8 +118,8 @@ const LobbyWaiting = () => {
       {sessionToken ?
         <>
           <Header />
-          <div className="bg-neutral-400 flex flex-col relative" id="hero">
-            <div className="bg-neutral-100 max-w-sexy p-10 my-6 shadow-md rounded-lg">
+          <div className="bg-neutral-400 flex flex-col relative pb-8" id="hero">
+            <div className="bg-neutral-100 max-w-sexy p-10 mb-6 mt-auto shadow-md rounded-lg">
               <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
               <h1 className="font-semibold text-center text-2xl"><b>{isGameMaster}</b> is the host</h1>
               <div className="flex flex-col gap-y-5 mx-4 mt-6 items-center">
@@ -148,7 +149,7 @@ const LobbyWaiting = () => {
                 />
               </div>
             </div>
-            <div className="bg-neutral-400 p-8 mb-10 rounded-lg shadow-md relative" >
+            <div className="bg-neutral-400 p-8 mb-auto rounded-lg shadow-md relative" >
               <div id="lobbyplayas">
                 {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
                 {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
