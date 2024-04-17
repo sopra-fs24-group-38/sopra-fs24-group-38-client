@@ -44,6 +44,8 @@ const Lobby = () => {
           "lobbyId": `${response.data.game_pin}`
         }
       )
+      
+      localStorage.setItem("pin", pin);
       navigate(`/lobby/${pin}`);
 
     } catch(error){
