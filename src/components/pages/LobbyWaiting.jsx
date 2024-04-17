@@ -19,6 +19,7 @@ const LobbyWaiting = () => {
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState("");
   const [players, setPlayers] = useState([]);
+  const [playerNames, setPlayerNames] = useState(new Set());
 
   useEffect(() => {
     playerDelta(true);
@@ -55,13 +56,17 @@ const LobbyWaiting = () => {
       }
 
       if (response.data.game_details.players.length > players.length){
-        const newPlayers = response.data.game_details.players.slice(players.length).map(player => ({
-          name: player.username,
-          avatar: `/assets/Ava${player.avatarId}.jpg`,
-        }));
+        const newPlayers = response.data.game_details.players.slice(players.length)
+          .filter(player => !playerNames.has(player.username))
+          .map(player => ({
+            name: player.username,
+            avatar: `/assets/Ava${player.avatarId}.jpg`,
+          }));
 
         newPlayers.forEach(element => {
           feedback.give(`${element.name} has joined`, 3000, "success");
+
+          setPlayerNames(prevNames => new Set([...prevNames, element.name]));
         });
 
         setPlayers(prevPlayers => [...prevPlayers, ...newPlayers]);
