@@ -125,7 +125,7 @@ const LobbyWaiting = () => {
 
   const leaveLobby = async () => {
     try{
-      const response = await api.delete(`/lobbies/users/${pin}`, { headers });
+      const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
       navigate("/lobby");
     } catch(error){
