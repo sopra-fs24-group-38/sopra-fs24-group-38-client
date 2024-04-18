@@ -10,6 +10,6 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <App />
-    <ToastContainer />
+    <ToastContainer limit={4} />
   </React.StrictMode>
 );

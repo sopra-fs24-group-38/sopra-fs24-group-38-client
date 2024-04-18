@@ -7,27 +7,39 @@ import { api, handleError } from "../../utils/api";
 import "../../styles/Hero.scss";
 import useFeedback from "../../hooks/useFeedback";
 import WebSocketContext from "../../context/WebSocketContext";
+import { toast } from "react-toastify";
 
 const LobbyWaiting = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
   const headers = { "Authorization": localStorage.getItem("token") };
   const pin = useParams().id;
-  const { lastMessage } = useContext(WebSocketContext);
+  const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
+  const prep = useRef(null);
 
   const [sessionToken, setSessionToken] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState("");
+  const [starting, setStarting] = useState(false);
   const [players, setPlayers] = useState([]);
   const playerNamesRef = useRef(new Set());
 
   useEffect(() => {
     playerDelta(true);
+
+    // fallback in case of reload or disconnect
+    sendJsonMessage(
+      {
+        "action": "init",
+        "userId": localStorage.getItem("id"),
+        "lobbyId": `${pin}`
+      }
+    );
   }, []);
 
   useEffect(() => {
     console.log("Received message: ", lastMessage);
-    if(lastMessage && lastMessage.data){
+    if(lastMessage && lastMessage.data && playerNamesRef.current.length !== 0){
       if(lastMessage.data === "user_joined"){
         playerDelta();
 
@@ -37,8 +49,17 @@ const LobbyWaiting = () => {
       } else if(lastMessage.data.includes("gamehost_left")){
         goodbye(JSON.parse(lastMessage.data).gamehost_left, true);
 
+      } else if(lastMessage.data === "game_preparing"){
+        prep.current = toast.loading("The game is starting soon")
+
       } else if(lastMessage.data === "game_start"){
-        navigate("/game/");
+        toast.update(prep.current, {
+          render: "Let's gooo ╰( ^o^)╮╰( ^o^)╮",
+          type: "success",
+          theme: "colored",
+          isLoading: false,
+        })
+        navigate("/game");
       }
     }
   }, [lastMessage]);
@@ -83,8 +104,7 @@ const LobbyWaiting = () => {
 
       if(hostLeft){
         playerDelta(true);
-        // TODO: might need to do add timer
-        feedback.give(`${username} has left the party,\n${isGameMaster} is now the host`, 3000, "info");
+        feedback.give(`${username} has left the party,\nthere is a new host`, 3000, "info");
       } else {
         feedback.give(`${username} has left the party`, 3000, "warning");
       }
@@ -96,7 +116,8 @@ const LobbyWaiting = () => {
   const startGame = async() => {
     try{
       const response = await api.post("/lobbies/start", {}, { headers });
-      feedback.give("The game is starting now\n╰( ^o^)╮╰( ^o^)╮", 3000, "success");
+      setStarting(prev => !prev);
+
     } catch(e){
       feedback.give(handleError(e), 3000, "error");
     }
@@ -127,7 +148,7 @@ const LobbyWaiting = () => {
                   text="Start Game"
                   color={"#72171D"}
                   func={startGame}
-                  disabled={players.length < 2 || isGameMaster !== localStorage.getItem("username")}
+                  disabled={players.length < 2 || isGameMaster !== localStorage.getItem("username") || starting}
                   width="120px"
                 />
 
