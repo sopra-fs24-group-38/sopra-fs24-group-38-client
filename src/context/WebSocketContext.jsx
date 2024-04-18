@@ -26,7 +26,7 @@ export const WebSocketProvider = ({ children }) => {
         return false;
       case 1001:
         // user either closed browser or disconnects, remove token
-        // localStorage.removeItem("token");
+        console.log("Page reload or disconnect");
         
         return false;
       case 1003:

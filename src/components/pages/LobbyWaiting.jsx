@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Header from "../ui/Header";
 import LobbySettings from "../ui/LobbySettings";
@@ -7,6 +7,7 @@ import { api, handleError } from "../../utils/api";
 import "../../styles/Hero.scss";
 import useFeedback from "../../hooks/useFeedback";
 import WebSocketContext from "../../context/WebSocketContext";
+import { toast } from "react-toastify";
 
 const LobbyWaiting = () => {
   const navigate = useNavigate();
@@ -14,25 +15,31 @@ const LobbyWaiting = () => {
   const headers = { "Authorization": localStorage.getItem("token") };
   const pin = useParams().id;
   const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
+  const prep = useRef(null);
 
   const [sessionToken, setSessionToken] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState("");
+  const [starting, setStarting] = useState(false);
   const [players, setPlayers] = useState([]);
+  const playerNamesRef = useRef(new Set());
 
   useEffect(() => {
     playerDelta(true);
+
+    // fallback in case of reload or disconnect
     sendJsonMessage(
       {
         "action": "init",
-        "userId": localStorage.getItem("id")
+        "userId": localStorage.getItem("id"),
+        "lobbyId": `${pin}`
       }
-    )
+    );
   }, []);
 
   useEffect(() => {
     console.log("Received message: ", lastMessage);
-    if(lastMessage && lastMessage.data){
+    if(lastMessage && lastMessage.data && playerNamesRef.current.length !== 0){
       if(lastMessage.data === "user_joined"){
         playerDelta();
 
@@ -42,7 +49,16 @@ const LobbyWaiting = () => {
       } else if(lastMessage.data.includes("gamehost_left")){
         goodbye(JSON.parse(lastMessage.data).gamehost_left, true);
 
+      } else if(lastMessage.data === "game_preparing"){
+        prep.current = toast.loading("The game is starting soon")
+
       } else if(lastMessage.data === "game_start"){
+        toast.update(prep.current, {
+          render: "Let's gooo ╰( ^o^)╮╰( ^o^)╮",
+          type: "success",
+          theme: "colored",
+          isLoading: false,
+        })
         navigate("/game");
       }
     }
@@ -61,13 +77,17 @@ const LobbyWaiting = () => {
       }
 
       if (response.data.game_details.players.length > players.length){
-        const newPlayers = response.data.game_details.players.slice(players.length).map(player => ({
-          name: player.username,
-          avatar: `/assets/Ava${player.avatarId}.jpg`,
-        }));
+        const newPlayers = response.data.game_details.players.slice(players.length)
+          .filter(player => !playerNamesRef.current.has(player.username))
+          .map(player => ({
+            name: player.username,
+            avatar: `/assets/Ava${player.avatarId}.jpg`,
+          }));
 
         newPlayers.forEach(element => {
           feedback.give(`${element.name} has joined`, 3000, "success");
+
+          playerNamesRef.current.add(element.name);
         });
 
         setPlayers(prevPlayers => [...prevPlayers, ...newPlayers]);
@@ -80,11 +100,11 @@ const LobbyWaiting = () => {
   const goodbye = async(username, hostLeft=false) => {
     try{
       setPlayers(prevPlayers => prevPlayers.filter(player => player.name !== username));
+      playerNamesRef.current.delete(username);
 
       if(hostLeft){
         playerDelta(true);
-        // TODO: might need to do add timer
-        feedback.give(`${username} has left the party,\n${isGameMaster} is now the host`, 3000, "info");
+        feedback.give(`${username} has left the party,\nthere is a new host`, 3000, "info");
       } else {
         feedback.give(`${username} has left the party`, 3000, "warning");
       }
@@ -96,7 +116,8 @@ const LobbyWaiting = () => {
   const startGame = async() => {
     try{
       const response = await api.post("/lobbies/start", {}, { headers });
-      feedback.give("The game is starting now\n╰( ^o^)╮╰( ^o^)╮", 3000, "success");
+      setStarting(prev => !prev);
+
     } catch(e){
       feedback.give(handleError(e), 3000, "error");
     }
@@ -118,8 +139,8 @@ const LobbyWaiting = () => {
       {sessionToken ?
         <>
           <Header />
-          <div className="bg-neutral-400 flex flex-col relative" id="hero">
-            <div className="bg-neutral-100 max-w-sexy p-10 my-6 shadow-md rounded-lg">
+          <div className="bg-neutral-400 flex flex-col relative pb-8" id="hero">
+            <div className="bg-neutral-100 max-w-sexy p-10 mb-6 mt-auto shadow-md rounded-lg">
               <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
               <h1 className="font-semibold text-center text-2xl"><b>{isGameMaster}</b> is the host</h1>
               <div className="flex flex-col gap-y-5 mx-4 mt-6 items-center">
@@ -127,7 +148,7 @@ const LobbyWaiting = () => {
                   text="Start Game"
                   color={"#72171D"}
                   func={startGame}
-                  disabled={players.length < 2 || isGameMaster !== localStorage.getItem("username")}
+                  disabled={players.length < 2 || isGameMaster !== localStorage.getItem("username") || starting}
                   width="120px"
                 />
 
@@ -149,7 +170,7 @@ const LobbyWaiting = () => {
                 />
               </div>
             </div>
-            <div className="bg-neutral-400 p-8 mb-10 rounded-lg shadow-md relative" >
+            <div className="bg-neutral-400 p-8 mb-auto rounded-lg shadow-md relative" >
               <div id="lobbyplayas">
                 {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
                 {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
