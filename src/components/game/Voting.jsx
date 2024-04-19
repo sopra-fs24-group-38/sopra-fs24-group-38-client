@@ -28,7 +28,6 @@ const Voting = (props) => {
 
   useEffect(() => {
     setPlayer(lobby.game_details.players.find(p => p.id === parseInt(localStorage.getItem("id"))))
-    console.log(solution)
   }, [lobby])
 
   useEffect(() => {
@@ -72,6 +71,7 @@ const Voting = (props) => {
       // Add each player's single answer to the array
       allAnswers.push({ id: lobby.game_details.players[i].id, solution: lobby.game_details.players[i].definition, voting: [] });
     }
+
     return _.shuffle(allAnswers)
   }
 
@@ -93,6 +93,7 @@ const Voting = (props) => {
       // Add each player's single answer to the array
       allAnswers.push({ id: oldAnswers[i].id, solution: oldAnswers[i].solution, voting: votes });
     }
+    
     return allAnswers
   }
 
