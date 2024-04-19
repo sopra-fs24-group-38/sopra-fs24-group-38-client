@@ -20,7 +20,10 @@ const Voting = (props) => {
   const [solutionStyle, setSolutionStyle] = useState({
     background: "#01DF3A" 
   });
-
+  const [selectSolutionStyle, setSelectSolutionStyle] = useState({
+    background: "#01DF3A" ,
+    border: "solid black 2px",
+  });
   // useEffect(() => {
   //   setAnswers(initAnswers());
   //   setPlayer(lobby.game_details.players.find(p => p.id === parseInt(localStorage.getItem("id"))))
@@ -93,7 +96,7 @@ const Voting = (props) => {
       // Add each player's single answer to the array
       allAnswers.push({ id: oldAnswers[i].id, solution: oldAnswers[i].solution, voting: votes });
     }
-    
+
     return allAnswers
   }
 
@@ -109,7 +112,7 @@ const Voting = (props) => {
         <div className="grow grid grid-cols-2 grid-rows-3 gap-8 mt-6" >
           {answers.map((answer, index) => {
             return (
-              <AnswerBlock key={index} answer={answer.solution} votingPlayers={answer.voting} func={() => handleClick(answer.id)} style={chosenOne === answer.id ? selectedStyle : (solution && answer.id ===0) ? solutionStyle : null} />
+              <AnswerBlock key={index} answer={answer.solution} votingPlayers={answer.voting} func={() => handleClick(answer.id)} style={(chosenOne === answer.id && solution && answer.id ===0) ? selectSolutionStyle : chosenOne === answer.id ? selectedStyle : (solution && answer.id ===0) ? solutionStyle : null} />
             )
           }
           )}
