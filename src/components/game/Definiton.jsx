@@ -28,8 +28,11 @@ const Definition = (props) => {
   return (
     <div className="bg-neutral-400 justify-center" id="hero">
       <div className="bg-neutral-100 flex flex-col shadow-md w-2/3 h-1/2 rounded-md p-5" id="gameQuestion">
-        <div className="flex grow mb-8 bg-supporange-200 rounded-md p-4 justify-center items-center">
-          <p className="text-center text-2xl">
+        <div className="flex grow mb-8 bg-supporange-200 rounded-md p-4 justify-center items-center flex-col">
+        <p className="text-center text-2xl p-5">
+            who or what is...
+          </p>   
+          <p className="text-center text-2xl p-5">
             {lobby.game_details.challenge}
           </p>
         </div>

@@ -24,6 +24,26 @@
 #endscreen > div > div:nth-child(9),
 #endscreen > div > div:nth-child(10),
 #endscreen > div > div:nth-child(11),
-#endscreen > div > div:nth-child(12) {
+#endscreen > div > div:nth-child(12) {  
   background-color: rgb(205, 127, 50);
+}
+
+[id^="outcome"][id$="false"] {
+  background-image: 
+  conic-gradient(
+    from 0deg at 50% 50%,
+    #cc1f1d 0%, 5%, #a81714 0% 0%, 10%, #cc1f1d 0% 0%, 15%, #a81714 0% 0%, 20%, #cc1f1d 0% 0%, 25%, #a81714 0% 0%, 30%, #cc1f1d 0% 0%, 35%, #a81714 0% 0%, 40%, #cc1f1d 0% 0%, 45%, #a81714 0% 0%, 50%, #cc1f1d 0% 0%, 55%, #a81714 0% 0%, 60%, #cc1f1d 0% 0%, 65%, #a81714 0% 0%, 70%, #cc1f1d 0% 0%, 75%, #a81714 2% 2%, 80%, #cc1f1d 0% 0%, 85%, #a81714 0% 0%, 90%, #cc1f1d 0% 0%, 95%, #a81714 0% 0%, 100%, #cc1f1d 0% 0%
+  );
+  top: 500px;
+  left: 50px;
+}
+
+[id^="outcome"][id$="true"] {
+  background-image: 
+  conic-gradient(
+    from 0deg at 50% 50%,
+    #16ba34 0%, 5%, #109c29 0% 0%, 10%, #16ba34 0% 0%, 15%, #109c29 0% 0%, 20%, #16ba34 0% 0%, 25%, #109c29 0% 0%, 30%, #16ba34 0% 0%, 35%, #109c29 0% 0%, 40%, #16ba34 0% 0%, 45%, #109c29 0% 0%, 50%, #16ba34 0% 0%, 55%, #109c29 0% 0%, 60%, #16ba34 0% 0%, 65%, #109c29 0% 0%, 70%, #16ba34 0% 0%, 75%, #109c29 0% 0%, 80%, #16ba34 0% 0%, 85%, #109c29 0% 0%, 90%, #16ba34 0% 0%, 95%, #109c29 0% 0%, 100%, #16ba34 0% 0%
+  );
+  top: 500px;
+  left: 450px;
 }
