@@ -17,6 +17,7 @@ const LobbySettings = ({out}) => {
       const headers = { "Authorization": localStorage.getItem("token") };
       await api.put(`/lobbies/${gameId}`, {"game_modes": modes, "rounds": rounds}, { headers });
 
+      feedback.give("The settings have been adjusted", 3000, "success");
       out();
     } catch(e){
       feedback.give(handleError(e), 3000, "error");

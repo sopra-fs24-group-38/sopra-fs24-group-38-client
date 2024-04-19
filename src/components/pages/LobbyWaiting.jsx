@@ -95,6 +95,9 @@ const LobbyWaiting = () => {
         setPlayers(prevPlayers => [...prevPlayers, ...newPlayers]);
       }
     } catch(e){
+      if(e.response.status === 401){
+        navigate("/login");
+      }
       feedback.give(handleError(e), 3000, "error");
     }
   };
@@ -134,11 +137,6 @@ const LobbyWaiting = () => {
     } catch(error){
       feedback.give(handleError(error), 3000, "error");
     }
-  };
-
-  const settingsAdjusted = () => {
-    setShowSettings(false);
-    feedback.give("The settings have been adjusted", 3000, "success");
   };
 
 
@@ -195,7 +193,7 @@ const LobbyWaiting = () => {
             </div>
 
             {showSettings ?
-              <LobbySettings out={settingsAdjusted} />
+              <LobbySettings out={() => setShowSettings(false)} />
               : null
             }
           </div>
