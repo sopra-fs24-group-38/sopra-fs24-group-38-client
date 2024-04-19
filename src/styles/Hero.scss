@@ -3,7 +3,7 @@
 #hero {
   height: calc(100dvh - $HEADER_HEIGHT);
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   align-items: center;
 
