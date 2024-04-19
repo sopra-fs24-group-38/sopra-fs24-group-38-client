@@ -60,7 +60,7 @@ const Game = () => {
       }
     }
     if (lobby.game_details.game_state === "GAMEOVER") {
-      navigate("/end");
+      navigate("/game/end");
     }
   }, [lobby])
 
