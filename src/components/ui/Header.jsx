@@ -1,28 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import SxyButton from "./SxyButton";
-import "../../styles/Header.scss";
 import { useNavigate } from "react-router-dom";
+import { api, handleError } from "../../utils/api";
+import useFeedback from "../../hooks/useFeedback";
+import Rules from "./Rules";
+
+import "../../styles/Header.scss";
+
 
 const Header = ({leave=false}) => {
   const navigate = useNavigate();
+  const feedback = useFeedback();
+  const [seeRules, setSeeRules] = useState(false);
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("id");
-    localStorage.removeItem("username");
-    navigate("/login");
-  }
+  const logout = async() => {
+    try{
+      const headers = { "Authorization": localStorage.getItem("token") };
+      const response = await api.get("/users/logout", { headers });
 
-  const showRules = () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+      localStorage.removeItem("username");
+      navigate("/login");
+    } catch(e){
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
 
-  }
 
   return(
     <div className="flex justify-between px-8 py-6 items-center bg-brand-500" id="header">
       <SxyButton
         text="?"
         color={"#C2B199"}
-        func={showRules}
+        func={() => setSeeRules(prev => !prev)}
       />
       {leave ?
         <SxyButton
@@ -32,6 +43,8 @@ const Header = ({leave=false}) => {
           width="100px"
           position={"row-reverse"}
         /> : <div />}
+      
+      {seeRules ? <Rules close={() => setSeeRules(false)} /> : null}
     </div>
   );
 };

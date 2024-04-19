@@ -39,7 +39,7 @@ const LobbyWaiting = () => {
 
   useEffect(() => {
     console.log("Received message: ", lastMessage);
-    if(lastMessage && lastMessage.data && playerNamesRef.current.length !== 0){
+    if(lastMessage && lastMessage.data && players.length !== 0){
       if(lastMessage.data === "user_joined"){
         playerDelta();
 
@@ -50,6 +50,7 @@ const LobbyWaiting = () => {
         goodbye(JSON.parse(lastMessage.data).gamehost_left, true);
 
       } else if(lastMessage.data === "game_preparing"){
+        setStarting(true);
         prep.current = toast.loading("The game is starting soon")
 
       } else if(lastMessage.data === "game_start"){
@@ -58,6 +59,7 @@ const LobbyWaiting = () => {
           render: "Let's gooo ╰( ^o^)╮╰( ^o^)╮",
           type: "success",
           theme: "colored",
+          autoClose: 2500,
           isLoading: false,
         })
         navigate("/game");
@@ -94,6 +96,9 @@ const LobbyWaiting = () => {
         setPlayers(prevPlayers => [...prevPlayers, ...newPlayers]);
       }
     } catch(e){
+      if(e.response.status === 401){
+        navigate("/login");
+      }
       feedback.give(handleError(e), 3000, "error");
     }
   };
@@ -117,7 +122,7 @@ const LobbyWaiting = () => {
   const startGame = async() => {
     try{
       const response = await api.post("/lobbies/start", {}, { headers });
-      setStarting(prev => !prev);
+      setStarting(true);
 
     } catch(e){
       feedback.give(handleError(e), 3000, "error");
@@ -128,6 +133,7 @@ const LobbyWaiting = () => {
     try{
       const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
+      localStorage.removeItem("pin");
       navigate("/lobby");
     } catch(error){
       feedback.give(handleError(error), 3000, "error");
@@ -167,6 +173,7 @@ const LobbyWaiting = () => {
                   text="Leave Lobby"
                   width="120px"
                   color={"#72171D"}
+                  disabled={starting}
                   func={leaveLobby}
                 />
               </div>
@@ -187,7 +194,7 @@ const LobbyWaiting = () => {
             </div>
 
             {showSettings ?
-              <LobbySettings out={setShowSettings} />
+              <LobbySettings out={() => setShowSettings(false)} />
               : null
             }
           </div>
