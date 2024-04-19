@@ -9,21 +9,25 @@ import "../../styles/Boards.scss";
 
 const View = (props) => {
   const { player } = props;
+  const [selectedStyle, setSelectedStyle] = useState({
+    "background-color": "#F29544"
+  });
 
   return (
     <>
-      <div key={`${player.avatarId}-avatar`} className="p-2 border border-gray-300 rounded">
-        <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`${player.name}'s pic`} className="w-full h-auto" />
-      </div>
-      <div key={`${player.avatarId}-name`} className="p-2 border border-gray-300 rounded">
-        <p>{player.username}</p>
-      </div>
-      <div key={`${player.avatarId}-ppr`} className="p-2 border border-gray-300 rounded">
-        <p>+{player.ppr}</p>
-      </div>
-      <div key={`${player.avatarId}-score`} className="p-2 border border-gray-300 rounded">
-        <p>{player.score}</p>
-      </div>
+        <div key={`${player.avatarId}-avatar`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+          <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`${player.name}'s pic`} className="w-full h-auto" />
+        </div>
+        <div key={`${player.avatarId}-name`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+          <p>{player.username}</p>
+        </div>
+        <div key={`${player.avatarId}-ppr`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+          <p>+{player.ppr}</p>
+        </div>
+        <div key={`${player.avatarId}-score`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+          <p>{player.score}</p>
+        </div>
+
     </>
   )
 }
