@@ -45,8 +45,8 @@ const Login = () => {
       {!localStorage.getItem("token") ?
         <>
           <Header />
-          <div className="w-full flex  justify-center items-center" id="hero">
-            <div className="flex flex-col  shadow-md items-center justify-center login">
+          <div className="w-full flex justify-center items-center login-bg" id="hero">
+            <div className="flex flex-col shadow-md items-center justify-center login">
               <h1 className="font-bold mb-5 mt-2 text-3xl">{isLogin ? "Login" : "Register"}</h1>
               <SxyInput
                 label="Username"
