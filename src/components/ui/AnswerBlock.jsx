@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 
 const AnswerBlock = ({answer="-", votingPlayers=[], func, style={}}) => {
-  const [votes, setVotes] = useState(votingPlayers);
 
   return(
     <div className="flex relative hover:cursor-pointer" onClick={() => func()}>
       <div className="flex gap-x-3 absolute -top-6 left-4">
-        {votes.map((player) => (
+        {votingPlayers.map((player) => (
           <div key={player.name}>
-            <img src={player.feature} alt={`${player.name}'s pic`} className="w-12 aspect-square border-2 border-black rounded" />
+            <img src={player.url} alt={`${player.name}'s pic`} className="w-12 aspect-square border-2 border-black rounded" />
           </div>
         ))}
       </div>

@@ -17,6 +17,7 @@ const LobbyWaiting = () => {
   const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const prep = useRef(null);
 
+
   const [sessionToken, setSessionToken] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState("");
@@ -26,7 +27,6 @@ const LobbyWaiting = () => {
 
   useEffect(() => {
     playerDelta(true);
-
     // fallback in case of reload or disconnect
     sendJsonMessage(
       {
@@ -53,6 +53,7 @@ const LobbyWaiting = () => {
         prep.current = toast.loading("The game is starting soon")
 
       } else if(lastMessage.data === "game_start"){
+
         toast.update(prep.current, {
           render: "Let's gooo ╰( ^o^)╮╰( ^o^)╮",
           type: "success",
