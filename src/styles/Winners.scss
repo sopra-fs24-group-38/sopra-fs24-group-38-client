@@ -1,0 +1,74 @@
+@import "./global.scss";
+
+
+#top3 {
+
+  img{
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .border-div {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    bottom: -7px;
+    left: -7px;
+    z-index: 0; 
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+
+    &#w1 {
+      background: gold;
+    }
+    &#w2 {
+      background: silver;
+    }
+    &#w3 {
+      background: rgb(205, 127, 50);
+    }
+  }
+
+  > div > h1 {
+    position: absolute;
+    z-index: 2;
+    font-weight: 600;
+
+    &[id=w1n] {
+      transform: rotate(334deg);
+      top: -7px;
+      left: -14px;
+      width: 90px;
+    }
+    &[id=w2n] {
+      transform: rotate(27deg);
+      bottom: -111px;
+      left: -70px;
+      width: 90px;
+    }
+    &[id=w3n] {
+      transform: rotate(27deg);
+      bottom: -112px;
+      right: -21px;
+      width: 90px;
+    }
+
+    &[id=w1p] {
+      transform: rotate(27deg);
+      top: -3px;
+      right: 5px;
+    }
+    &[id=w2p] {
+      transform: rotate(334deg);
+      bottom: -107px;
+      left: 17px;
+    }
+    &[id=w3p] {
+      transform: rotate(334deg);
+      bottom: -105px;
+      right: -56px;
+    }
+  }
+}
