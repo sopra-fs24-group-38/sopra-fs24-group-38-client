@@ -21,7 +21,7 @@ const Definition = (props) => {
       setDefinition(true)
     }
   }, [])
-  
+
   const sendDefinition = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
@@ -37,7 +37,7 @@ const Definition = (props) => {
 
   return (
     <div className="bg-neutral-400 justify-center" id="hero">
-      <div className="bg-neutral-100 flex flex-col shadow-md w-2/3 h-1/2 rounded-md p-3" id="gameQuestion">
+      <div className="bg-neutral-100 flex flex-col shadow-md w-1/3 h-1/2 rounded-md p-3" id="gameQuestion">
         <div className="flex grow mb-8 bg-supporange-200 rounded-md justify-center items-center flex-col">
           <p className="text-center text-2xl p-2">
             who or what is...

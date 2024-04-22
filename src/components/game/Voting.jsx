@@ -8,6 +8,7 @@ import { api, handleError } from "../../utils/api";
 
 const Voting = (props) => {
   const { lobby, solution } = props;
+
   const feedback = useFeedback();
   const [chosenOne, setChosenOne] = useState(-1);
   const [answers, setAnswers] = useState([]);
@@ -65,9 +66,9 @@ const Voting = (props) => {
     allAnswers.push({ id: 0, solution: lobby.game_details.solution });
 
     // Loop through each player in the lobby
-    for (let i of lobby.game_details.players) {
+    for (let answer of lobby.game_details.players) {
       // Add each player's single answer to the array
-      allAnswers.push({ id: lobby.game_details.players[i].id, solution: lobby.game_details.players[i].definition, voting: [] });
+      allAnswers.push({ id: answer.id, solution: answer.definition, voting: [] });
     }
 
     return _.shuffle(allAnswers)
@@ -78,18 +79,17 @@ const Voting = (props) => {
 
 
     // Loop through each player in the lobby
-    for (let i of oldAnswers) {
-
+    for (let answer of oldAnswers) {
       let votes = [];
       lobby.game_details.players.forEach(player => {
         // Check if the votedForUserId is a valid id and not 0 or null
-        if (player.votedForUserId === oldAnswers[i].id) {
+        if (player.votedForUserId === answer.id) {
           votes.push({ name: player.username, url: `/assets/Ava${player.avatarId}.jpg` })
         }
       });
 
       // Add each player's single answer to the array
-      allAnswers.push({ id: oldAnswers[i].id, solution: oldAnswers[i].solution, voting: votes });
+      allAnswers.push({ id: answer.id, solution: answer.solution, voting: votes });
     }
 
     return allAnswers
@@ -97,7 +97,7 @@ const Voting = (props) => {
 
   return (
     <div className="bg-neutral-400 justify-center" id="hero">
-      <div className="flex flex-col bg-neutral-100 shadow-md w-2/3 h-4/5 p-5 rounded-lg" id="gameVoting">
+      <div className="flex flex-col bg-neutral-100 shadow-md w-1/3 h-4/5 p-5 rounded-lg" id="gameVoting">
         <div className="flex mb-5 h-1/6 bg-supporange-200 rounded-md p-4 justify-center items-center" id="votingQuestion">
           <p className="text-center text-xl">
             {lobby.game_details.challenge}

@@ -13,7 +13,6 @@ const View = (props) => {
     "backgroundColor": "#F29544"
   };
 
-
   return (
     <>{player && (
       <div key={playerIndex} className="grid grid-cols-4 pb-2 gap-y-2">
@@ -30,7 +29,6 @@ const View = (props) => {
           <p>{player.score}</p>
         </div>
       </div>
-
     )
     }
     </>

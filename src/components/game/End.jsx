@@ -80,7 +80,6 @@ const End = () => {
               {players.length > 3 ? players.slice(3).flatMap((player) => [
                 <div key={`ava-${player.username}`} >
                   <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`player-${player.id}`} className="w-20 rounded-lg" />
-
                 </div>,
                 <div key={`name-${player.username}`} className="pt-1" >
                   <p>{player.username}</p>

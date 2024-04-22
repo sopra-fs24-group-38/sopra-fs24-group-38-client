@@ -31,7 +31,10 @@ const SxyInput = ({label, value, color, func, enterKey=null, type="text", inputM
 
 SxyInput.propTypes = {
   label: PropTypes.string, 
-  value: PropTypes.string, 
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]), 
   color: PropTypes.string, 
   func: PropTypes.func, 
   enterKey: PropTypes.func, 
@@ -40,8 +43,14 @@ SxyInput.propTypes = {
   disabled: PropTypes.bool, 
   maxLength: PropTypes.number, 
   placeholder: PropTypes.string, 
-  max: PropTypes.string, 
-  min: PropTypes.string
+  max: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  min: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 };
 
 export default SxyInput;
