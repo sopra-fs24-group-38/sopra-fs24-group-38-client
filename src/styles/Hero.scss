@@ -126,7 +126,69 @@
     flex-direction: row;
     justify-content: center;
   }
+  
+  #gameVoting {
+    margin-top: -25px !important;
+    height: 90%;
+    padding: 8px;
+  }
 
+  #votingQuestion {
+    margin-bottom: 5px;
+  }
+
+  #Answers {
+    gap: 0.25rem;
+    top: 0px;
+    margin-top: 5px !important;
+    left: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+
+  #answer-text{
+    padding: 3px;
+    font-size: 1rem;
+  }
+  #lobbyButtons {
+    display: flex !important;
+    flex-direction: row !important;
+    margin-top: 10px;
+    gap: 10px;
+  }
+
+  #scorePlayers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  #gameScores {
+    width: 80%;
+    margin: 20px;
+    padding: 20px;
+  }
+
+  #endScreen {
+    display: flex !important;
+    flex-direction: column !important;
+    scale: 0.7;
+  }
+  #ranks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+  #top3 {
+    margin-bottom: 80px;
+  }
+
+  #endBtn {
+    display: flex !important;
+    flex-direction: rows !important;
+  }
 
 }
 
@@ -211,6 +273,11 @@
       background-position: top;
     }
   }
+  #endScreen {
+    display: flex !important;
+    flex-direction: column !important;
+    scale: 0.8;
+  }
 
   #gameQuestion {
     p {
@@ -260,6 +327,7 @@
     height: 80px !important;
   }
 
+
   #header > div:nth-child(1) > button {
     border-radius: 50%;
     font-size: 26px;
@@ -270,9 +338,13 @@
     border: black solid 2px;
   }
   #control {
-    margin: 0px;
+    margin: -15px;
     padding: 10px;
-    scale: 0.8;
+    scale: 0.75;
+  }
+
+  #gameQuestion {
+    height: fit-content;
   }
   
   // intricate shit for player pics in lobbyWaiting

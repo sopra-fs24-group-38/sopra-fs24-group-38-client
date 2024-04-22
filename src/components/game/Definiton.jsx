@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types"
 import SxyInput from "../ui/SxyInput";
 import SxyButton from "../ui/SxyButton";
@@ -12,6 +12,14 @@ const Definition = (props) => {
   const [submission, setSubmission] = useState("");
   const [definition, setDefinition] = useState(false);
 
+  useEffect( () => {
+    const tempPlayer = lobby.game_details.players.find(player => player.id === parseInt(localStorage.getItem("id")))
+    if (tempPlayer.definition) {
+      
+    setSubmission(tempPlayer.definition)
+    setDefinition(true)
+    }
+  }, [])
   const sendDefinition = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
@@ -39,6 +47,8 @@ const Definition = (props) => {
         <SxyInput
           label={"Fool your friends"}
           value={submission}
+          maxLength={40}
+          disabled={definition}
           func={(n) => setSubmission(n)}
         />
         <SxyButton

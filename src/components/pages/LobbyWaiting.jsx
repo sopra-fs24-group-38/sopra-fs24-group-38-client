@@ -178,7 +178,7 @@ const LobbyWaiting = () => {
                 />
               </div>
             </div>
-            <div className="bg-neutral-400 p-8 mb-auto mt-auto rounded-lg shadow-md relative" >
+            <div className="bg-neutral-400 p-5 mb-auto mt-auto rounded-lg shadow-md relative" >
               <div id="lobbyplayas">
                 {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
                 {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
