@@ -8,28 +8,28 @@ import Rules from "./Rules";
 import "../../styles/Header.scss";
 
 
-const Header = ({leave=false}) => {
+const Header = ({ leave = false }) => {
   const navigate = useNavigate();
   const feedback = useFeedback();
   const [seeRules, setSeeRules] = useState(false);
 
-  const logout = async() => {
-    try{
+  const logout = async () => {
+    try {
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.get("/users/logout", { headers });
-
-      localStorage.removeItem("token");
-      localStorage.removeItem("id");
-      localStorage.removeItem("username");
-      navigate("/login");
-    } catch(e){
+    } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+    localStorage.removeItem("username");
+    navigate("/login");
+
   };
 
 
-  return(
-    <div className="flex justify-between px-8 py-6 items-center bg-brand-500" id="header">
+  return (
+    <div className="flex justify-between px-6 py-6 items-center bg-brand-500" id="header">
       <SxyButton
         text="?"
         color={"#C2B199"}
@@ -43,7 +43,7 @@ const Header = ({leave=false}) => {
           width="100px"
           position={"row-reverse"}
         /> : <div />}
-      
+
       {seeRules ? <Rules close={() => setSeeRules(false)} /> : null}
     </div>
   );

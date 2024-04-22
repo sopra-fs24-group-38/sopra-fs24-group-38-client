@@ -88,7 +88,7 @@ const Login = () => {
                   </svg>
                 }
               </div>
-              <div className="flex mb-6 mt-2 justify-between w-80">
+              <div className="flex mb-6 mt-2 justify-between w-80" id="login-btn">
                 <SxyButton
                   text={isLogin ? "Login" : "Register"}
                   color={"#72171D"}

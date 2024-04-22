@@ -60,9 +60,9 @@ const Lobby = () => {
         <>
           <Header leave />
           <div className="bg-neutral-400 justify-center" id="hero">
-            <div className="bg-neutral-100 max-w-sexy p-10 shadow-md rounded-lg">
+            <div className="bg-neutral-100 max-w-sexy p-10 shadow-md rounded-lg" id="lobby">
               <h1 className="font-bold text-center mt-4 text-2xl">Welcome {localStorage.getItem("username")}</h1>
-              <div className="flex flex-col m-10 gap-y-10 justify-between items-center">
+              <div className="flex flex-col m-10 gap-y-10 justify-between items-center" id="lobbyButtons">
                 <SxyButton
                   text="Create Lobby"
                   color={"#72171D"}
@@ -71,7 +71,6 @@ const Lobby = () => {
                 />
 
                 {showPin ?
-                  <>
                     <div className="flex justify-between relative" id="lobbypin">
                       <SxyButton
                         text="Send"
@@ -92,7 +91,6 @@ const Lobby = () => {
                         func={(n) => setPin(n)}
                         enterKey={joinLobby}/>
                     </div>
-                  </>
                   :
                   <SxyButton
                     text="Join Lobby"

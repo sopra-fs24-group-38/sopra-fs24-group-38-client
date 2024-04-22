@@ -147,10 +147,10 @@ const LobbyWaiting = () => {
         <>
           <Header />
           <div className="bg-neutral-400 flex flex-col relative pb-8" id="hero">
-            <div className="bg-neutral-100 max-w-sexy p-10 mb-6 mt-auto shadow-md rounded-lg">
+            <div className="bg-neutral-100 max-w-sexy p-10 mb-auto mt-auto shadow-md rounded-lg" id="control">
               <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
               <h1 className="font-semibold text-center text-2xl"><b>{isGameMaster}</b> is the host</h1>
-              <div className="flex flex-col gap-y-5 mx-4 mt-6 items-center">
+              <div className="flex flex-col gap-y-5 mx-3 mt-4 items-center">
                 <SxyButton
                   text="Start Game"
                   color={"#72171D"}
@@ -178,7 +178,7 @@ const LobbyWaiting = () => {
                 />
               </div>
             </div>
-            <div className="bg-neutral-400 p-8 mb-auto rounded-lg shadow-md relative" >
+            <div className="bg-neutral-400 p-5 mb-auto mt-auto rounded-lg shadow-md relative" >
               <div id="lobbyplayas">
                 {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
                 {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
