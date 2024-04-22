@@ -103,8 +103,6 @@
 }
 
 
-
-
 @media (orientation: landscape) and (height<=600px) {
 
   // login
@@ -196,6 +194,7 @@
 }
 
 @media (width <=699px) {
+
   .login {
     width: 380px;
   }
@@ -315,6 +314,7 @@
 }
 
 @media (width >=1200px) {
+
   .login {
     top: 0;
     right: 0;
@@ -328,14 +328,13 @@
   }
 }
 
-
 @media (height <=750px) {
+
   #header {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
     height: 80px !important;
   }
-
 
   #header>div:nth-child(1)>button {
     border-radius: 50%;

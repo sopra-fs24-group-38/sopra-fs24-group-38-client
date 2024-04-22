@@ -12,6 +12,7 @@ const Definition = (props) => {
   const [submission, setSubmission] = useState("");
   const [definition, setDefinition] = useState(false);
 
+
   useEffect(() => {
     const tempPlayer = lobby.game_details.players.find(player => player.id === parseInt(localStorage.getItem("id")))
     if (tempPlayer.definition) {
@@ -20,6 +21,7 @@ const Definition = (props) => {
       setDefinition(true)
     }
   }, [])
+
   const sendDefinition = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };

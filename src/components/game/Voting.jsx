@@ -8,20 +8,21 @@ import { api, handleError } from "../../utils/api";
 
 const Voting = (props) => {
   const { lobby, solution } = props;
-  const feedback = useFeedback()
+
+  const feedback = useFeedback();
   const [chosenOne, setChosenOne] = useState(-1);
   const [answers, setAnswers] = useState([]);
   const [player, setPlayer] = useState({});
   const selectedStyle = {
     border: "solid black 2px",
   };
-  const [solutionStyle] = useState({
+  const solutionStyle = {
     background: "#01DF3A"
-  });
-  const [selectSolutionStyle] = useState({
+  }
+  const selectSolutionStyle = {
     background: "#01DF3A",
     border: "solid black 2px",
-  })
+  }
 
 
   useEffect(() => {
@@ -79,7 +80,6 @@ const Voting = (props) => {
 
     // Loop through each player in the lobby
     for (let answer of oldAnswers) {
-
       let votes = [];
       lobby.game_details.players.forEach(player => {
         // Check if the votedForUserId is a valid id and not 0 or null
