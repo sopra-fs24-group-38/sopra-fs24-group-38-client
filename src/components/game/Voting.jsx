@@ -7,21 +7,21 @@ import { api, handleError } from "../../utils/api";
 
 
 const Voting = (props) => {
-  const { lobby, solution} = props;
-  const feedback = useFeedback()
+  const { lobby, solution } = props;
+  const feedback = useFeedback();
   const [chosenOne, setChosenOne] = useState(-1);
   const [answers, setAnswers] = useState([]);
   const [player, setPlayer] = useState({});
   const selectedStyle = {
     border: "solid black 2px",
-  };  
-  const [solutionStyle] = useState({
-    background: "#01DF3A" 
-  });
-  const [selectSolutionStyle] = useState({
-    background: "#01DF3A" ,
+  };
+  const solutionStyle = {
+    background: "#01DF3A"
+  }
+  const selectSolutionStyle = {
+    background: "#01DF3A",
     border: "solid black 2px",
-  })
+  }
 
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Voting = (props) => {
 
   const handleClick = (number) => {
     // if player didnt vote yet
-    if ((player && player.votedForUserId === null) && !(chosenOne>=0)) {
+    if ((player && player.votedForUserId === null) && (chosenOne < 0)) {
       if (player.id !== number) {
         setChosenOne(number);
         sendVote(number)
@@ -51,7 +51,7 @@ const Voting = (props) => {
   const sendVote = async (number) => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
-      const response = await api.put("/lobbies/users/votes", { vote: number }, { headers }); //${localStorage.getItem("pin")}
+      await api.put("/lobbies/users/votes", { vote: number }, { headers }); //${localStorage.getItem("pin")}
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
@@ -65,7 +65,7 @@ const Voting = (props) => {
     allAnswers.push({ id: 0, solution: lobby.game_details.solution });
 
     // Loop through each player in the lobby
-    for (let i = 0; i < lobby.game_details.players.length; i++) {
+    for (let i of lobby.game_details.players) {
       // Add each player's single answer to the array
       allAnswers.push({ id: lobby.game_details.players[i].id, solution: lobby.game_details.players[i].definition, voting: [] });
     }
@@ -75,10 +75,10 @@ const Voting = (props) => {
 
   const updateAnswers = (oldAnswers) => {
     let allAnswers = [];
-    
+
 
     // Loop through each player in the lobby
-    for (let i = 0; i < oldAnswers.length; i++) {
+    for (let i of oldAnswers) {
 
       let votes = [];
       lobby.game_details.players.forEach(player => {
@@ -107,7 +107,11 @@ const Voting = (props) => {
         <div className="grow grid grid-cols-2 grid-rows-3 gap-5 mt-6" id="Answers" >
           {answers.map((answer, index) => {
             return (
-              <AnswerBlock key={index} answer={answer.solution} votingPlayers={answer.voting} func={() => handleClick(answer.id)} style={(chosenOne === answer.id && solution && answer.id ===0) ? selectSolutionStyle : chosenOne === answer.id ? selectedStyle : (solution && answer.id ===0) ? solutionStyle : null} />
+              <AnswerBlock key={answer.id} answer={answer.solution} votingPlayers={answer.voting} func={() => handleClick(answer.id)}
+                style={(chosenOne === answer.id && solution && answer.id === 0) ?
+                  selectSolutionStyle : chosenOne === answer.id ?
+                    selectedStyle : (solution && answer.id === 0) ?
+                      solutionStyle : null} />
             )
           }
           )}

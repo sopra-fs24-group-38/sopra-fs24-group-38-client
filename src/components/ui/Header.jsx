@@ -16,7 +16,7 @@ const Header = ({ leave = false }) => {
   const logout = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
-      const response = await api.get("/users/logout", { headers });
+      await api.get("/users/logout", { headers });
     } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }

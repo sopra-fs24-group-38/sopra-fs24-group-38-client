@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const SxyButton = ({text="-", color, width="100%", func, disabled, position}) => {
 
@@ -27,6 +28,15 @@ const SxyButton = ({text="-", color, width="100%", func, disabled, position}) =>
       </button>
     </div>
   );
+};
+
+SxyButton.propTypes = {
+  text: PropTypes.string, 
+  color: PropTypes.string, 
+  width: PropTypes.string, 
+  func: PropTypes.func, 
+  disabled: PropTypes.bool,
+  position: PropTypes.string
 };
 
 export default SxyButton;

@@ -39,7 +39,7 @@ const LobbyWaiting = () => {
 
   useEffect(() => {
     console.log("Received message: ", lastMessage);
-    if(lastMessage && lastMessage.data && players.length !== 0){
+    if(lastMessage?.data && players.length !== 0){
       if(lastMessage.data === "user_joined"){
         playerDelta();
 

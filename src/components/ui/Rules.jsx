@@ -1,8 +1,9 @@
 import React from "react";
 import SxyButton from "../ui/SxyButton";
+import PropTypes from "prop-types";
 
 
-const Rules = ({close}) => {
+const Rules = ({ close }) => {
 
   return (
     <div id="rules">
@@ -24,8 +25,8 @@ const Rules = ({close}) => {
       <h2>Game loop</h2>
       <br />
       <p>Every round there is an expression or phrase that is presented.
-        The task at hand is to fool your friends by delivering an explanation for said word/phrase that might be plausible. 
-      <b> But</b> you are not allowed to give the correct explanation if you know it!
+      The task at hand is to fool your friends by delivering an explanation for said word/phrase that might be plausible.{" "}
+      <b>But</b> you are not allowed to give the correct explanation if you know it!
       </p>
       <br />
       <p>After everyone has submitted their answer we change to the voting phase where all player answers + the correct one are shown.</p>
@@ -47,6 +48,10 @@ const Rules = ({close}) => {
       </ul>
     </div>
   );
+};
+
+Rules.propTypes = {
+  close: PropTypes.func
 };
 
 export default Rules;

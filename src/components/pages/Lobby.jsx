@@ -17,7 +17,7 @@ const Lobby = () => {
   const { sendJsonMessage } = useContext(WebSocketContext);
 
   const createLobby = async () => {
-    try{
+    try {
       const response = await api.post("/lobbies", {}, { headers });
       localStorage.setItem("pin", response.data.game_pin)
       sendJsonMessage(
@@ -29,13 +29,13 @@ const Lobby = () => {
       )
       navigate(`/lobby/${response.data.game_pin}`);
 
-    } catch(error) {
+    } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
   }
 
   const joinLobby = async () => {
-    try{
+    try {
       const response = await api.put(`/lobbies/users/${pin}`, {}, { headers });
       sendJsonMessage(
         {
@@ -44,17 +44,17 @@ const Lobby = () => {
           "lobbyId": `${response.data.game_pin}`
         }
       )
-      
+
       localStorage.setItem("pin", pin);
       navigate(`/lobby/${pin}`);
 
-    } catch(error){
+    } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
   }
-  
 
-  return(
+
+  return (
     <>
       {localStorage.getItem("token") ?
         <>
@@ -71,26 +71,26 @@ const Lobby = () => {
                 />
 
                 {showPin ?
-                    <div className="flex justify-between relative" id="lobbypin">
-                      <SxyButton
-                        text="Send"
-                        color={"#72171D"}
-                        func={joinLobby}
-                        width="50px"/>
-                      <SxyButton
-                        text="Cancel"
-                        color={"red"}
-                        func={() => setShowPin(false)}
-                        width="55px" />
-                      <SxyInput
-                        value={pin}
-                        color={"#ebe4d7"}
-                        inputMode={"numeric"}
-                        maxLength={"4"}
-                        placeholder="1234"
-                        func={(n) => setPin(n)}
-                        enterKey={joinLobby}/>
-                    </div>
+                  <div className="flex justify-between relative" id="lobbypin">
+                    <SxyButton
+                      text="Send"
+                      color={"#72171D"}
+                      func={joinLobby}
+                      width="50px" />
+                    <SxyButton
+                      text="Cancel"
+                      color={"red"}
+                      func={() => setShowPin(false)}
+                      width="55px" />
+                    <SxyInput
+                      value={pin}
+                      color={"#ebe4d7"}
+                      inputMode={"numeric"}
+                      maxLength={"4"}
+                      placeholder="1234"
+                      func={(n) => setPin(n)}
+                      enterKey={joinLobby} />
+                  </div>
                   :
                   <SxyButton
                     text="Join Lobby"

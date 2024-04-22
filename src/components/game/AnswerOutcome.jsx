@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import "../../styles/Boards.scss";
 
 const AnswerOutcome = ({ fooler }) => {
-  // const {fooler} = props;
   return (
 
     <div className="bg-neutral-400 justify-center" id="hero">
