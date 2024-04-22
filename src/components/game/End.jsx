@@ -21,9 +21,7 @@ const End = () => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.get(`/lobbies/${localStorage.getItem("pin")}`, { headers });
-
-      // setPlayers(response.data.game_details.players.slice().sort((a, b) => b.score - a.score));
-      setPlayers([{ "username": "s", "score": 16, "definition": "3", "votedForUserId": 0, "avatarId": 4, "id": 1 }, { "username": "ss", "score": 16, "definition": "4", "votedForUserId": 0, "avatarId": 2, "id": 2 }, { "username": "s", "score": 16, "definition": "3", "votedForUserId": 0, "avatarId": 4, "id": 1 }, { "username": "ss", "score": 16, "definition": "4", "votedForUserId": 0, "avatarId": 2, "id": 2 }])
+      setPlayers(response.data.game_details.players.slice().sort((a, b) => b.score - a.score));
     } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
@@ -81,7 +79,7 @@ const End = () => {
             <div className="grid grid-cols-3 gap-y-3 w-80 items-start">
               {players.length > 3 ? players.slice(3).flatMap((player) => [
                 <div key={`ava-${player.username}`} >
-                  <img src={`/assets/Ava${player.avatarId}.jpg`} className="w-20 rounded-lg" />
+                  <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`player-${player.id}`} className="w-20 rounded-lg" />
                 </div>,
                 <div key={`name-${player.username}`} className="pt-1" >
                   <p>{player.username}</p>

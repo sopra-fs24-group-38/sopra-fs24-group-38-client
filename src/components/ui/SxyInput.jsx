@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const SxyInput = ({label, value, color, func, enterKey=null, type="text", inputMode, disabled=false, maxLength, placeholder="enter here..", max, min}) => {
   const handleKeyDown = (e) => {
@@ -26,6 +27,21 @@ const SxyInput = ({label, value, color, func, enterKey=null, type="text", inputM
       />
     </div>
   );
+};
+
+SxyInput.propTypes = {
+  label: PropTypes.string, 
+  value: PropTypes.string, 
+  color: PropTypes.string, 
+  func: PropTypes.func, 
+  enterKey: PropTypes.func, 
+  type: PropTypes.string, 
+  inputMode: PropTypes.string, 
+  disabled: PropTypes.bool, 
+  maxLength: PropTypes.number, 
+  placeholder: PropTypes.string, 
+  max: PropTypes.string, 
+  min: PropTypes.string
 };
 
 export default SxyInput;

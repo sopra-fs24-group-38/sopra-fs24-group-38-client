@@ -12,12 +12,12 @@ const Definition = (props) => {
   const [submission, setSubmission] = useState("");
   const [definition, setDefinition] = useState(false);
 
-  useEffect( () => {
+  useEffect(() => {
     const tempPlayer = lobby.game_details.players.find(player => player.id === parseInt(localStorage.getItem("id")))
     if (tempPlayer.definition) {
-      
-    setSubmission(tempPlayer.definition)
-    setDefinition(true)
+
+      setSubmission(tempPlayer.definition)
+      setDefinition(true)
     }
   }, [])
   const sendDefinition = async () => {

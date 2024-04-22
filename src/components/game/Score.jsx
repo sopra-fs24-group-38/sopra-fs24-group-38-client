@@ -9,26 +9,26 @@ import "../../styles/Boards.scss";
 
 const View = (props) => {
   const { player, playerIndex } = props;
-  const [selectedStyle, setSelectedStyle] = useState({
+  const selectedStyle = {
     "backgroundColor": "#F29544"
-  });
+  };
 
   return (
     <>{player && (
       <div key={playerIndex} className="grid grid-cols-4 pb-2 gap-y-2">
-      <div key={`${playerIndex}-avatar`} className="p-2 border border-gray-300 rounded " style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-        <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`${player.name}"s pic`} className="w-full h-auto" />
+        <div key={`${playerIndex}-avatar`} className="p-2 border border-gray-300 rounded " style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+          <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`${player.name}"s pic`} className="w-full h-auto" />
+        </div>
+        <div key={`${playerIndex}-name`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+          <p>{player.username}</p>
+        </div>
+        <div key={`${player.avatarId}-ppr`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+          <p>+{player.ppr}</p>
+        </div>
+        <div key={`${playerIndex}-score`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+          <p>{player.score}</p>
+        </div>
       </div>
-      <div key={`${playerIndex}-name`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-        <p>{player.username}</p>
-      </div>
-      <div key={`${player.avatarId}-ppr`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-        <p>+{player.ppr}</p>
-      </div>
-      <div key={`${playerIndex}-score`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-        <p>{player.score}</p>
-      </div>
-    </div>
     )
     }
     </>
@@ -76,7 +76,7 @@ const Score = (props) => {
   const nextRound = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
-      const response = await api.post("/lobbies/rounds/start", {}, { headers });
+      await api.post("/lobbies/rounds/start", {}, { headers });
 
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
@@ -90,7 +90,7 @@ const Score = (props) => {
         <h1 className="mb-6 font-semibold text-xl hover:cursor-pointer">Leaderboard</h1>
         <div id="scorePlayers">
           {players.flatMap((player, playerIndex) => {
-            return (<View key={playerIndex} player={player} playerIndex={playerIndex} />)
+            return (<View key={`player-${playerIndex}`} player={player} playerIndex={playerIndex} />)
           }
 
           )}
@@ -109,7 +109,8 @@ Score.propTypes = {
 };
 
 View.propTypes = {
-  player: PropTypes.object
+  player: PropTypes.object,
+  playerIndex: PropTypes.number
 };
 
 export default Score;
