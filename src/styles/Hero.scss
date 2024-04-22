@@ -105,6 +105,7 @@
 
 
 
+
 @media (orientation: landscape) and (height<=600px) {
 
   // login
@@ -196,6 +197,7 @@
 }
 
 @media (width <=699px) {
+
   .login {
     width: 380px;
   }
@@ -244,6 +246,7 @@
         transition: clip-path 0.25s, filter 0.25s;
       }
 
+
     }
 
     :nth-child(3) {
@@ -258,9 +261,6 @@
       filter: brightness(1) saturate(1);
     }
   }
-
-
-
 }
 
 @media (width < 450px) {
@@ -312,7 +312,8 @@
 }
 
 @media (width >=1200px) {
-  .login {
+
+  .login {    
     top: 0;
     right: 0;
     left: auto;
@@ -326,13 +327,12 @@
 }
 
 
-@media (height <=750px) {
+@media (height <= 750px) {
   #header {
     padding-top: 0px !important;
     padding-bottom: 0px !important;
     height: 80px !important;
   }
-
 
   #header>div:nth-child(1)>button {
     border-radius: 50%;
@@ -390,9 +390,9 @@
       filter: brightness(0.75) contrast(0.75);
     }
 
+
     >img:hover {
       filter: brightness(1) saturate(1);
     }
   }
-
 }

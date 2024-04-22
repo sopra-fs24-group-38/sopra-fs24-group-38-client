@@ -13,6 +13,7 @@ const View = (props) => {
     "backgroundColor": "#F29544"
   };
 
+
   return (
     <>{player && (
       <div key={playerIndex} className="grid grid-cols-4 pb-2 gap-y-2">
@@ -29,6 +30,7 @@ const View = (props) => {
           <p>{player.score}</p>
         </div>
       </div>
+
     )
     }
     </>
@@ -77,7 +79,6 @@ const Score = (props) => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
       await api.post("/lobbies/rounds/start", {}, { headers });
-
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
@@ -90,7 +91,7 @@ const Score = (props) => {
         <h1 className="mb-6 font-semibold text-xl hover:cursor-pointer">Leaderboard</h1>
         <div id="scorePlayers">
           {players.flatMap((player, playerIndex) => {
-            return (<View key={`player-${playerIndex}`} player={player} playerIndex={playerIndex} />)
+            return (<View key={`player-${player.id}`} player={player} playerIndex={playerIndex} />)
           }
 
           )}
