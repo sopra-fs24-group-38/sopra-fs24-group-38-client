@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../ui/Header";
 import LobbySettings from "../ui/LobbySettings";
 import SxyButton from "../ui/SxyButton";
@@ -17,8 +17,6 @@ const LobbyWaiting = () => {
   const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const prep = useRef(null);
 
-
-  const [sessionToken, setSessionToken] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isGameMaster, setIsGameMaster] = useState("");
   const [starting, setStarting] = useState(false);
@@ -75,11 +73,10 @@ const LobbyWaiting = () => {
         response.data.game_details.game_master_username === localStorage.getItem("username") ?
           setIsGameMaster(localStorage.getItem("username"))
           : setIsGameMaster(response.data.game_details.game_master_username);
-        
-        setSessionToken(response.data.game_details.players.some(obj => obj.username.includes(localStorage.getItem("username"))));
       }
 
-      if (response.data.game_details.players.length > players.length){
+      // 1sr statement checks for update need, 2nd statement is sessionGuard
+      if (response.data.game_details.players.length > players.length && response.data.game_details.players.some(obj => obj.username.includes(localStorage.getItem("username")))){
         const newPlayers = response.data.game_details.players.slice(players.length)
           .filter(player => !playerNamesRef.current.has(player.username))
           .map(player => ({
@@ -94,9 +91,11 @@ const LobbyWaiting = () => {
         });
 
         setPlayers(prevPlayers => [...prevPlayers, ...newPlayers]);
+      } else{
+        navigate("/lobby");
       }
     } catch(e){
-      if(e.response.status === 401){
+      if(e.response.status === 401 || e.response.status === 404){
         navigate("/login");
       }
       feedback.give(handleError(e), 3000, "error");
@@ -143,64 +142,59 @@ const LobbyWaiting = () => {
 
   return (
     <>
-      {sessionToken ?
-        <>
-          <Header />
-          <div className="bg-neutral-400 flex flex-col relative pb-8" id="hero">
-            <div className="bg-neutral-100 max-w-sexy p-10 mb-auto mt-auto shadow-md rounded-lg" id="control">
-              <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
-              <h1 className="font-semibold text-center text-2xl"><b>{isGameMaster}</b> is the host</h1>
-              <div className="flex flex-col gap-y-5 mx-3 mt-4 items-center">
-                <SxyButton
-                  text="Start Game"
-                  color={"#72171D"}
-                  func={startGame}
-                  disabled={players.length < 2 || isGameMaster !== localStorage.getItem("username") || starting}
-                  width="120px"
-                />
+      <Header />
+        <div className="bg-neutral-100 max-w-sexy p-10 mb-auto mt-auto shadow-md rounded-lg" id="control">
+        <div className="bg-neutral-100 max-w-sexy p-10 mb-6 mt-auto shadow-md rounded-lg">
+          <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
+          <h1 className="font-semibold text-center text-2xl"><b>{isGameMaster}</b> is the host</h1>
+          <div className="flex flex-col gap-y-5 mx-3 mt-4 items-center">
+            <SxyButton
+              text="Start Game"
+              color={"#72171D"}
+              func={startGame}
+              disabled={players.length < 2 || isGameMaster !== localStorage.getItem("username") || starting}
+              width="120px"
+            />
 
-                {isGameMaster === localStorage.getItem("username") ?
-                  <SxyButton
-                    text="Settings"
-                    color={"#72171D"}
-                    func={() => setShowSettings(true)}
-                    width="120px"
-                  />
-                  : null
-                }
-
-                <SxyButton
-                  text="Leave Lobby"
-                  width="120px"
-                  color={"#72171D"}
-                  disabled={starting}
-                  func={leaveLobby}
-                />
-              </div>
-            </div>
-            <div className="bg-neutral-400 p-5 mb-auto mt-auto rounded-lg shadow-md relative" >
-              <div id="lobbyplayas">
-                {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
-                {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
-                {players.length < 1 ? <p></p> : <img src={players[0].avatar} alt="player 1" />}
-                {players.length < 4 ? <p></p> : <img src={players[3].avatar} alt="player 4" />}
-                {players.length < 5 ? <p></p> : <img src={players[4].avatar} alt="player 5" />}
-              </div>
-              {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
-              {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}
-              {players.length < 1 ? null : <p className="absolute top-48 left-4 font-bold text-lg z-20">{players[0].name}</p>}
-              {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">{players[3].name}</p>}
-              {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">{players[4].name}</p>}
-            </div>
-
-            {showSettings ?
-              <LobbySettings out={() => setShowSettings(false)} />
+            {isGameMaster === localStorage.getItem("username") ?
+              <SxyButton
+                text="Settings"
+                color={"#72171D"}
+                func={() => setShowSettings(true)}
+                width="120px"
+              />
               : null
             }
+
+            <SxyButton
+              text="Leave Lobby"
+              width="120px"
+              color={"#72171D"}
+              disabled={starting}
+              func={leaveLobby}
+            />
           </div>
-        </>
-        // session guard
-        : <Navigate to={"/lobby"} />}
+        </div>
+        <div className="bg-neutral-400 p-8 mb-auto rounded-lg shadow-md relative" >
+          <div id="lobbyplayas">
+            {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
+            {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
+            {players.length < 1 ? <p></p> : <img src={players[0].avatar} alt="player 1" />}
+            {players.length < 4 ? <p></p> : <img src={players[3].avatar} alt="player 4" />}
+            {players.length < 5 ? <p></p> : <img src={players[4].avatar} alt="player 5" />}
+          </div>
+          {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
+          {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}
+          {players.length < 1 ? null : <p className="absolute top-48 left-4 font-bold text-lg z-20">{players[0].name}</p>}
+          {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">{players[3].name}</p>}
+          {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">{players[4].name}</p>}
+        </div>
+
+        {showSettings ?
+          <LobbySettings out={() => setShowSettings(false)} />
+          : null
+        }
+      </div>
     </>
   );
 };
