@@ -46,7 +46,7 @@ const Login = () => {
         <>
           <Header />
           <div className="w-full flex justify-center items-center login-bg" id="hero">
-            <div className="flex flex-col shadow-md items-center justify-center login">
+            <div className="flex flex-col fixed text-center shadow-md items-center justify-center rounded-2xl" id="login">
               <h1 className="font-bold mb-5 mt-2 text-3xl">{isLogin ? "Login" : "Register"}</h1>
               <SxyInput
                 label="Username"
@@ -88,7 +88,7 @@ const Login = () => {
                   </svg>
                 }
               </div>
-              <div className="flex mb-6 mt-2 justify-between w-80" id="login-btn">
+              <div className="flex mt-4 justify-between w-80" id="login-btn">
                 <SxyButton
                   text={isLogin ? "Login" : "Register"}
                   color={"#72171D"}

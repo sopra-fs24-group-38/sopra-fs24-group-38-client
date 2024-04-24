@@ -23,26 +23,29 @@ const Definition = (props) => {
   }, [])
 
   const sendDefinition = async () => {
-    try {
-      const headers = { "Authorization": localStorage.getItem("token") };
-      const response = await api.put("/lobbies/users/definitions", { definition: submission }, { headers }); //${localStorage.getItem("pin")}
-      console.log(response.data)
-      setDefinition(true);
+    if(submission.replace(" ", "") !== ""){
+      try {
+        const headers = { "Authorization": localStorage.getItem("token") };
+        const response = await api.put("/lobbies/users/definitions", { definition: submission }, { headers }); //${localStorage.getItem("pin")}
+        console.log(response.data)
+        setDefinition(true);
 
-    } catch (error) {
-      feedback.give(handleError(error), 3000, "error");
+      } catch (error) {
+        feedback.give(handleError(error), 3000, "error");
+      }
+    } else {
+      feedback.give("The submission cannot be empty!", 2500, "info");
     }
-
   }
 
   return (
     <div className="bg-neutral-400 justify-center" id="hero">
-      <div className="bg-neutral-100 flex flex-col shadow-md w-1/3 h-1/2 rounded-md p-3" id="gameQuestion">
-        <div className="flex grow mb-8 bg-supporange-200 rounded-md justify-center items-center flex-col">
-          <p className="text-center text-2xl p-2">
+      <div className="bg-neutral-100 flex flex-col shadow-md max-w-sexy rounded-xl p-5" id="gameQuestion">
+        <div className="flex flex-col mb-8 py-12 px-24 bg-supporange-200 rounded-md justify-center items-center">
+          <p className="text-center text-2xl p-3">
             who or what is...
           </p>
-          <p className="text-center text-2xl">
+          <p className="text-center text-2xl break-words">
             {lobby.game_details.challenge}
           </p>
         </div>
@@ -51,13 +54,14 @@ const Definition = (props) => {
           value={submission}
           maxLength={40}
           disabled={definition}
+          enterKey={sendDefinition}
           func={(n) => setSubmission(n)}
         />
         <SxyButton
           text="Send"
           color={"#731224"}
-          disabled={definition}
-          func={() => sendDefinition()}
+          disabled={definition || !submission}
+          func={sendDefinition}
         />
       </div>
     </div>

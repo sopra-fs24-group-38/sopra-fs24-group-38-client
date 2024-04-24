@@ -15,17 +15,17 @@ const View = (props) => {
 
   return (
     <>{player && (
-      <div key={playerIndex} className="grid grid-cols-4 pb-2 gap-y-2">
+      <div key={playerIndex} className="grid grid-cols-4 w-96 pb-2 gap-y-2">
         <div key={`${playerIndex}-avatar`} className="p-2 border border-gray-300 rounded " style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-          <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`${player.name}"s pic`} className="w-full h-auto" />
+          <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`${player.name}"s pic`} />
         </div>
-        <div key={`${playerIndex}-name`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+        <div key={`${playerIndex}-name`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
           <p>{player.username}</p>
         </div>
-        <div key={`${player.avatarId}-ppr`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+        <div key={`${player.avatarId}-ppr`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
           <p>+{player.ppr}</p>
         </div>
-        <div key={`${playerIndex}-score`} className="p-2 border border-gray-300 rounded" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+        <div key={`${playerIndex}-score`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
           <p>{player.score}</p>
         </div>
       </div>
@@ -41,6 +41,7 @@ const Score = (props) => {
   const navigate = useNavigate();
   const feedback = useFeedback();
   const [players, setPlayers] = useState([]);
+  const [ready, setReady] = useState(false);
 
 
   useEffect(() => {
@@ -77,6 +78,7 @@ const Score = (props) => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
       await api.post("/lobbies/rounds/start", {}, { headers });
+      setReady(true);
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
@@ -85,18 +87,18 @@ const Score = (props) => {
 
   return (
     <div className="bg-neutral-400 justify-center" id="hero">
-      <div className="bg-neutral-100  shadow-md w-96 h-auto p-10 rounded-lg" id="gameScores">
+      <div className="bg-neutral-100 shadow-md max-w-sexy p-10 rounded-lg" id="gameScores">
         <h1 className="mb-6 font-semibold text-xl hover:cursor-pointer">Leaderboard</h1>
-        <div id="scorePlayers">
+        <div className="mb-4" id="scorePlayers">
           {players.flatMap((player, playerIndex) => {
             return (<View key={`player-${player.id}`} player={player} playerIndex={playerIndex} />)
+          })
           }
-
-          )}
         </div>
         <SxyButton
-          text="next round"
+          text="Next round"
           color={"#72171D"}
+          disabled={ready}
           func={nextRound} />
       </div>
     </div>
