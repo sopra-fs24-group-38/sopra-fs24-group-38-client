@@ -75,7 +75,7 @@ const LobbyWaiting = () => {
           : setIsGameMaster(response.data.game_details.game_master_username);
       }
 
-      // 1sr statement checks for update need, 2nd statement is sessionGuard
+      // 1st statement checks for update need, 2nd statement is sessionGuard
       if (response.data.game_details.players.length > players.length && response.data.game_details.players.some(obj => obj.username.includes(localStorage.getItem("username")))){
         const newPlayers = response.data.game_details.players.slice(players.length)
           .filter(player => !playerNamesRef.current.has(player.username))
@@ -143,11 +143,11 @@ const LobbyWaiting = () => {
   return (
     <>
       <Header />
-        <div className="bg-neutral-100 max-w-sexy p-10 mb-auto mt-auto shadow-md rounded-lg" id="control">
-        <div className="bg-neutral-100 max-w-sexy p-10 mb-6 mt-auto shadow-md rounded-lg">
+      <div className="bg-neutral-400 flex flex-col justify-center relative" id="hero">
+        <div className="bg-neutral-100 max-w-sexy mb-10 p-9 shadow-md rounded-lg" id="lobbywaiting">
           <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
           <h1 className="font-semibold text-center text-2xl"><b>{isGameMaster}</b> is the host</h1>
-          <div className="flex flex-col gap-y-5 mx-3 mt-4 items-center">
+          <div className="flex gap-x-5 mx-3 mt-4 items-center">
             <SxyButton
               text="Start Game"
               color={"#72171D"}
@@ -160,6 +160,7 @@ const LobbyWaiting = () => {
               <SxyButton
                 text="Settings"
                 color={"#72171D"}
+                disabled={starting}
                 func={() => setShowSettings(true)}
                 width="120px"
               />
@@ -175,7 +176,7 @@ const LobbyWaiting = () => {
             />
           </div>
         </div>
-        <div className="bg-neutral-400 p-8 mb-auto rounded-lg shadow-md relative" >
+        <div className="bg-neutral-400 p-8 rounded-lg shadow-md relative" >
           <div id="lobbyplayas">
             {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
             {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}

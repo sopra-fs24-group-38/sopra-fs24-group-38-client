@@ -23,13 +23,14 @@ const Header = ({ leave = false }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
     localStorage.removeItem("username");
+    localStorage.removeItem("pin");
     navigate("/login");
 
   };
 
 
   return (
-    <div className="flex justify-between px-6 py-6 items-center bg-brand-500" id="header">
+    <div className="flex justify-between px-6 py-6 items-center" id="header">
       <SxyButton
         text="?"
         color={"#C2B199"}
