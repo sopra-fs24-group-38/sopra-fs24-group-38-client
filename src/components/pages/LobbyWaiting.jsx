@@ -37,7 +37,7 @@ const LobbyWaiting = () => {
 
   useEffect(() => {
     console.log("Received message: ", lastMessage);
-    if(lastMessage && lastMessage.data && players.length !== 0){
+    if(lastMessage?.data && players.length !== 0){
       if(lastMessage.data === "user_joined"){
         playerDelta();
 
@@ -143,11 +143,11 @@ const LobbyWaiting = () => {
   return (
     <>
       <Header />
-      <div className="bg-neutral-400 flex flex-col relative pb-8" id="hero">
+        <div className="bg-neutral-100 max-w-sexy p-10 mb-auto mt-auto shadow-md rounded-lg" id="control">
         <div className="bg-neutral-100 max-w-sexy p-10 mb-6 mt-auto shadow-md rounded-lg">
           <h1 className="font-semibold text-center mb-3 text-2xl">PIN: <b>{pin}</b></h1>
           <h1 className="font-semibold text-center text-2xl"><b>{isGameMaster}</b> is the host</h1>
-          <div className="flex flex-col gap-y-5 mx-4 mt-6 items-center">
+          <div className="flex flex-col gap-y-5 mx-3 mt-4 items-center">
             <SxyButton
               text="Start Game"
               color={"#72171D"}

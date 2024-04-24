@@ -8,7 +8,7 @@
   align-items: center;
 
   background-color: #ece4d7;
-  
+
   background-image: url("../../public/assets/4xbg.png");
   background-repeat: no-repeat;
   background-size: contain;
@@ -32,7 +32,7 @@
     left: -3px;
     width: 125px;
 
-    > input {
+    >input {
       border: solid black 1.5px;
     }
   }
@@ -72,11 +72,8 @@
       transition: clip-path 0.25s, filter 0.25s;
     }
 
-    // &:focus {
-    //   outline: 1px dashed black;
-    //   outline-offset: -5px;
-    // }
   }
+
   :nth-child(3) {
     grid-column: 2 / span 2;
   }
@@ -84,7 +81,8 @@
   &:has(img:hover) img:not(:hover) {
     filter: brightness(0.75) contrast(0.75);
   }
-  > img:hover {
+
+  >img:hover {
     filter: brightness(1) saturate(1);
   }
 }
@@ -104,13 +102,204 @@
   text-align: center;
 }
 
-@media (width >= 450px) {
+
+@media (orientation: landscape) and (height<=600px) {
+
+  // login
+  .login {
+    position: fixed;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    padding: 20px 20px 24px;
+    border-radius: 1.25rem;
+    background: #ffffff;
+    text-align: center;
+    width: 450px;
+    height: 80vh;
+  }
+
+  #hero {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #gameVoting {
+    margin-top: -25px !important;
+    height: 90%;
+    padding: 8px;
+  }
+
+  #votingQuestion {
+    margin-bottom: 5px;
+  }
+
+  #Answers {
+    gap: 0.25rem;
+    top: 0px;
+    margin-top: 5px !important;
+    left: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+
+  #answer-text {
+    padding: 3px;
+    font-size: 1rem;
+  }
+
+  #lobbyButtons {
+    display: flex !important;
+    flex-direction: row !important;
+    margin-top: 10px;
+    gap: 10px;
+  }
+
+  #scorePlayers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+  }
+
+  #gameScores {
+    width: 80%;
+    margin: 20px;
+    padding: 20px;
+  }
+
+  #endScreen {
+    display: flex !important;
+    flex-direction: column !important;
+    scale: 0.7;
+  }
+
+  #ranks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  #top3 {
+    margin-bottom: 80px;
+  }
+
+  #endBtn {
+    display: flex !important;
+    flex-direction: rows !important;
+  }
+
+}
+
+@media (width <=699px) {
+
   .login {
     width: 380px;
   }
+
+  #login-btn {
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    gap: 5px;
+    margin: auto;
+    width: auto;
+  }
+
+  #hero {
+    &.login-bg {
+      background-image: url("../../public/assets/nbp.png");
+      background-repeat: repeat;
+      background-size: 35%;
+      background-position: top;
+    }
+  }
+
+  // intricate shit for player pics in lobbyWaiting
+  #lobbyplayas {
+    --size: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, var(--size));
+    grid-auto-rows: var(--size);
+    margin-bottom: var(--size);
+    place-items: start center;
+    gap: 5px;
+
+    img {
+      object-fit: contain;
+      aspect-ratio: 1/1;
+      width: calc(var(--size) * 2);
+      clip-path: path("M 45 5 C 50 0 50 0 55 5 C 95 45 95 45 95 45 C 100 50 100 50 95 55 C 95 55 55 95 55 95 C 50 100 50 100 45 95 C 45 95 5 55 5 55 C 0 50 0 50 5 45 Z");
+      transition: clip-path 0.25s, filter 0.75s;
+      grid-column: auto / span 2;
+      border-radius: 5px;
+
+      &:hover,
+      &:focus {
+        clip-path: path("M 0 0 C 0 0 100 0 100 0 C 100 0 100 50 100 50 C 100 50 100 100 100 100 C 100 100 50 100 50 100 C 50 100 50 100 0 100 C 0 100 0 50 0 50 C 0 50 0 50 0 50 Z");
+        z-index: 10;
+        transition: clip-path 0.25s, filter 0.25s;
+      }
+
+    }
+
+    :nth-child(3) {
+      grid-column: 2 / span 2;
+    }
+
+    &:has(img:hover) img:not(:hover) {
+      filter: brightness(0.75) contrast(0.75);
+    }
+
+    >img:hover {
+      filter: brightness(1) saturate(1);
+    }
+  }
+
+#gameQuestion, #gameVoting {
+  width: fit-content;
+  margin: 10px;
 }
 
-@media (width >= 700px) {
+}
+
+@media (width < 450px) {
+
+  .login {
+    width: 250px;
+  }
+
+  #hero {
+    &.login-bg {
+      background-image: url("../../public/assets/nbp.png");
+      background-repeat: repeat;
+      background-size: 40%;
+      background-position: top;
+    }
+  }
+
+  #endScreen {
+    display: flex !important;
+    flex-direction: column !important;
+    scale: 0.8;
+  }
+
+  #gameQuestion {
+    p {
+      font-size: 1rem;
+      line-height: 1rem;
+    }
+  }
+
+  #answer-text {
+    font-size: 0.8rem;
+    line-height: 1rem;
+  }
+}
+
+@media (width >=700px) {
   .login {
     top: 0;
     right: 0;
@@ -119,12 +308,93 @@
     margin: 0;
     height: 100%;
     border-radius: 0;
-    padding-top: 240px;
+    padding-top: 150px;
+    width: 45%;
   }
 }
 
-@media (width >= 1200px) {
+@media (width >=1200px) {
+
   .login {
+    top: 0;
+    right: 0;
+    left: auto;
+    translate: 0 0;
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
+    padding-top: 150px;
     width: 25%;
   }
+}
+
+@media (height <=750px) {
+
+  #header {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    height: 80px !important;
+  }
+
+  #header>div:nth-child(1)>button {
+    border-radius: 50%;
+    font-size: 26px;
+    aspect-ratio: 1/1;
+    width: 40px;
+    padding: 5px;
+    height: 40px;
+    border: black solid 2px;
+  }
+
+  #control {
+    margin: -15px;
+    padding: 10px;
+    scale: 0.75;
+  }
+
+  #gameQuestion {
+    height: fit-content;
+  }
+
+  // intricate shit for player pics in lobbyWaiting
+  #lobbyplayas {
+    --size: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, var(--size));
+    grid-auto-rows: var(--size);
+    margin-bottom: var(--size);
+    place-items: start center;
+    gap: 5px;
+
+    img {
+      object-fit: contain;
+      aspect-ratio: 1/1;
+      width: calc(var(--size) * 2);
+      clip-path: path("M 45 5 C 50 0 50 0 55 5 C 95 45 95 45 95 45 C 100 50 100 50 95 55 C 95 55 55 95 55 95 C 50 100 50 100 45 95 C 45 95 5 55 5 55 C 0 50 0 50 5 45 Z");
+      transition: clip-path 0.25s, filter 0.75s;
+      grid-column: auto / span 2;
+      border-radius: 5px;
+
+      &:hover,
+      &:focus {
+        clip-path: path("M 0 0 C 0 0 100 0 100 0 C 100 0 100 50 100 50 C 100 50 100 100 100 100 C 100 100 50 100 50 100 C 50 100 50 100 0 100 C 0 100 0 50 0 50 C 0 50 0 50 0 50 Z");
+        z-index: 10;
+        transition: clip-path 0.25s, filter 0.25s;
+      }
+
+    }
+
+    :nth-child(3) {
+      grid-column: 2 / span 2;
+    }
+
+    &:has(img:hover) img:not(:hover) {
+      filter: brightness(0.75) contrast(0.75);
+    }
+
+    >img:hover {
+      filter: brightness(1) saturate(1);
+    }
+  }
+
 }

@@ -12,9 +12,11 @@ const AnswerFooled = ({ fooler }) => {
             <h1 className="font-bold text-4xl">You did not fool anyone</h1> :
             <>
               <h1 className="font-bold text-3xl text-center">You have fooled:<br /><br /></h1>
-              {fooler.foolers.map(player => {
-                return (<> <h1 className="font-bold text-3xl text-center">{player.username}</h1><img src={`/assets/Ava${player.avatarId}.jpg`} alt="go" className="w-20 mt-5 aspect-square rounded-xl" /></>)
-              })}
+              <div id="scorePlayers">
+                {fooler.foolers.map((p, index) => {
+                  return (<>{p && <div key={p.id} id="fooled"> <h1 className="font-bold text-3xl text-center">{p.username}</h1><img src={`/assets/Ava${p.avatarId}.jpg`} alt="go" className="w-20 aspect-square rounded-xl" /> </div>} </>)
+                })}
+              </div>
             </>
           }
         </div>
