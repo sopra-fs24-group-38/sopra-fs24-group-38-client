@@ -97,14 +97,14 @@ const Voting = (props) => {
 
   return (
     <div className="bg-neutral-400 justify-center" id="hero">
-      <div className="flex flex-col bg-neutral-100 shadow-md w-1/3 h-4/5 p-5 rounded-lg" id="gameVoting">
+      <div className="flex flex-col bg-neutral-100 shadow-md p-5 rounded-lg max-w-sexy" id="gameVoting">
         <div className="flex mb-5 h-1/6 bg-supporange-200 rounded-md p-4 justify-center items-center" id="votingQuestion">
-          <p className="text-center text-xl">
+          <p className="text-center text-xl p-4">
             {lobby.game_details.challenge}
           </p>
         </div>
         <h1 className="text-xl">Select an answer:</h1>
-        <div className="grow grid grid-cols-2 grid-rows-3 gap-5 mt-6" id="Answers" >
+        <div className="grow grid grid-cols-2 gap-5 mt-6" id="answers" >
           {answers.map((answer, index) => {
             return (
               <AnswerBlock key={answer.id} answer={answer.solution} votingPlayers={answer.voting} func={() => handleClick(answer.id)}

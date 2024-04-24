@@ -48,7 +48,7 @@ const End = () => {
           <div id="ranks">
             {/* place 1-3 */}
             {players.length !== 0 ?
-              <div className="flex justify-center mb-48 mt-6" id="top3">
+              <div className="flex justify-center mb-40 mt-6" id="top3">
                 <div className="relative">
                   <div className="border-div" id="w1" />
                   <img className="w-40" src={`/assets/Ava${players[0].avatarId}.jpg`} alt="winner 1" />
@@ -76,28 +76,28 @@ const End = () => {
               : null}
 
             {/* places 4+ */}
-            <div className="grid grid-cols-3 gap-y-3 w-80 items-start">
-              {players.length > 3 ? players.slice(3).flatMap((player) => [
-                <div key={`ava-${player.username}`} >
-                  <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`player-${player.id}`} className="w-20 rounded-lg" />
-                </div>,
-                <div key={`name-${player.username}`} className="pt-1" >
-                  <p>{player.username}</p>
-                </div>,
-                <div key={`score-${player.username}`} className="items-end justify-self-center pt-1">
-                  <p>{player.score} pts</p>
-                </div>,
-              ]) : null}
-            </div>
-
+            {players.length > 3 ? 
+              <div className="grid grid-cols-3 gap-y-3 w-80 items-start">
+                {players.slice(3).flatMap((player) => [
+                  <div key={`ava-${player.username}`} >
+                    <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`player-${player.id}`} className="w-20 rounded-lg" />
+                  </div>,
+                  <div key={`name-${player.username}`} className="pt-1" >
+                    <p>{player.username}</p>
+                  </div>,
+                  <div key={`score-${player.username}`} className="items-end justify-self-center pt-1">
+                    <p>{player.score} pts</p>
+                  </div>,
+                ])}
+              </div> : null}
           </div>
 
-          <div className="flex justify-around mt-12" id="endBtn">
+          <div className="flex justify-around mt-8 w-80 mx-auto" id="endBtn">
             <SxyButton
               text="New Game"
               width="100px"
               color={"#731224"}
-              func={() => { }}
+              func={() => {navigate(`/lobby/${localStorage.getItem("pin")}`)}}
             />
             <SxyButton
               text="Leave Session"

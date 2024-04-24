@@ -112,8 +112,6 @@ const Game = () => {
       {gameState === "OUTCOME" && <AnswerOutcome fooler={fooler} />}
       {gameState === "FOOLED" && <AnswerFooled fooler={fooler} />}
       {gameState === "SCORE" && <Score lobby={lobby} />}
-
-
     </>
   );
 };
