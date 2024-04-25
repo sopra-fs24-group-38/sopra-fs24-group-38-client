@@ -69,7 +69,7 @@ const LobbySettings = ({out}) => {
           value={rounds}
           func={(n) => setRounds(n)}
           max={15}
-          min={5}/>
+          min={3}/>
       </div>
 
       <div className="flex w-60 justify-between" id="login-btn">
