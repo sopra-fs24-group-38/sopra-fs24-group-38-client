@@ -85,7 +85,7 @@ const LobbyWaiting = () => {
           }));
 
         newPlayers.forEach(element => {
-          feedback.give(`${element.name} has joined`, 3000, "success");
+          feedback.give(`${element.name} has joined`, 1500, "success");
 
           playerNamesRef.current.add(element.name);
         });
@@ -111,7 +111,7 @@ const LobbyWaiting = () => {
         playerDelta(true);
         feedback.give(`${username} has left the party,\nthere is a new host`, 3000, "info");
       } else {
-        feedback.give(`${username} has left the party`, 3000, "warning");
+        feedback.give(`${username} has left the party`, 2000, "warning");
       }
     } catch(e){
       feedback.give(handleError(e), 3000, "error");

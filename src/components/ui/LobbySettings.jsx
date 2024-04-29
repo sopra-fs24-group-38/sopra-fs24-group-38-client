@@ -9,7 +9,7 @@ import useFeedback from "../../hooks/useFeedback";
 const LobbySettings = ({out}) => {
   const feedback = useFeedback();
   const gameId = useParams().id;
-  const [modes, setModes] = useState(["DEFINITIONS"]);
+  const [modes, setModes] = useState(["BIZARRE"]);
   const [rounds, setRounds] = useState(10);
 
   const saveSettings = async() => {
@@ -17,7 +17,7 @@ const LobbySettings = ({out}) => {
       const headers = { "Authorization": localStorage.getItem("token") };
       await api.put(`/lobbies/${gameId}`, {"game_modes": modes, "rounds": rounds}, { headers });
 
-      feedback.give("The settings have been adjusted", 3000, "success");
+      feedback.give("The settings have been adjusted", 2000, "success");
       out();
     } catch(e){
       feedback.give(handleError(e), 3000, "error");
@@ -42,23 +42,25 @@ const LobbySettings = ({out}) => {
         <h1 className="text-center text-xl font-bold">Modes</h1>
         <div className="flex flex-col gap-y-4 border-solid border-2 border-black p-4 rounded-xl" id="login-btn">
           <SxyButton
-            text="Definitions"
-            color={modes.includes("DEFINITIONS") ? "#8227B3" : "#B479D4"}
+            text="Bizarre"
+            color={modes.includes("BIZARRE") ? "#8227B3" : "#B479D4"}
             width="120px"
-            func={() => modeSelection("DEFINITIONS")}/>
-          {/* currently disabled */}
+            func={() => modeSelection("BIZARRE")}/>
           <SxyButton
             text="Dutch"
             color={modes.includes("DUTCH") ? "#8227B3" : "#B479D4"}
             width="120px"
-            disabled={true}
             func={() => modeSelection("DUTCH")}/>
           <SxyButton
-            text="Urban Dict"
-            color={modes.includes("URBAN") ? "#8227B3" : "#B479D4"}
+            text="Programming"
+            color={modes.includes("PROGRAMMING") ? "#8227B3" : "#B479D4"}
             width="120px"
-            disabled={true}
-            func={() => modeSelection("URBAN")}/>
+            func={() => modeSelection("PROGRAMMING")}/>
+          <SxyButton
+            text="Rare Foods"
+            color={modes.includes("RAREFOODS") ? "#8227B3" : "#B479D4"}
+            width="120px"
+            func={() => modeSelection("RAREFOODS")}/>
         </div>
       </div>
 
