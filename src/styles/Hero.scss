@@ -39,7 +39,7 @@
 }
 
 #settings {
-  width: 90vw;
+  width: clamp(550px, 40vw, 800px);
   height: 95%;
   border-radius: 8px;
   border: solid black 2px;
@@ -137,6 +137,17 @@
     }
   }
 
+  #settings {
+    min-width: 725px;
+
+    #settingsBtn {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      padding: 10px;
+    }
+  }
+
   #gameVoting {
     padding: 10px;
   }
@@ -214,6 +225,10 @@
   #answer-text {
    font-size: 1rem;
   }
+
+  #settings {
+    width: clamp(430px, 80vw, 600px);
+  }
 }
 
 @media (width < 450px) {
@@ -232,6 +247,10 @@
     &.login-bg {
       background-size: 40%;
     }
+  }
+
+  #settings {
+    width: clamp(310px, 90vw, 400px);
   }
 
   #endScreen {

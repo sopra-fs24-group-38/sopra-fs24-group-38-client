@@ -12,7 +12,7 @@ const SxyInput = ({label, value, color, func, enterKey=null, type="text", inputM
     <div className="flex flex-col justify-center">
       {label ? <label className="font-medium mb-2">{label}</label> : null}
       <input
-        className="mb-5 h-9 pl-4 rounded-xl border-none bg-white opacity-85"
+        className={`mb-5 h-9 rounded-xl border-none bg-white opacity-85 ${(type === "text" || type === "password") ? "pl-4" : ""}`}
         style={{backgroundColor: color}}
         placeholder={placeholder}
         type={type}

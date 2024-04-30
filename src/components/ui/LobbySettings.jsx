@@ -40,7 +40,7 @@ const LobbySettings = ({out}) => {
 
       <div className="flex flex-col">
         <h1 className="text-center text-xl font-bold">Modes</h1>
-        <div className="flex flex-col gap-y-4 border-solid border-2 border-black p-4 rounded-xl" id="login-btn">
+        <div className="flex flex-col gap-y-4 border-solid border-2 border-black p-4 rounded-xl" id="settingsBtn">
           <SxyButton
             text="Bizarre"
             color={modes.includes("BIZARRE") ? "#8227B3" : "#B479D4"}

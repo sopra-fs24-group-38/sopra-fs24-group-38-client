@@ -31,11 +31,14 @@ const Header = ({ leave = false }) => {
 
   return (
     <div className="flex justify-between px-6 py-6 items-center" id="header">
-      <SxyButton
-        text="?"
-        color={"#C2B199"}
-        func={() => setSeeRules(prev => !prev)}
-      />
+      <div className="flex items-center gap-x-2">
+        <SxyButton
+          text="?"
+          color={"#C2B199"}
+          func={() => setSeeRules(prev => !prev)}
+        />
+        <h1 className="text-xl font-medium">Rules</h1>
+      </div>
       {leave ?
         <SxyButton
           text="Logout"

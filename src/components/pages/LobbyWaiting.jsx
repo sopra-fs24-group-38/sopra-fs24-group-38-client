@@ -186,7 +186,7 @@ const LobbyWaiting = () => {
           </div>
           {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
           {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}
-          {players.length < 1 ? null : <p className="absolute top-48 left-4 font-bold text-lg z-20">{players[0].name}</p>}
+          {players.length < 1 ? null : <p className="absolute top-52 left-4 font-bold text-lg z-20">{players[0].name}</p>}
           {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">{players[3].name}</p>}
           {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">{players[4].name}</p>}
         </div>
