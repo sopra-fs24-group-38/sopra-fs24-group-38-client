@@ -22,13 +22,13 @@
 
 #rules {
   position: absolute;
-  width: 95vw;
+  width: clamp(300px, 25vw, 400px);
   height: calc((100dvh - $HEADER_HEIGHT));
   bottom: 10px;
-  left: 2vw;
+  left: 1.5vw;
   border-radius: 8px;
   border: solid black 2px;
-  z-index: 9009;
+  z-index: 20;
   background-color:#9FA1B3;
   padding: 20px;
   overflow-y: auto;
