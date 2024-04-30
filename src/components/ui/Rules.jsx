@@ -17,7 +17,7 @@ const Rules = ({ close }) => {
 
       <p>Requirements: <b>2 - 5</b> players</p>
       <br />
-      <p>The game is playable anywhere between 5 - 15 rounds.</p>
+      <p>The game is playable anywhere between 3 - 15 rounds.</p>
       <p>Only the host can change the settings.</p>
       <br /><br />
 
@@ -42,10 +42,10 @@ const Rules = ({ close }) => {
       <br />
       <p>There are currently 4 different game modes available:</p>
       <ul>
-        <li>Bizzare: abstract words that are not well known</li>
-        <li>Dutch: actual Dutch</li>
-        <li>Programming: words that pertain to the programming domain</li>
-        <li>Rare Foods: foods and dishes from around the globe</li>
+        <li><b>Bizzare</b>: abstract words that are not well known</li>
+        <li><b>Dutch</b>: actual Dutch</li>
+        <li><b>Programming</b>: words that pertain to the programming domain</li>
+        <li><b>Rare Foods</b>: foods and dishes from around the globe</li>
       </ul>
     </div>
   );
