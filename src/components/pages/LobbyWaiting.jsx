@@ -85,7 +85,7 @@ const LobbyWaiting = () => {
           }));
 
         newPlayers.forEach(element => {
-          feedback.give(`${element.name} has joined`, 3000, "success");
+          feedback.give(`${element.name} has joined`, 1500, "success");
 
           playerNamesRef.current.add(element.name);
         });
@@ -111,7 +111,7 @@ const LobbyWaiting = () => {
         playerDelta(true);
         feedback.give(`${username} has left the party,\nthere is a new host`, 3000, "info");
       } else {
-        feedback.give(`${username} has left the party`, 3000, "warning");
+        feedback.give(`${username} has left the party`, 2000, "warning");
       }
     } catch(e){
       feedback.give(handleError(e), 3000, "error");
@@ -186,7 +186,7 @@ const LobbyWaiting = () => {
           </div>
           {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
           {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}
-          {players.length < 1 ? null : <p className="absolute top-48 left-4 font-bold text-lg z-20">{players[0].name}</p>}
+          {players.length < 1 ? null : <p className="absolute top-52 left-4 font-bold text-lg z-20">{players[0].name}</p>}
           {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">{players[3].name}</p>}
           {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">{players[4].name}</p>}
         </div>

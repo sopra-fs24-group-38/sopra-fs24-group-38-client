@@ -9,7 +9,7 @@
     border: black solid 1.5px;
   }
 
-  > div:nth-child(1) > button {
+  > div:nth-child(1) > div > button {
     border-radius: 50%;
     font-size: 32px;
     aspect-ratio: 1/1;
@@ -22,13 +22,13 @@
 
 #rules {
   position: absolute;
-  width: 95vw;
+  width: clamp(300px, 25vw, 400px);
   height: calc((100dvh - $HEADER_HEIGHT));
   bottom: 10px;
-  left: 2vw;
+  left: 1.5vw;
   border-radius: 8px;
   border: solid black 2px;
-  z-index: 9009;
+  z-index: 20;
   background-color:#9FA1B3;
   padding: 20px;
   overflow-y: auto;
@@ -37,7 +37,7 @@
     border-radius: 8px;
     border: solid black 2px;
     position: absolute;
-    right: 2.5vw;
+    right: 1vw;
   }
 
   > p{
@@ -65,7 +65,7 @@
     padding-top: 0px;
     padding-bottom: 0px;
 
-    & > div:nth-child(1) > button {
+    & > div:nth-child(1) > div > button {
       font-size: 26px;
       width: 40px;
       height: 40px;

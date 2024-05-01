@@ -1,12 +1,11 @@
 import React from "react";
 import SxyButton from "../ui/SxyButton";
-import PropTypes from "prop-types";
 
 
 const Rules = ({ close }) => {
 
   return (
-    <div id="rules">
+    <div id="rules" onClick={close}>
       <SxyButton
         func={close}
         text="X"
@@ -18,14 +17,15 @@ const Rules = ({ close }) => {
 
       <p>Requirements: <b>2 - 5</b> players</p>
       <br />
-      <p>The game is playable anywhere between 5 - 15 rounds.</p>
+      <p>The game is playable anywhere between 3 - 15 rounds.</p>
       <p>Only the host can change the settings.</p>
       <br /><br />
 
       <h2>Game loop</h2>
       <br />
       <p>Every round there is an expression or phrase that is presented.
-      The task at hand is to fool your friends by delivering an explanation for said word/phrase that might be plausible.{" "}
+      The task at hand is to fool your friends by delivering an explanation for said word/phrase that might be plausible.
+      <br />
       <b>But</b> you are not allowed to give the correct explanation if you know it!
       </p>
       <br />
@@ -40,18 +40,15 @@ const Rules = ({ close }) => {
       <br /><br />
       <h2>Different game modes</h2>
       <br />
-      <p>There are currently 3 different game modes available:</p>
+      <p>There are currently 4 different game modes available:</p>
       <ul>
-        <li>Definitions: abstract words that are not well known</li>
-        <li>Dutch: actual Dutch</li>
-        <li>Urban dictionary: slang words and metaphors</li>
+        <li><b>Bizzare</b>: abstract words that are not well known</li>
+        <li><b>Dutch</b>: actual Dutch</li>
+        <li><b>Programming</b>: words that pertain to the programming domain</li>
+        <li><b>Rare Foods</b>: foods and dishes from around the globe</li>
       </ul>
     </div>
   );
-};
-
-Rules.propTypes = {
-  close: PropTypes.func
 };
 
 export default Rules;
