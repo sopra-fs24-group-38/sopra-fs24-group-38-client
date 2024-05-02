@@ -118,6 +118,23 @@ const LobbyWaiting = () => {
     }
   };
 
+  const addAI = async() => {
+    try {
+      const response = await api.put(`/lobbies/users/${pin}/ai`, {}, { headers });
+    } catch(e) {
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
+
+  // TODO: apply on AI players pic
+  const removeRobo = async() => {
+    try {
+      
+    } catch(e) {
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
+
   const startGame = async() => {
     try{
       const response = await api.post("/lobbies/start", {}, { headers });
@@ -157,20 +174,30 @@ const LobbyWaiting = () => {
             />
 
             {isGameMaster === localStorage.getItem("username") ?
-              <SxyButton
-                text="Settings"
-                color={"#72171D"}
-                disabled={starting}
-                func={() => setShowSettings(true)}
-                width="120px"
-              />
+              <>
+                <SxyButton
+                  text="Settings"
+                  color={"#72171D"}
+                  disabled={starting}
+                  func={() => setShowSettings(true)}
+                  width="120px"
+                />
+
+                <SxyButton 
+                  text="Add AI player"
+                  color={"#16BA34"}
+                  disabled={players.length === 5}
+                  func={addAI}
+                  width="120px"
+                />
+              </>
               : null
             }
 
             <SxyButton
               text="Leave Lobby"
               width="120px"
-              color={"#72171D"}
+              color={"#CC1F1D"}
               disabled={starting}
               func={leaveLobby}
             />
