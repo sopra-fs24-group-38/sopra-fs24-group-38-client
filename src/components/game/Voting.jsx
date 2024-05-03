@@ -23,6 +23,9 @@ const Voting = (props) => {
     background: "#01DF3A",
     border: "solid black 2px",
   }
+  const ownAnswerStyle = {
+    background: "#a5987fbf",
+  }
 
 
   useEffect(() => {
@@ -108,7 +111,8 @@ const Voting = (props) => {
           {answers.map((answer, index) => {
             return (
               <AnswerBlock key={answer.id} answer={answer.solution} votingPlayers={answer.voting} func={() => handleClick(answer.id)}
-                style={(chosenOne === answer.id && solution && answer.id === 0) ?
+                style={answer.id ===player.id ? ownAnswerStyle :
+                  (chosenOne === answer.id && solution && answer.id === 0) ?
                   selectSolutionStyle : chosenOne === answer.id ?
                     selectedStyle : (solution && answer.id === 0) ?
                       solutionStyle : null} />

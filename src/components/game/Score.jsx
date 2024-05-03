@@ -68,8 +68,7 @@ const Score = (props) => {
     const updatedPlayers = playerList.map(player => ({
       ...player,
       ppr: voteCount.get(player.id) || 0  // Use 0 if no votes found for this player
-    }));
-
+    })).sort((a, b) => b.score - a.score);
     return updatedPlayers
 
 
