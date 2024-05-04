@@ -19,8 +19,11 @@ const Rules = ({ close }) => {
       <br />
       <p>The game is playable anywhere between 3 - 15 rounds.</p>
       <p><u>Only the host</u> can change the settings and add/remove AI players.</p>
-      <br /><br />
+      <br />
 
+      <b><p className="text-red-600">IMPORTANT: adding multiple AI players and choosing multiple different modes increases the time the game needs to prepare. This is just a heads up, it does work :)</p></b>
+      <br />
+      
       <h2>Game loop</h2>
       <br />
       <p>Every round there is an expression or phrase that is presented.
