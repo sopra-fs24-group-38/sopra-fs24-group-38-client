@@ -129,7 +129,7 @@ const LobbyWaiting = () => {
   // TODO: apply on AI players pic
   const removeRobo = async() => {
     try {
-      
+      console.log("Done");
     } catch(e) {
       feedback.give(handleError(e), 3000, "error");
     }
@@ -205,11 +205,11 @@ const LobbyWaiting = () => {
         </div>
         <div className="bg-neutral-400 p-8 rounded-lg shadow-md relative" >
           <div id="lobbyplayas">
-            {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
-            {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
-            {players.length < 1 ? <p></p> : <img src={players[0].avatar} alt="player 1" />}
-            {players.length < 4 ? <p></p> : <img src={players[3].avatar} alt="player 4" />}
-            {players.length < 5 ? <p></p> : <img src={players[4].avatar} alt="player 5" />}
+            {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" id={players[1].avatar.match(/10[0-9]/g) ? "robo" : ""} onClick={players[1].avatar.match(/10[0-9]/g) ? removeRobo : null} />}
+            {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" id={players[2].avatar.match(/10[0-9]/g) ? "robo" : ""} onClick={players[2].avatar.match(/10[0-9]/g) ? removeRobo : null} />}
+            {players.length < 1 ? <p></p> : <img src={players[0].avatar} alt="player 1" id={players[0].avatar.match(/10[0-9]/g) ? "robo" : ""} onClick={players[0].avatar.match(/10[0-9]/g) ? removeRobo : null} />}
+            {players.length < 4 ? <p></p> : <img src={players[3].avatar} alt="player 4" id={players[3].avatar.match(/10[0-9]/g) ? "robo" : ""} onClick={players[3].avatar.match(/10[0-9]/g) ? removeRobo : null} />}
+            {players.length < 5 ? <p></p> : <img src={players[4].avatar} alt="player 5" id={players[4].avatar.match(/10[0-9]/g) ? "robo" : ""} onClick={players[4].avatar.match(/10[0-9]/g) ? removeRobo : null} />}
           </div>
           {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
           {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}

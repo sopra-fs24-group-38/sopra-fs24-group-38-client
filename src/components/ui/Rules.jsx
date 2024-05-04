@@ -18,7 +18,7 @@ const Rules = ({ close }) => {
       <p>Requirements: <b>2 - 5</b> players</p>
       <br />
       <p>The game is playable anywhere between 3 - 15 rounds.</p>
-      <p>Only the host can change the settings.</p>
+      <p><u>Only the host</u> can change the settings and add/remove AI players.</p>
       <br /><br />
 
       <h2>Game loop</h2>
@@ -47,6 +47,8 @@ const Rules = ({ close }) => {
         <li><b>Programming</b>: words that pertain to the programming domain</li>
         <li><b>Rare Foods</b>: foods and dishes from around the globe</li>
       </ul>
+      <br />
+      <p>You can mix and match the modes to your liking. They will be evenly distributed across the selected modes divided by the round count.</p>
     </div>
   );
 };
