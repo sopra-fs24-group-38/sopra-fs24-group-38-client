@@ -18,6 +18,11 @@ const LobbyWaiting = () => {
   const prep = useRef(null);
 
   const [showSettings, setShowSettings] = useState(false);
+  const [settingsData, setSettingsData] = useState({
+    rounds: 10,
+    modes: ["BIZARRE"],
+  });
+
   const [isGameMaster, setIsGameMaster] = useState("");
   const [starting, setStarting] = useState(false);
   const [players, setPlayers] = useState([]);
@@ -227,7 +232,7 @@ const LobbyWaiting = () => {
         </div>
 
         {showSettings ?
-          <LobbySettings out={() => setShowSettings(false)} />
+          <LobbySettings out={() => setShowSettings(false)} config={settingsData} setConfig={(n) => setSettingsData(n)} />
           : null
         }
       </div>

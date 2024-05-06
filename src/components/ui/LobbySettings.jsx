@@ -6,16 +6,21 @@ import { useParams } from "react-router";
 import { api, handleError } from "../../utils/api";
 import useFeedback from "../../hooks/useFeedback";
 
-const LobbySettings = ({out}) => {
+const LobbySettings = ({out, config, setConfig}) => {
   const feedback = useFeedback();
   const gameId = useParams().id;
-  const [modes, setModes] = useState(["BIZARRE"]);
-  const [rounds, setRounds] = useState(10);
+  const [modes, setModes] = useState(config.modes);
+  const [rounds, setRounds] = useState(config.rounds);
 
   const saveSettings = async() => {
     try{
       const headers = { "Authorization": localStorage.getItem("token") };
       await api.put(`/lobbies/${gameId}`, {"game_modes": modes, "rounds": rounds}, { headers });
+      setConfig(before => ({
+        ...before,
+        modes: modes,
+        rounds: rounds,
+      }));
 
       feedback.give("The settings have been adjusted", 2000, "success");
       out();
