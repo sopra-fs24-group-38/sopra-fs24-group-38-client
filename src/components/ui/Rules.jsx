@@ -23,7 +23,7 @@ const Rules = ({ close }) => {
 
       <b><p className="text-red-600">IMPORTANT: adding multiple AI players and choosing multiple different modes increases the time the game needs to prepare. This is just a heads up, it does work :)</p></b>
       <br />
-      
+
       <h2>Game loop</h2>
       <br />
       <p>Every round there is an expression or phrase that is presented.
@@ -33,7 +33,7 @@ const Rules = ({ close }) => {
       </p>
       <br />
       <p>After everyone has submitted their answer we change to the voting phase where all player answers + the correct one are shown.</p>
-      <p>You can gain points for either getting the right answer (+2) and/or fooling your friends (+1 per fooled friend).</p>
+      <p>You can gain points for either getting the right answer (+1) and/or fooling your friends (+2 per fooled friend).</p>
       <br />
       <p>After the voting you can see if you answered correctly or if you&apos;ve been fooled and by whom.</p>
       <p>The final phase of the loop is a scoreboard where every player is listed with their respective scores.</p>

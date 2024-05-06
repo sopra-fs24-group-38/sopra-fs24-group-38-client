@@ -134,14 +134,15 @@ const LobbyWaiting = () => {
   };
 
   const removeRobo = async(playerIndex) => {
-    try {
-      const avatarId = players[playerIndex].avatar.substr(11, 3);
-      const requestBody = JSON.stringify({ avatarId })
-      const response = await api.delete(`/lobbies/users/${pin}/ai`, { requestBody }, { headers });
-    } catch(e) {
-      feedback.give(handleError(e), 3000, "error");
-    }
+      try {
+          const avatarId = players[playerIndex].avatar.substr(11, 3);
+          const requestBody = { avatarId };
+          const response = await api.delete(`/lobbies/users/${pin}/ai`, { data: requestBody, headers });
+      } catch(e) {
+          feedback.give(handleError(e), 3000, "error");
+      }
   };
+
 
   const startGame = async() => {
     try{
@@ -191,7 +192,7 @@ const LobbyWaiting = () => {
                   width="120px"
                 />
 
-                <SxyButton 
+                <SxyButton
                   text="Add AI player"
                   color={"#16BA34"}
                   disabled={players.length === 5 || starting}
