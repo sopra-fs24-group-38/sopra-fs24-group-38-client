@@ -46,7 +46,7 @@ const LobbyWaiting = () => {
         playerNamesRef.current.delete(sus[0].name);
         setPlayers(prevPlayers => prevPlayers.filter(player => player.avatar !== sus[0].avatar));
 
-        feedback.give("Robo was sent to a farm upstate", 2000, "warning");
+        feedback.give("A robo was sent to a farm upstate", 2000, "info");
 
       } else if(lastMessage.data.includes("user_left")){
         goodbye(JSON.parse(lastMessage.data).user_left);
@@ -134,15 +134,13 @@ const LobbyWaiting = () => {
   };
 
   const removeRobo = async(playerIndex) => {
-      try {
-          const avatarId = players[playerIndex].avatar.substr(11, 3);
-          const requestBody = { avatarId };
-          const response = await api.delete(`/lobbies/users/${pin}/ai`, { data: requestBody, headers });
-      } catch(e) {
-          feedback.give(handleError(e), 3000, "error");
-      }
+    try {
+      const avaId = players[playerIndex].avatar.substr(11, 3);
+      const response = await api.delete(`/lobbies/users/${pin}/ai`, { data: {avatarId: avaId}, headers });
+    } catch(e) {
+      feedback.give(handleError(e), 3000, "error");
+    }
   };
-
 
   const startGame = async() => {
     try{
@@ -154,7 +152,7 @@ const LobbyWaiting = () => {
     }
   };
 
-  const leaveLobby = async () => {
+  const leaveLobby = async() => {
     try{
       const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 

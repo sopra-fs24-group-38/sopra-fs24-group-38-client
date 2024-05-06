@@ -64,6 +64,13 @@ const Lobby = () => {
               <h1 className="font-bold text-center mt-4 text-2xl">Welcome {localStorage.getItem("username")}</h1>
               <div className="flex flex-col m-10 gap-y-10 justify-between items-center" id="lobbyButtons">
                 <SxyButton
+                  text="Global Leaderboard"
+                  color={"#72171D"}
+                  func={() => {}}
+                  width="120px"
+                />
+
+                <SxyButton
                   text="Create Lobby"
                   color={"#72171D"}
                   func={createLobby}
