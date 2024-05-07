@@ -1,44 +1,64 @@
-# Nobody is perfect frontend
+# Group 38 - Nobody's Perfect
 
-## Sopra  - Group 38
+A fun and engaging web application in which you can creatively fool your friends and have a good time. Each round, the game presents an unknown, difficult, technical or “slang” word. Each player then types in a wrong, but possible explanation for this word. Then, the game shows all the players’ wrong and one correct explanation and lets the players vote for what they think is correct. Successfully tricking others into choosing your wrong explanation earns you points.
 
-We want to build a fun and engaging web application in which you can creatively fool your
-friends and have a good time. In combination with competitive aspects we want to solve the
-problem of finding a cool game to play with your friends. Thus we want to create a multiplayer
-game derived from the concept of the board game “Nobody’s Perfect”. Each round, the game
-presents an unknown, difficult, technical or “slang” word. Each player then types in a wrong, but
-possible explanation for this word. Then, the game shows all the player’s wrong and one correct
-explanation and lets the players vote for what they think is correct. Successfully tricking others
-into choosing your wrong explanation earns you points. As a multiplayer web application game,
-that is easily extendable and repeatable with additional modes or languages (see optional user
-stories), thus making it highly suitable for this course.
+## Main Components
 
-## Prerequisites and Installation
-For your local development environment, you will need Node.js.
+These are the main files necessary to get a good grasp of the application:
 
-Before you start the application for the first time, run this command to install all other dependencies, including React:
+1. [LobbyWaiting](https://github.com/sopra-fs24-group-38/sopra-fs24-group-38-client/tree/main/src/components/pages/LobbyWaiting.jsx) is the main hub for player management.
+2. [Game](https://github.com/sopra-fs24-group-38/sopra-fs24-group-38-client/tree/main/src/components/pages/Game.jsx) holds the full logic for the game cycle.
 
-```npm install```
+## Getting started
 
-Next, you can start the app with:
+The game can be played here: http://sopra-fs24-group-38-client.oa.r.appspot.com/
 
-```npm run dev```
+Since this app relies on our OpenAI API commands this is not locally playable without setting something similar up yourself (or having access to our API token).
 
-### Build
-Finally, `npm run build` builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance:\
-The build is minified, and the filenames include hashes.<br>
+### Technologies used
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* [React](https://react.dev/) - JS library
+* [react-use-websocket](https://www.npmjs.com/package/react-use-websocket) - for websockets
 
-### Contributors
+The application has been CSS adjusted for Google Chrome (but also works fine for other browsers). We do expect a browser version that is compliant with the CSS Baseline 2023.
+Also please note that this was developed as a desktop-first application. We did pay attention to the mobile appearance but it was not the major focus.
 
-- Markus Senn (https://github.com/iKusii)
-- Cédric Yves Styner (https://github.com/glt-cs)
-- Harris Alem Yar (https://github.com/so-ri)
-- Elia Aeberhard (https://github.com/Elyisha)
-- Samuel Frank (https://github.com/samuelfrnk)
+## Illustrations
+
+The login page is self-explanatory, choose a username and get started.
+
+![login]()
 
 
+## Roadmap
 
+This is how we envisioned to extend this application:
+* Extend on the user side by introducing a profile page and a chatroom to improve the community feeling between players and giving them a possibility to exchange PINs easily
+* Letting the users choose their own avatar from our pool
+* Adding even more game modes
 
+## Authors
+
+For the FrontEnd part:
+* **Cédric Styner** - *Main contributor* - [glt-cs](https://github.com/glt-cs)
+* **Markus Senn** - *Main contributor* - [iKusii](https://github.com/iKusii)
+* **Samuel Frank** - *QA and main connection for backend coordination*
+
+* **Stefan Schuler** - *Responsible TA* - []()
+* **Roy Rutishauser** - *template provider* - [royru](https://github.com/royru)
+* **Luis Torrejón** - *template provider* - [luis-tm](https://github.com/luis-tm)
+* **Marco Leder** - *template provider* - []()
+
+Continuous team work and BackEnd authors:
+* **Harris Alem** - *Main contributor* - [so-ri](https://github.com/so-ri)
+* **Elia Aeberhard** - *Main contributor* - [Elyisha](https://github.com/Elyisha)
+* **Samuel Frank** - *Main contributor* - [samuelfrnk](https://github.com/samuelfrnk)
+
+## License
+
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE.md) file for details.
+
+## Acknowledgments
+
+* Thanks to all the people that helped, on- and offline
+* No bots were harmed in the making of this game (some attempts were made)
