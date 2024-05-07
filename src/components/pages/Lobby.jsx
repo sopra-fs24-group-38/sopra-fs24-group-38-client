@@ -66,7 +66,7 @@ const Lobby = () => {
                 <SxyButton
                   text="Global Leaderboard"
                   color={"#72171D"}
-                  func={() => {}}
+                  func={() => navigate("/leaderboard")}
                   width="120px"
                 />
 

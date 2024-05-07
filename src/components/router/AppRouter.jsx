@@ -7,6 +7,7 @@ import StyleGuide from "../../styles/StyleGuide";
 import NotFound from "../pages/NotFound";
 import Game from "../pages/Game";
 import End from "../game/End";
+import Leaderboard from "../pages/Leaderboard";
 
 
 const AppRouter = () => {
@@ -21,6 +22,8 @@ const AppRouter = () => {
 
         <Route path="/game" element={<Game />} />
         <Route path="/game/end" element={<End />} />
+
+        <Route path="/leaderboard" element={<Leaderboard />} />
 
         <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="*" element={<NotFound />} />
