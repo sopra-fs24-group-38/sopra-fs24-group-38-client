@@ -70,6 +70,12 @@
       clip-path: path("M 0 0 C 0 0 150 0 150 0 C 150 0 150 75 150 75 C 150 75 150 150 150 150 C 150 150 75 150 75 150 C 75 150 75 150 0 150 C 0 150 0 75 0 75 C 0 75 0 75 0 75 Z");
       z-index: 10;
       transition: clip-path 0.25s, filter 0.25s;
+
+      &#robo {
+        clip-path: path("M 67.5 7.5 C 75 0 75 0 82.5 7.5 C 142.5 67.5 142.5 67.5 142.5 67.5 C 150 75 150 75 142.5 82.5 C 142.5 82.5 82.5 142.5 82.5 142.5 C 75 150 75 150 67.5 142.5 C 67.5 142.5 7.5 82.5 7.5 82.5 C 0 75 0 75 7.5 67.5 Z");
+        filter: sepia(1) brightness(0.75) contrast(1.2) hue-rotate(286deg);
+        cursor: pointer;
+      }
     }
   }
 
@@ -86,6 +92,38 @@
   }
 }
 
+#tooltip {
+  position: absolute;
+  left: 130px;
+  top: -25px;
+  padding: 5px 10px;
+  font-weight: 600;
+  color: white;
+  border: solid black 1px;
+  border-radius: 16px;
+  visibility: hidden;
+  background-color: #CC1F1D;
+
+}
+
+body:has(#robo:hover) #tooltip {
+  visibility: visible;
+}
+
+// leaderboard
+#leaderboard {
+  width: clamp(500px, 40vw, 800px);
+  max-height: 85%;
+
+  > :nth-child(1) {
+    grid-template-columns: 15% 35% 20% 30%;
+  }
+
+  > :nth-child(2) {
+    align-self: center;
+  }
+}
+
 
 // login
 #login {
@@ -93,6 +131,7 @@
   padding: 44px 30px;
   background: #ffffff;
 }
+
 
 
 // MEDIA QUERIES
@@ -218,6 +257,16 @@
     }
   }
 
+  #lobbywaiting {
+    margin-bottom: 20px;
+
+    > div {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+  }
+
   #gameQuestion, #gameVoting {
   margin: 10px;
   }
@@ -227,6 +276,10 @@
   }
 
   #settings {
+    width: clamp(430px, 80vw, 600px);
+  }
+
+  #leaderboard {
     width: clamp(430px, 80vw, 600px);
   }
 }
@@ -246,6 +299,15 @@
   #hero {
     &.login-bg {
       background-size: 40%;
+    }
+  }
+
+  #lobbywaiting{
+    margin-bottom: 10px;
+    padding: 18px;
+
+    & ~ div {
+      scale: 0.85;
     }
   }
 

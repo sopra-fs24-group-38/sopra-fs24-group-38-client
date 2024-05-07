@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { json, useNavigate, useParams } from "react-router-dom";
 import Header from "../ui/Header";
 import LobbySettings from "../ui/LobbySettings";
 import SxyButton from "../ui/SxyButton";
@@ -18,6 +18,11 @@ const LobbyWaiting = () => {
   const prep = useRef(null);
 
   const [showSettings, setShowSettings] = useState(false);
+  const [settingsData, setSettingsData] = useState({
+    rounds: 10,
+    modes: ["BIZARRE"],
+  });
+
   const [isGameMaster, setIsGameMaster] = useState("");
   const [starting, setStarting] = useState(false);
   const [players, setPlayers] = useState([]);
@@ -40,6 +45,13 @@ const LobbyWaiting = () => {
     if(lastMessage?.data && players.length !== 0){
       if(lastMessage.data === "user_joined"){
         playerDelta();
+
+      } else if(lastMessage.data.includes("ai_removed")){
+        const sus = players.filter(player => player.avatar.includes(JSON.parse(lastMessage.data).ai_removed));
+        playerNamesRef.current.delete(sus[0].name);
+        setPlayers(prevPlayers => prevPlayers.filter(player => player.avatar !== sus[0].avatar));
+
+        feedback.give("A robo was sent to a farm upstate", 2000, "info");
 
       } else if(lastMessage.data.includes("user_left")){
         goodbye(JSON.parse(lastMessage.data).user_left);
@@ -118,6 +130,23 @@ const LobbyWaiting = () => {
     }
   };
 
+  const addAI = async() => {
+    try {
+      const response = await api.put(`/lobbies/users/${pin}/ai`, {}, { headers });
+    } catch(e) {
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
+
+  const removeRobo = async(playerIndex) => {
+    try {
+      const avaId = players[playerIndex].avatar.substr(11, 3);
+      const response = await api.delete(`/lobbies/users/${pin}/ai`, { data: {avatarId: avaId}, headers });
+    } catch(e) {
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
+
   const startGame = async() => {
     try{
       const response = await api.post("/lobbies/start", {}, { headers });
@@ -128,7 +157,7 @@ const LobbyWaiting = () => {
     }
   };
 
-  const leaveLobby = async () => {
+  const leaveLobby = async() => {
     try{
       const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
@@ -157,20 +186,30 @@ const LobbyWaiting = () => {
             />
 
             {isGameMaster === localStorage.getItem("username") ?
-              <SxyButton
-                text="Settings"
-                color={"#72171D"}
-                disabled={starting}
-                func={() => setShowSettings(true)}
-                width="120px"
-              />
+              <>
+                <SxyButton
+                  text="Settings"
+                  color={"#72171D"}
+                  disabled={starting}
+                  func={() => setShowSettings(true)}
+                  width="120px"
+                />
+
+                <SxyButton
+                  text="Add AI player"
+                  color={"#16BA34"}
+                  disabled={players.length === 5 || starting}
+                  func={addAI}
+                  width="120px"
+                />
+              </>
               : null
             }
 
             <SxyButton
               text="Leave Lobby"
               width="120px"
-              color={"#72171D"}
+              color={"#CC1F1D"}
               disabled={starting}
               func={leaveLobby}
             />
@@ -178,21 +217,22 @@ const LobbyWaiting = () => {
         </div>
         <div className="bg-neutral-400 p-8 rounded-lg shadow-md relative" >
           <div id="lobbyplayas">
-            {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" />}
-            {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" />}
-            {players.length < 1 ? <p></p> : <img src={players[0].avatar} alt="player 1" />}
-            {players.length < 4 ? <p></p> : <img src={players[3].avatar} alt="player 4" />}
-            {players.length < 5 ? <p></p> : <img src={players[4].avatar} alt="player 5" />}
+            {players.length < 2 ? <p></p> : <img src={players[1].avatar} alt="player 2" id={(players[1].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? "robo" : ""} onClick={(players[1].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? () => removeRobo(1) : null} />}
+            {players.length < 3 ? <p></p> : <img src={players[2].avatar} alt="player 3" id={(players[2].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? "robo" : ""} onClick={(players[2].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? () => removeRobo(2) : null} />}
+            {players.length < 1 ? <p></p> : <img src={players[0].avatar} alt="player 1" id={(players[0].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? "robo" : ""} onClick={(players[0].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? () => removeRobo(0) : null} />}
+            {players.length < 4 ? <p></p> : <img src={players[3].avatar} alt="player 4" id={(players[3].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? "robo" : ""} onClick={(players[3].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? () => removeRobo(3) : null} />}
+            {players.length < 5 ? <p></p> : <img src={players[4].avatar} alt="player 5" id={(players[4].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? "robo" : ""} onClick={(players[4].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? () => removeRobo(4) : null} />}
           </div>
           {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
           {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}
           {players.length < 1 ? null : <p className="absolute top-52 left-4 font-bold text-lg z-20">{players[0].name}</p>}
           {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">{players[3].name}</p>}
           {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">{players[4].name}</p>}
+          <div id="tooltip">Remove AI player</div>
         </div>
 
         {showSettings ?
-          <LobbySettings out={() => setShowSettings(false)} />
+          <LobbySettings out={() => setShowSettings(false)} config={settingsData} setConfig={(n) => setSettingsData(n)} />
           : null
         }
       </div>

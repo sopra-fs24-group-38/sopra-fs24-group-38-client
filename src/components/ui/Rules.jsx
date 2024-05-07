@@ -18,8 +18,11 @@ const Rules = ({ close }) => {
       <p>Requirements: <b>2 - 5</b> players</p>
       <br />
       <p>The game is playable anywhere between 3 - 15 rounds.</p>
-      <p>Only the host can change the settings.</p>
-      <br /><br />
+      <p><u>Only the host</u> can change the settings and add/remove AI players.</p>
+      <br />
+
+      <b><p className="text-red-600">IMPORTANT: adding multiple AI players and choosing multiple different modes increases the time the game needs to prepare. This is just a heads up, it does work :)</p></b>
+      <br />
 
       <h2>Game loop</h2>
       <br />
@@ -30,7 +33,7 @@ const Rules = ({ close }) => {
       </p>
       <br />
       <p>After everyone has submitted their answer we change to the voting phase where all player answers + the correct one are shown.</p>
-      <p>You can gain points for either getting the right answer (+2) and/or fooling your friends (+1 per fooled friend).</p>
+      <p>You can gain points for either getting the right answer (+1) and/or fooling your friends (+2 per fooled friend).</p>
       <br />
       <p>After the voting you can see if you answered correctly or if you&apos;ve been fooled and by whom.</p>
       <p>The final phase of the loop is a scoreboard where every player is listed with their respective scores.</p>
@@ -47,6 +50,8 @@ const Rules = ({ close }) => {
         <li><b>Programming</b>: words that pertain to the programming domain</li>
         <li><b>Rare Foods</b>: foods and dishes from around the globe</li>
       </ul>
+      <br />
+      <p>You can mix and match the modes to your liking. They will be evenly distributed across the selected modes divided by the round count.</p>
     </div>
   );
 };
