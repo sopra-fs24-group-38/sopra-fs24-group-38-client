@@ -4,10 +4,11 @@ import SxyInput from "../ui/SxyInput";
 import SxyButton from "../ui/SxyButton";
 import useFeedback from "../../hooks/useFeedback";
 import { api, handleError } from "../../utils/api";
+import { toast } from "react-toastify";
 
 
 const Definition = (props) => {
-  const { lobby } = props;
+  const { lobby, prep } = props;
   const feedback = useFeedback()
   const [submission, setSubmission] = useState("");
   const [definition, setDefinition] = useState(false);
@@ -23,13 +24,13 @@ const Definition = (props) => {
   }, [])
 
   const sendDefinition = async () => {
-    if(submission.replace(" ", "") !== ""){
+    if (submission.replace(" ", "") !== "") {
       try {
         const headers = { "Authorization": localStorage.getItem("token") };
         const response = await api.put("/lobbies/users/definitions", { definition: submission }, { headers }); //${localStorage.getItem("pin")}
         console.log(response.data)
         setDefinition(true);
-
+        prep.current = toast.loading("Waiting for remaining definitions");
       } catch (error) {
         feedback.give(handleError(error), 3000, "error");
       }
@@ -70,7 +71,8 @@ const Definition = (props) => {
 
 
 Definition.propTypes = {
-  lobby: PropTypes.object
+  lobby: PropTypes.object,
+  prep: PropTypes.object
 };
 
 
