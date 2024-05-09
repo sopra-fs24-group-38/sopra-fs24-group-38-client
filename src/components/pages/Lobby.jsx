@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import Header from "../ui/Header";
 import SxyButton from "../ui/SxyButton";
@@ -13,8 +13,22 @@ const Lobby = () => {
   const feedback = useFeedback();
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
+  const [inSession, setInSession] = useState(false);
   const headers = { "Authorization": localStorage.getItem("token") };
   const { sendJsonMessage } = useContext(WebSocketContext);
+
+  useEffect(() => {
+    fetchStatus();
+  }, []);
+
+  const fetchStatus = async() => {
+    try {
+      // const response = await api.get("/users/self", { headers });
+
+    } catch(e) {
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
 
   const createLobby = async () => {
     try {
@@ -32,7 +46,7 @@ const Lobby = () => {
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
-  }
+  };
 
   const joinLobby = async () => {
     try {
@@ -51,7 +65,7 @@ const Lobby = () => {
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
-  }
+  };
 
 
   return (
