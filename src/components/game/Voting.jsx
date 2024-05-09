@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import AnswerBlock from "../ui/AnswerBlock";
 import useFeedback from "../../hooks/useFeedback";
 import { api, handleError } from "../../utils/api";
+import { toast } from "react-toastify";
 
 
 const Voting = (props) => {
-  const { lobby, solution } = props;
-
+  const { lobby, solution, prep } = props;
   const feedback = useFeedback();
   const [chosenOne, setChosenOne] = useState(-1);
   const [answers, setAnswers] = useState([]);
@@ -27,8 +27,18 @@ const Voting = (props) => {
     background: "#a5987fbf",
   }
 
+  useEffect(() => {
+    toast.update(prep.current, {
+      render: "Please vote your answer.",
+      type: "info",
+      theme: "colored",
+      autoClose: 2000,
+      isLoading: false,
+    })
+  }, [])
 
   useEffect(() => {
+    console.log(lobby)
     setPlayer(lobby.game_details.players.find(p => p.id === parseInt(localStorage.getItem("id"))))
   }, [lobby])
 
@@ -48,6 +58,7 @@ const Voting = (props) => {
         setChosenOne(number);
         sendVote(number)
 
+        prep.current = toast.loading("Waiting for remaining votes");
       }
     }
   }
@@ -111,11 +122,11 @@ const Voting = (props) => {
           {answers.map((answer, index) => {
             return (
               <AnswerBlock key={answer.id} answer={answer.solution} votingPlayers={answer.voting} func={() => handleClick(answer.id)}
-                style={answer.id ===player.id ? ownAnswerStyle :
+                style={answer.id === player.id ? ownAnswerStyle :
                   (chosenOne === answer.id && solution && answer.id === 0) ?
-                  selectSolutionStyle : chosenOne === answer.id ?
-                    selectedStyle : (solution && answer.id === 0) ?
-                      solutionStyle : null} />
+                    selectSolutionStyle : chosenOne === answer.id ?
+                      selectedStyle : (solution && answer.id === 0) ?
+                        solutionStyle : null} />
             )
           }
           )}
@@ -128,7 +139,8 @@ const Voting = (props) => {
 
 Voting.propTypes = {
   lobby: PropTypes.object,
-  solution: PropTypes.bool
+  solution: PropTypes.bool,
+  prep: PropTypes.object
 };
 
 export default Voting;

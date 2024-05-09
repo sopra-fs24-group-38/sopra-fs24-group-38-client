@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import useFeedback from "../../hooks/useFeedback";
 
+import { toast } from "react-toastify";
 import WebSocketContext from "../../context/WebSocketContext";
 import { api, handleError } from "../../utils/api";
 import Definition from "../game/Definiton";
@@ -16,6 +17,7 @@ const Game = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
   const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
+  const prep = useRef(null);
   const [gameState, setGameState] = useState("");
   const [solution, setSolution] = useState(false);
   const [fooler, setFooler] = useState({ mode: false, player: { username: "", avatarId: 0 } });
@@ -47,6 +49,8 @@ const Game = () => {
       navigate(`/lobby/${localStorage.getItem("pin")}`);
     }
     if (lobby.game_details.game_state === "DEFINITION") {
+
+      toast.dismiss()
       setGameState("DEFINITION")
     }
     if (lobby.game_details.game_state === "VOTE") {
@@ -86,6 +90,7 @@ const Game = () => {
     const tempFooled = lobby.game_details.players.filter(x => x.votedForUserId === tempPlayer.id && x)
     const tempFooler = ({ mode: (tempPlayer.votedForUserId === 0), player: lobby.game_details.players.find(x => x.id === tempPlayer.votedForUserId && x), fooled: (tempFooled.length >= 1), foolers: tempFooled })
     setFooler(tempFooler)
+    toast.dismiss()
     setTimeout(() => handleSolution(), 1500);
   }
 
@@ -93,7 +98,7 @@ const Game = () => {
     setSolution(true)
     setTimeout(() => handleFooled(), 3000);
   }
-  
+
   const handleFooled = () => {
     setGameState("OUTCOME")
     setTimeout(() => handleScore(), 5000);
@@ -107,11 +112,11 @@ const Game = () => {
   return (
     <>
       <Header />
-      {gameState === "DEFINITION" && <Definition lobby={lobby} />}
-      {gameState === "VOTE" && <Voting lobby={lobby} solution={solution} />}
+      {gameState === "DEFINITION" && <Definition lobby={lobby} prep={prep} />}
+      {gameState === "VOTE" && <Voting lobby={lobby} solution={solution} prep={prep} />}
       {gameState === "OUTCOME" && <AnswerOutcome fooler={fooler} />}
       {gameState === "FOOLED" && <AnswerFooled fooler={fooler} />}
-      {gameState === "SCORE" && <Score lobby={lobby} />}
+      {gameState === "SCORE" && <Score lobby={lobby} prep={prep} />}
     </>
   );
 };

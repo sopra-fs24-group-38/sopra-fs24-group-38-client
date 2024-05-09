@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import SxyButton from "../ui/SxyButton";
 import useFeedback from "../../hooks/useFeedback";
 import { api, handleError } from "../../utils/api";
+import { toast } from "react-toastify";
 
 import "../../styles/Boards.scss";
 
@@ -37,7 +38,7 @@ const View = (props) => {
 
 
 const Score = (props) => {
-  const { lobby } = props;
+  const { lobby, prep } = props;
   const navigate = useNavigate();
   const feedback = useFeedback();
   const [players, setPlayers] = useState([]);
@@ -78,6 +79,7 @@ const Score = (props) => {
       const headers = { "Authorization": localStorage.getItem("token") };
       await api.post("/lobbies/rounds/start", {}, { headers });
       setReady(true);
+      prep.current = toast.loading("Waiting for other players");
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
@@ -105,7 +107,8 @@ const Score = (props) => {
 };
 
 Score.propTypes = {
-  lobby: PropTypes.object
+  lobby: PropTypes.object,
+  prep: PropTypes.object
 };
 
 View.propTypes = {
