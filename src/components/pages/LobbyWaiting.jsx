@@ -89,6 +89,11 @@ const LobbyWaiting = () => {
           : setIsGameMaster(response.data.game_details.game_master_username);
       }
 
+      // Routes the player to the right mode of the game
+      if (response.data.game_details.game_state !== "WAITING") {
+        navigate("/game");
+      }
+
       // 1st statement checks for update need, 2nd statement is sessionGuard
       if (response.data.game_details.players.length > players.length && response.data.game_details.players.some(obj => obj.username.includes(localStorage.getItem("username")))){
         const newPlayers = response.data.game_details.players.slice(players.length)

@@ -4,11 +4,13 @@ import useFeedback from "../../hooks/useFeedback";
 import { api, handleError } from "../../utils/api";
 import Header from "../ui/Header";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import "../../styles/Winners.scss";
 
 
-const End = () => {
+const End = (props) => {
+  const { prep } = props;
   const feedback = useFeedback();
   const navigate = useNavigate();
   const headers = { "Authorization": localStorage.getItem("token") };
@@ -16,6 +18,7 @@ const End = () => {
   const isHost = useRef(false);
 
   useEffect(() => {
+    toast.dismiss()
     tally();
   }, []);
 
@@ -45,6 +48,8 @@ const End = () => {
     } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
+    localStorage.removeItem("pin");
+    navigate("/lobby");
   };
 
   const anotherOne = async() => {
@@ -96,7 +101,7 @@ const End = () => {
               : null}
 
             {/* places 4+ */}
-            {players.length > 3 ? 
+            {players.length > 3 ?
               <div className="grid grid-cols-3 gap-y-3 w-80 items-start">
                 {players.slice(3).flatMap((player) => [
                   <div key={`ava-${player.username}`} >

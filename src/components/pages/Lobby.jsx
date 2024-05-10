@@ -16,6 +16,12 @@ const Lobby = () => {
   const headers = { "Authorization": localStorage.getItem("token") };
   const { sendJsonMessage } = useContext(WebSocketContext);
 
+  useEffect(() => { 
+    if (localStorage.getItem("pin")) {
+      navigate(`/lobby/${localStorage.getItem("pin")}`);
+    }
+  }, [])
+
   const createLobby = async () => {
     try {
       const response = await api.post("/lobbies", {}, { headers });
@@ -93,7 +99,7 @@ const Lobby = () => {
                       value={pin}
                       color={"#ebe4d7"}
                       inputMode={"numeric"}
-                      maxLength={"4"}
+                      maxLength={4}
                       placeholder="1234"
                       func={(n) => setPin(n)}
                       enterKey={joinLobby} />
