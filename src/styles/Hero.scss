@@ -280,6 +280,7 @@ body:has(#robo:hover) #tooltip {
 
   #answer-text {
    font-size: 1rem;
+   word-break: break-word;
   }
 
   #settings {
@@ -331,6 +332,46 @@ body:has(#robo:hover) #tooltip {
   }
 }
 
+
+@media (width < 350px) {
+
+  #login {
+    width: 200px;
+
+    #login-btn {
+      flex-direction: column;
+      align-items: center;
+      height: 90px;
+    }
+  }
+
+  #hero {
+    &.login-bg {
+      background-size: 40%;
+    }
+  }
+
+  #lobbywaiting{
+    margin-bottom: 10px;
+    padding: 18px;
+
+    & ~ div {
+      scale: 0.80;
+    }
+  }
+
+  #settings {
+    width: clamp(310px, 90vw, 400px);
+  }
+
+  #endScreen {
+    scale: 0.8;
+  }
+
+  #answer-text {
+    font-size: 0.75rem;
+  }
+}
 @media (width >=700px) {
   #login {
     top: 0;

@@ -8,20 +8,27 @@ import { toast } from "react-toastify";
 
 
 const Definition = (props) => {
-  const { lobby, prep } = props;
+  const { lobby, prep, player } = props;
   const feedback = useFeedback()
   const [submission, setSubmission] = useState("");
   const [definition, setDefinition] = useState(false);
 
+  useEffect(() => {
+    toast.dismiss();
+  }, [])
 
   useEffect(() => {
-    const tempPlayer = lobby.game_details.players.find(player => player.id === parseInt(localStorage.getItem("id")))
-    if (tempPlayer.definition) {
-
-      setSubmission(tempPlayer.definition)
+    if (player.definition) {
+      setSubmission(player.definition)
       setDefinition(true)
     }
-  }, [])
+  }, [player])
+
+  useEffect(() => {
+    if (definition === true ) {
+      prep.current = toast.loading("Waiting for remaining definitions");
+    }
+  }, [definition])
 
   const sendDefinition = async () => {
     if (submission.replace(" ", "") !== "") {
@@ -30,7 +37,6 @@ const Definition = (props) => {
         const response = await api.put("/lobbies/users/definitions", { definition: submission }, { headers }); //${localStorage.getItem("pin")}
         console.log(response.data)
         setDefinition(true);
-        prep.current = toast.loading("Waiting for remaining definitions");
       } catch (error) {
         feedback.give(handleError(error), 3000, "error");
       }
