@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { json, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../ui/Header";
 import LobbySettings from "../ui/LobbySettings";
 import SxyButton from "../ui/SxyButton";
@@ -16,6 +16,7 @@ const LobbyWaiting = () => {
   const pin = useParams().id;
   const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const prep = useRef(null);
+  const [aiCount, setAiCount] = useState(0);
 
   const [showSettings, setShowSettings] = useState(false);
   const [settingsData, setSettingsData] = useState({
@@ -49,6 +50,7 @@ const LobbyWaiting = () => {
       } else if(lastMessage.data.includes("ai_removed")){
         const sus = players.filter(player => player.avatar.includes(JSON.parse(lastMessage.data).ai_removed));
         playerNamesRef.current.delete(sus[0].name);
+        setAiCount(prev => prev - 1);
         setPlayers(prevPlayers => prevPlayers.filter(player => player.avatar !== sus[0].avatar));
 
         feedback.give("A robo was sent to a farm upstate", 2000, "info");
@@ -97,7 +99,12 @@ const LobbyWaiting = () => {
           }));
 
         newPlayers.forEach(element => {
-          feedback.give(`${element.name} has joined`, 1500, "success");
+          if(element.avatar,match(/10[0-9]/g)){
+            setAiCount(prev => prev + 1);
+            feedback.give("The host has recruited some help", 1500, "info");
+          } else {
+            feedback.give(`${element.name} has joined`, 1500, "success");
+          }
 
           playerNamesRef.current.add(element.name);
         });
@@ -132,7 +139,7 @@ const LobbyWaiting = () => {
 
   const addAI = async() => {
     try {
-      const response = await api.put(`/lobbies/users/${pin}/ai`, {}, { headers });
+      await api.put(`/lobbies/users/${pin}/ai`, {}, { headers });
     } catch(e) {
       feedback.give(handleError(e), 3000, "error");
     }
@@ -141,7 +148,7 @@ const LobbyWaiting = () => {
   const removeRobo = async(playerIndex) => {
     try {
       const avaId = players[playerIndex].avatar.substr(11, 3);
-      const response = await api.delete(`/lobbies/users/${pin}/ai`, { data: {avatarId: avaId}, headers });
+      await api.delete(`/lobbies/users/${pin}/ai`, { data: {avatarId: avaId}, headers });
     } catch(e) {
       feedback.give(handleError(e), 3000, "error");
     }
@@ -149,7 +156,7 @@ const LobbyWaiting = () => {
 
   const startGame = async() => {
     try{
-      const response = await api.post("/lobbies/start", {}, { headers });
+      await api.post("/lobbies/start", {}, { headers });
       setStarting(true);
 
     } catch(e){
@@ -159,7 +166,7 @@ const LobbyWaiting = () => {
 
   const leaveLobby = async() => {
     try{
-      const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
+      await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
       localStorage.removeItem("pin");
       navigate("/lobby");
@@ -198,7 +205,7 @@ const LobbyWaiting = () => {
                 <SxyButton
                   text="Add AI player"
                   color={"#16BA34"}
-                  disabled={players.length === 5 || starting}
+                  disabled={players.length === 5 || starting || aiCount > 1}
                   func={addAI}
                   width="120px"
                 />
