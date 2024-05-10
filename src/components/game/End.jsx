@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SxyButton from "../ui/SxyButton";
 import useFeedback from "../../hooks/useFeedback";
 import { api, handleError } from "../../utils/api";
@@ -11,7 +11,9 @@ import "../../styles/Winners.scss";
 const End = () => {
   const feedback = useFeedback();
   const navigate = useNavigate();
+  const headers = { "Authorization": localStorage.getItem("token") };
   const [players, setPlayers] = useState([]);
+  const isHost = useRef(false);
 
   useEffect(() => {
     tally();
@@ -19,9 +21,13 @@ const End = () => {
 
   const tally = async () => {
     try {
-      const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.get(`/lobbies/${localStorage.getItem("pin")}`, { headers });
+      // ordering
       setPlayers(response.data.game_details.players.slice().sort((a, b) => b.score - a.score));
+      // check host
+      if(response.data.game_details.game_master_username === localStorage.getItem("username")){
+        isHost.current = true;
+      }
     } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
@@ -29,12 +35,26 @@ const End = () => {
 
   const aightImmaLeave = async () => {
     try {
-      const headers = { "Authorization": localStorage.getItem("token") };
-      const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers })
+      if(isHost.current){
+        await api.put("/lobbies/newround", { headers });
+      }
+      await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers })
 
       localStorage.removeItem("pin");
       navigate("/lobby");
     } catch (e) {
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
+
+  const anotherOne = async() => {
+    try {
+      if(isHost.current){
+        await api.put("/lobbies/newround", { headers });
+      }
+
+      navigate(`/lobby/${localStorage.getItem("pin")}`)
+    } catch(e) {
       feedback.give(handleError(e), 3000, "error");
     }
   };
@@ -97,7 +117,7 @@ const End = () => {
               text="New Game"
               width="100px"
               color={"#731224"}
-              func={() => {navigate(`/lobby/${localStorage.getItem("pin")}`)}}
+              func={anotherOne}
             />
             <SxyButton
               text="Leave Session"
