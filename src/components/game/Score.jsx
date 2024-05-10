@@ -59,7 +59,7 @@ const Score = (props) => {
       if (player.votedForUserId && playerList.some(p => p.id === player.votedForUserId)) {
         voteCount.set(player.votedForUserId, (voteCount.get(player.votedForUserId) || 0) + 2);
       }
-      // Increment by 1 if the player voted for "0" (self-vote)
+      // Increment by 1 if the player voted for "0" (correct-vote)
       if (player.votedForUserId === 0) {
         voteCount.set(player.id, (voteCount.get(player.id) || 0) + 1);
       }
@@ -91,6 +91,20 @@ const Score = (props) => {
       <div className="bg-neutral-100 shadow-md max-w-sexy p-10 rounded-lg" id="gameScores">
         <h1 className="mb-6 font-semibold text-xl hover:cursor-pointer">Leaderboard</h1>
         <div className="mb-4" id="scorePlayers">
+        <div key={-1} className="grid grid-cols-4 w-96 pb-2 gap-y-2">
+        <div key={`${-1}-avatar`} className="p-2">
+          Avatar
+        </div>
+        <div key={`${-1}-name`} className="p-2">
+          Username
+        </div>
+        <div key={`${-1}-ppr`} className="p-2">
+          <p>Points</p>
+        </div>
+        <div key={`${-1}-score`} className="p-2">
+          <p>Total score</p>
+        </div>
+      </div>
           {players.flatMap((player, playerIndex) => {
             return (<View key={`player-${player.id}`} player={player} playerIndex={playerIndex} />)
           })

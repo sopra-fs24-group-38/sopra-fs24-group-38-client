@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import Header from "../ui/Header";
 import SxyButton from "../ui/SxyButton";
@@ -15,6 +15,12 @@ const Lobby = () => {
   const [pin, setPin] = useState("");
   const headers = { "Authorization": localStorage.getItem("token") };
   const { sendJsonMessage } = useContext(WebSocketContext);
+
+  useEffect(() => { 
+    if (localStorage.getItem("pin")) {
+      navigate(`/lobby/${localStorage.getItem("pin")}`);
+    }
+  }, [])
 
   const createLobby = async () => {
     try {
@@ -93,7 +99,7 @@ const Lobby = () => {
                       value={pin}
                       color={"#ebe4d7"}
                       inputMode={"numeric"}
-                      maxLength={"4"}
+                      maxLength={4}
                       placeholder="1234"
                       func={(n) => setPin(n)}
                       enterKey={joinLobby} />

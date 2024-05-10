@@ -8,11 +8,10 @@ import { toast } from "react-toastify";
 
 
 const Voting = (props) => {
-  const { lobby, solution, prep } = props;
+  const { lobby, solution, prep, player } = props;
   const feedback = useFeedback();
   const [chosenOne, setChosenOne] = useState(-1);
   const [answers, setAnswers] = useState([]);
-  const [player, setPlayer] = useState({});
   const selectedStyle = {
     border: "solid black 2px",
   };
@@ -37,10 +36,6 @@ const Voting = (props) => {
     })
   }, [])
 
-  useEffect(() => {
-    console.log(lobby)
-    setPlayer(lobby.game_details.players.find(p => p.id === parseInt(localStorage.getItem("id"))))
-  }, [lobby])
 
   useEffect(() => {
     setChosenOne(Object.is(player.votedForUserId, null) ? -1 : player.votedForUserId);
@@ -140,7 +135,8 @@ const Voting = (props) => {
 Voting.propTypes = {
   lobby: PropTypes.object,
   solution: PropTypes.bool,
-  prep: PropTypes.object
+  prep: PropTypes.object,
+  player: PropTypes.object
 };
 
 export default Voting;

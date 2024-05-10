@@ -22,13 +22,14 @@ const Game = () => {
   const [gameState, setGameState] = useState("");
   const [solution, setSolution] = useState(false);
   const [fooler, setFooler] = useState({ mode: false, player: { username: "", avatarId: 0 } });
+  const [player, setPlayer] = useState({ avatarId: 0, definition: "", id: 0, score: 0, username: "" });
   const [lobby, setLobby] = useState({
     "game_pin": localStorage.getItem("pin"),
     "game_details": {
       "challenge": "",
       "solution": "",
       "players": [],
-      "game_state": "LOBBY",
+      "game_state": "DEFINITION",
       "game_over": false
     }
   });
@@ -38,7 +39,8 @@ const Game = () => {
     sendJsonMessage(
       {
         "action": "init",
-        "userId": localStorage.getItem("id")
+        "userId": localStorage.getItem("id"),
+        "lobbyId": `${localStorage.getItem("pin")}`
       }
     )
     // setFooler({mode: false, player: {username:"", avatarId:0}})
@@ -50,8 +52,6 @@ const Game = () => {
       navigate(`/lobby/${localStorage.getItem("pin")}`);
     }
     if (lobby.game_details.game_state === "DEFINITION") {
-
-      toast.dismiss()
       setGameState("DEFINITION")
     }
     if (lobby.game_details.game_state === "VOTE") {
@@ -71,16 +71,25 @@ const Game = () => {
 
   // Use Effect to render new Lobbyinformation
   useEffect(() => {
-    console.log("Received message:", lastMessage);
-    getLobby();
-  }, [lastMessage,]);
+    // console.log("Received message:", lastMessage);
+    setTimeout(() => getLobby(), 20);
+    if(lastMessage?.data?.includes("user_left")){
+      goodbye(JSON.parse(lastMessage?.data).user_left);
+
+    } else if(lastMessage?.data?.includes("gamehost_left")){
+      goodbye(JSON.parse(lastMessage?.data).gamehost_left);
+    }
+  }, [lastMessage]);
 
   const getLobby = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("token") };
       const response = await api.get(`/lobbies/${localStorage.getItem("pin")}`, { headers });
       setLobby(response.data)
-
+      const tempPlayer = response.data.game_details.players.find(player => player.id === parseInt(localStorage.getItem("id")));
+      if (tempPlayer) {
+        setPlayer(tempPlayer);
+      }
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
@@ -109,16 +118,23 @@ const Game = () => {
     setSolution(false)
     setTimeout(() => setGameState("SCORE"), 5000);
   }
+  const goodbye = async(username) => {
+    try{
 
+        feedback.give(`${username} has left the party`, 2000, "warning");
+    } catch(e){
+      feedback.give(handleError(e), 3000, "error");
+    }
+  };
   return (
     <>
-      <Header />
+      <Header quit={true} />
       <Information lobby={lobby} prep={prep} />
-      {gameState === "DEFINITION" && <Definition lobby={lobby} prep={prep} />}
-      {gameState === "VOTE" && <Voting lobby={lobby} solution={solution} prep={prep} />}
+      {gameState === "DEFINITION" && <Definition lobby={lobby} prep={prep} player={player} />}
+      {gameState === "VOTE" && <Voting lobby={lobby} solution={solution} prep={prep} player={player} />}
       {gameState === "OUTCOME" && <AnswerOutcome fooler={fooler} />}
       {gameState === "FOOLED" && <AnswerFooled fooler={fooler} />}
-      {gameState === "SCORE" && <Score lobby={lobby} prep={prep} />}
+      {gameState === "SCORE" && <Score lobby={lobby} prep={prep} player={player} />}
     </>
   );
 };

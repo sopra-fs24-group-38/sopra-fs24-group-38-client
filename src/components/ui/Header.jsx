@@ -8,7 +8,7 @@ import Rules from "./Rules";
 import "../../styles/Header.scss";
 
 
-const Header = ({ leave = false }) => {
+const Header = ({ leave = false, quit = false }) => {
   const navigate = useNavigate();
   const feedback = useFeedback();
   const [seeRules, setSeeRules] = useState(false);
@@ -28,9 +28,20 @@ const Header = ({ leave = false }) => {
 
   };
 
+  const leaveLobby = async () => {
+    try {
+      const headers = { "Authorization": localStorage.getItem("token") };
+      const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
+
+      localStorage.removeItem("pin");
+      navigate("/lobby");
+    } catch (error) {
+      feedback.give(handleError(error), 3000, "error");
+    }
+  };
 
   return (
-    <div className="flex justify-between px-6 py-6 items-center" id="header">
+    <div className="flex px-6 py-6" id="header">
       <div className="flex items-center gap-x-2">
         <SxyButton
           text="?"
@@ -40,13 +51,23 @@ const Header = ({ leave = false }) => {
         <h1 className="text-xl font-medium">Rules</h1>
       </div>
       {leave ?
+        <><div id="logout">
         <SxyButton
           text="Logout"
           color={"#CC1F1D"}
           func={logout}
           width="100px"
           position={"row-reverse"}
-        /> : <div />}
+        /></div></> : <div />}
+      {quit ?
+        <><div id="logout">
+          <SxyButton
+            text="Quit"
+            color={"#CC1F1D"}
+            func={leaveLobby}
+            width="100px"
+            position={"row-reverse"} />
+        </div></> : <div />}
 
       {seeRules ? <Rules close={() => setSeeRules(false)} /> : null}
     </div>
