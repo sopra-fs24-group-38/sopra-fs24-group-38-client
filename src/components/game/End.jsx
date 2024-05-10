@@ -48,8 +48,6 @@ const End = (props) => {
     } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
-    localStorage.removeItem("pin");
-    navigate("/lobby");
   };
 
   const anotherOne = async() => {
