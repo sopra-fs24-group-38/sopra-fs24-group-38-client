@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
+import Information from "../game/Information";
 import useFeedback from "../../hooks/useFeedback";
 
 import { toast } from "react-toastify";
@@ -112,6 +113,7 @@ const Game = () => {
   return (
     <>
       <Header />
+      <Information lobby={lobby} prep={prep} />
       {gameState === "DEFINITION" && <Definition lobby={lobby} prep={prep} />}
       {gameState === "VOTE" && <Voting lobby={lobby} solution={solution} prep={prep} />}
       {gameState === "OUTCOME" && <AnswerOutcome fooler={fooler} />}
