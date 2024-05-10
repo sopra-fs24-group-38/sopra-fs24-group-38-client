@@ -67,6 +67,10 @@ const Lobby = () => {
     }
   };
 
+  const takeMeBack = () => {
+    
+  };
+
 
   return (
     <>
@@ -81,15 +85,23 @@ const Lobby = () => {
                   text="Global Leaderboard"
                   color={"#72171D"}
                   func={() => navigate("/leaderboard")}
+                  disabled={inSession}
                   width="120px"
                 />
 
-                <SxyButton
-                  text="Create Lobby"
-                  color={"#72171D"}
-                  func={createLobby}
-                  width="120px"
-                />
+                {inSession ? 
+                  <SxyButton 
+                    text="Rejoin Lobby"
+                    width="120px"
+                    color={"#72171D"}
+                    func={takeMeBack}
+                  /> :
+                  <SxyButton
+                    text="Create Lobby"
+                    color={"#72171D"}
+                    func={createLobby}
+                    width="120px"
+                  />}
 
                 {showPin ?
                   <div className="flex justify-between relative" id="lobbypin">
@@ -117,6 +129,7 @@ const Lobby = () => {
                     text="Join Lobby"
                     color={"#72171D"}
                     func={() => setShowPin(true)}
+                    disabled={inSession}
                     width="120px"
                   />
                 }
