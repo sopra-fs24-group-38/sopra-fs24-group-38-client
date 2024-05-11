@@ -267,7 +267,7 @@ body:has(#robo:hover) #tooltip {
   #lobbywaiting {
     margin-bottom: 20px;
 
-    > div {
+    > div:nth-child(3) {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;

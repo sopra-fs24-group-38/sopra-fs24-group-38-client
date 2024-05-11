@@ -18,7 +18,7 @@ const Rules = ({ close }) => {
       <p>Requirements: <b>2 - 5</b> players</p>
       <br />
       <p>The game is playable anywhere between 3 - 15 rounds.</p>
-      <p><u>Only the host</u> can change the settings and add/remove AI players.</p>
+      <p><u>Only the host</u> can change the settings and add/remove AI players. There may not be more than 2 AI players in any lobby.</p>
       <br />
 
       <b><p className="text-red-600">IMPORTANT: adding multiple AI players and choosing multiple different modes increases the time the game needs to prepare. This is just a heads up, it does work :)</p></b>

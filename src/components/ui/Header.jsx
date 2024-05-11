@@ -51,14 +51,18 @@ const Header = ({ leave = false, quit = false }) => {
         <h1 className="text-xl font-medium">Rules</h1>
       </div>
       {leave ?
-        <><div id="logout">
-        <SxyButton
-          text="Logout"
-          color={"#CC1F1D"}
-          func={logout}
-          width="100px"
-          position={"row-reverse"}
-        /></div></> : <div />}
+        <>
+          <div id="logout">
+            <SxyButton
+              text="Logout"
+              color={"#CC1F1D"}
+              func={logout}
+              width="100px"
+              position={"row-reverse"}
+            />
+          </div>
+        </>
+        : <div />}
       {quit ?
         <><div id="logout">
           <SxyButton
