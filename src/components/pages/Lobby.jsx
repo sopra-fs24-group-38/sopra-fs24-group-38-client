@@ -38,7 +38,7 @@ const Lobby = () => {
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
-  }
+  };
 
   const joinLobby = async () => {
     try {
@@ -57,7 +57,7 @@ const Lobby = () => {
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
-  }
+  };
 
 
   return (
