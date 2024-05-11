@@ -120,12 +120,13 @@ const Game = () => {
   }
   const goodbye = async(username) => {
     try{
-
-        feedback.give(`${username} has left the party`, 2000, "warning");
+      feedback.give(`${username} has left the party`, 2000, "warning");
     } catch(e){
       feedback.give(handleError(e), 3000, "error");
     }
   };
+
+
   return (
     <>
       <Header quit={true} />

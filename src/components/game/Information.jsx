@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types"
 
 
 const Information = (props) => {
-  const { lobby, prep } = props;
+  const { lobby } = props;
 
   return (
     <div className="justify-center items-center" id="info">
@@ -19,13 +19,12 @@ const Information = (props) => {
         </div>
       </div>
     </div>
-      )
-    }
-
-
-      Information.propTypes = {
-        lobby: PropTypes.object
+  );
 };
 
 
-      export default Information;
+Information.propTypes = {
+  lobby: PropTypes.object
+};
+
+export default Information;

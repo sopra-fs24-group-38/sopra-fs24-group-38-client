@@ -39,7 +39,7 @@ const End = (props) => {
   const aightImmaLeave = async () => {
     try {
       if(isHost.current){
-        await api.put("/lobbies/newround", { headers });
+        await api.put("/lobbies/newround", {}, { headers });
       }
       await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers })
 
@@ -53,7 +53,7 @@ const End = (props) => {
   const anotherOne = async() => {
     try {
       if(isHost.current){
-        await api.put("/lobbies/newround", { headers });
+        await api.put("/lobbies/newround", {}, { headers });
       }
 
       navigate(`/lobby/${localStorage.getItem("pin")}`)
