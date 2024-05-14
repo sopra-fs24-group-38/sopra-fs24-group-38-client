@@ -40,16 +40,16 @@ const Leaderboard = () => {
                   <p><b>Points</b></p>
                   <p><b>Players fooled</b></p>
                   {allstars.flat().sort((a, b) => b.permanentScore - a.permanentScore).map((player, index) => [
-                    <div key={`player-${index}`}>
+                    <div key={`player-${index}`} className={`${player.username === localStorage.getItem("username") ? "bg-contrast-300 pl-4 -ml-4" : ""}`}>
                       {`#${index + 1}`}
                     </div>,
-                    <div key={player.username}>
+                    <div key={player.username} className={`${player.username === localStorage.getItem("username") ? "bg-contrast-300" : ""}`}>
                       {player.username}
                     </div>,
-                    <div key={`${player.username}-score`}>
+                    <div key={`${player.username}-score`} className={`${player.username === localStorage.getItem("username") ? "bg-contrast-300" : ""}`}>
                       {player.permanentScore}
                     </div>,
-                    <div key={`${player.username}-fools`}>
+                    <div key={`${player.username}-fools`} className={`${player.username === localStorage.getItem("username") ? "bg-contrast-300" : ""}`}>
                       {player.permanentFools}
                     </div>,
                   ])}
