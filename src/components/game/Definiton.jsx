@@ -33,7 +33,7 @@ const Definition = (props) => {
   const sendDefinition = async () => {
     if (submission.replace(" ", "") !== "") {
       try {
-        const headers = { "Authorization": localStorage.getItem("token") };
+        const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
         const response = await api.put("/lobbies/users/definitions", { definition: submission }, { headers }); //${localStorage.getItem("pin")}
         console.log(response.data)
         setDefinition(true);

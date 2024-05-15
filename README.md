@@ -57,7 +57,7 @@ Check this at http://localhost:8080, we have a Swagger page for ease of access a
 
 ## Illustrations
 
-The login page is self-explanatory, choose a username and get started.
+The login page is self-explanatory, choose a username and join the party.
 
 ![login]()
 
@@ -65,15 +65,16 @@ In the top left corner there is always a rules button explaining the in-and-outs
 
 ![lobby]()
 
-K
+Change settings, see other players joining/leaving or add up to 2 AI players to fill spots.
 
 ![lobbywaiting]()
 
-K
+The main game loop consists of a definition presentation, voting screen, outcome and interim scoreboard.
+(use compound image with all 4 views)
 
 ![round]()
 
-K
+Simple board with placement, all-time score and total fooled players.
 
 ![leaderboard]()
 

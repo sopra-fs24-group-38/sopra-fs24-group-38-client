@@ -13,7 +13,7 @@ const Lobby = () => {
   const feedback = useFeedback();
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
-  const headers = { "Authorization": localStorage.getItem("token") };
+  const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
   const { sendJsonMessage } = useContext(WebSocketContext);
 
   useEffect(() => { 
@@ -62,7 +62,7 @@ const Lobby = () => {
 
   return (
     <>
-      {localStorage.getItem("token") ?
+      {localStorage.getItem("nobody_is_perfect_token") ?
         <>
           <Header leave />
           <div className="bg-neutral-400 justify-center" id="hero">

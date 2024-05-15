@@ -15,12 +15,12 @@ const Header = ({ leave = false, quit = false }) => {
 
   const logout = async () => {
     try {
-      const headers = { "Authorization": localStorage.getItem("token") };
+      const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
       await api.get("/users/logout", { headers });
     } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
-    localStorage.removeItem("token");
+    localStorage.removeItem("nobody_is_perfect_token");
     localStorage.removeItem("id");
     localStorage.removeItem("username");
     localStorage.removeItem("pin");
@@ -30,7 +30,7 @@ const Header = ({ leave = false, quit = false }) => {
 
   const leaveLobby = async () => {
     try {
-      const headers = { "Authorization": localStorage.getItem("token") };
+      const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
       const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
       localStorage.removeItem("pin");

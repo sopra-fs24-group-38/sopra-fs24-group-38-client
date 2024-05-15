@@ -13,7 +13,7 @@ const End = (props) => {
   const { prep } = props;
   const feedback = useFeedback();
   const navigate = useNavigate();
-  const headers = { "Authorization": localStorage.getItem("token") };
+  const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
   const [players, setPlayers] = useState([]);
   const isHost = useRef(false);
 

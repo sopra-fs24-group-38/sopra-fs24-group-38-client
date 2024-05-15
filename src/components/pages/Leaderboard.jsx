@@ -9,7 +9,7 @@ import { api, handleError } from "../../utils/api";
 const Leaderboard = () => {
   const navigate = useNavigate();
   const feedback = useFeedback();
-  const headers = { "Authorization": localStorage.getItem("token") };
+  const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
   const [allstars, setAllstars] = useState([]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Leaderboard = () => {
 
   return(
     <>
-      {localStorage.getItem("token") ?
+      {localStorage.getItem("nobody_is_perfect_token") ?
         <div>
           <Header />
           <div className="bg-neutral-400 justify-center" id="hero">
@@ -40,16 +40,16 @@ const Leaderboard = () => {
                   <p><b>Points</b></p>
                   <p><b>Players fooled</b></p>
                   {allstars.flat().sort((a, b) => b.permanentScore - a.permanentScore).map((player, index) => [
-                    <div key={`player-${index}`}>
+                    <div key={`player-${index}`} className={`${player.username === localStorage.getItem("username") ? "bg-contrast-300 pl-4 -ml-4" : ""}`}>
                       {`#${index + 1}`}
                     </div>,
-                    <div key={player.username}>
+                    <div key={player.username} className={`${player.username === localStorage.getItem("username") ? "bg-contrast-300" : ""}`}>
                       {player.username}
                     </div>,
-                    <div key={`${player.username}-score`}>
+                    <div key={`${player.username}-score`} className={`${player.username === localStorage.getItem("username") ? "bg-contrast-300" : ""}`}>
                       {player.permanentScore}
                     </div>,
-                    <div key={`${player.username}-fools`}>
+                    <div key={`${player.username}-fools`} className={`${player.username === localStorage.getItem("username") ? "bg-contrast-300" : ""}`}>
                       {player.permanentFools}
                     </div>,
                   ])}
