@@ -25,7 +25,7 @@ export const WebSocketProvider = ({ children }) => {
         // closed normally, do nothing
         return false;
       case 1001:
-        // user either closed browser or disconnects, remove token
+        // user either closed browser or disconnects
         console.log("Page reload or disconnect");
         
         return false;

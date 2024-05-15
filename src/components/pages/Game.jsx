@@ -83,7 +83,7 @@ const Game = () => {
 
   const getLobby = async () => {
     try {
-      const headers = { "Authorization": localStorage.getItem("token") };
+      const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
       const response = await api.get(`/lobbies/${localStorage.getItem("pin")}`, { headers });
       setLobby(response.data)
       const tempPlayer = response.data.game_details.players.find(player => player.id === parseInt(localStorage.getItem("id")));

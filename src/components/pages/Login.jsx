@@ -30,7 +30,7 @@ const Login = () => {
       }
 
       // Store the token into the local storage.
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("nobody_is_perfect_token", response.data.token);
       localStorage.setItem("id", response.data.id);
       localStorage.setItem("username", username);
 
@@ -42,7 +42,7 @@ const Login = () => {
 
   return (
     <>
-      {!localStorage.getItem("token") ?
+      {!localStorage.getItem("nobody_is_perfect_token") ?
         <>
           <Header />
           <div className="w-full flex justify-center items-center login-bg" id="hero">

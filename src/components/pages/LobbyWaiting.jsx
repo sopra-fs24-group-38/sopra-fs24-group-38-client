@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 const LobbyWaiting = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
-  const headers = { "Authorization": localStorage.getItem("token") };
+  const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
   const pin = useParams().id;
   const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const prep = useRef(null);
