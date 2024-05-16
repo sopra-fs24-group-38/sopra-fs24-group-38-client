@@ -29,7 +29,7 @@ const End = (props) => {
       }
     )
     
-    setTimeout(() => tally(), 20);
+    setTimeout(() => tally(), 100);
   }, []);
 
   const tally = async () => {
