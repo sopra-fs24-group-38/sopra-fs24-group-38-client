@@ -9,7 +9,7 @@ import { api, handleError } from "../../utils/api";
 const Leaderboard = () => {
   const navigate = useNavigate();
   const feedback = useFeedback();
-  const headers = { "Authorization": localStorage.getItem("token") };
+  const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
   const [allstars, setAllstars] = useState([]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Leaderboard = () => {
 
   const unauthorized = (error) => {
     if (error.response.status === 401 || error.response.status === 404) {
-      localStorage.removeItem("token");
+      localStorage.removeItem("nobody_is_perfect_token");
       localStorage.removeItem("pin");
       navigate("/login");
     }
@@ -36,7 +36,7 @@ const Leaderboard = () => {
 
   return(
     <>
-      {localStorage.getItem("token") ?
+      {localStorage.getItem("nobody_is_perfect_token") ?
         <div>
           <Header />
           <div className="bg-neutral-400 justify-center" id="hero">

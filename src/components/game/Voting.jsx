@@ -60,7 +60,7 @@ const Voting = (props) => {
 
   const sendVote = async (number) => {
     try {
-      const headers = { "Authorization": localStorage.getItem("token") };
+      const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
       await api.put("/lobbies/users/votes", { vote: number }, { headers }); //${localStorage.getItem("pin")}
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");

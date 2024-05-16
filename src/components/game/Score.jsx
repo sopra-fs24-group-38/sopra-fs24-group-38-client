@@ -74,7 +74,7 @@ const Score = (props) => {
 
   const nextRound = async () => {
     try {
-      const headers = { "Authorization": localStorage.getItem("token") };
+      const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
       await api.post("/lobbies/rounds/start", {}, { headers });
       setReady(true);
       prep.current = toast.loading("Waiting for other players");

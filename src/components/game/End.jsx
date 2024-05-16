@@ -15,7 +15,7 @@ const End = (props) => {
   const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const feedback = useFeedback();
   const navigate = useNavigate();
-  const headers = { "Authorization": localStorage.getItem("token") };
+  const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
   const [players, setPlayers] = useState([]);
   const isHost = useRef(false);
 
@@ -76,7 +76,7 @@ const End = (props) => {
 
   const unauthorized = (error) => {
     if (error.response.status === 401 || error.response.status === 404) {
-      localStorage.removeItem("token");
+      localStorage.removeItem("nobody_is_perfect_token");
       localStorage.removeItem("pin");
       navigate("/login");
     }

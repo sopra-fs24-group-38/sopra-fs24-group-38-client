@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 const LobbyWaiting = () => {
   const navigate = useNavigate();
   const feedback = useFeedback()
-  const headers = { "Authorization": localStorage.getItem("token") };
+  const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
   const pin = useParams().id;
   const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const prep = useRef(null);
@@ -120,7 +120,7 @@ const LobbyWaiting = () => {
       }
     } catch (e) {
       if (e.response.status === 401 || e.response.status === 404) {
-        localStorage.removeItem("token");
+        localStorage.removeItem("nobody_is_perfect_token");
         localStorage.removeItem("pin");
         navigate("/login");
       }

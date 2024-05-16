@@ -42,7 +42,7 @@ const Login = () => {
 
   return (
     <>
-      {!localStorage.getItem("token") ?
+      {!localStorage.getItem("nobody_is_perfect_token") ?
         <>
           <Header />
           <div className="w-full flex justify-center items-center login-bg" id="hero">
