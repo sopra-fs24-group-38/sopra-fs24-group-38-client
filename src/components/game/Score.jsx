@@ -109,7 +109,7 @@ const Score = (props) => {
           }
         </div>
         <SxyButton
-          text="Next round"
+          text={lobby.game_details.round_number < lobby.game_details.max_round_numbers ? "Next round" : "Switch to victory screen!"}
           color={"#72171D"}
           disabled={ready}
           func={nextRound} />

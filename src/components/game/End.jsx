@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import SxyButton from "../ui/SxyButton";
 import useFeedback from "../../hooks/useFeedback";
 import { api, handleError } from "../../utils/api";
 import Header from "../ui/Header";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import WebSocketContext from "../../context/WebSocketContext";
 
 import "../../styles/Winners.scss";
 
 
 const End = (props) => {
   const { prep } = props;
+  const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
   const feedback = useFeedback();
   const navigate = useNavigate();
   const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
@@ -19,7 +21,15 @@ const End = (props) => {
 
   useEffect(() => {
     toast.dismiss()
-    tally();
+    sendJsonMessage(
+      {
+        "action": "init",
+        "userId": localStorage.getItem("id"),
+        "lobbyId": `${localStorage.getItem("pin")}`
+      }
+    )
+    
+    setTimeout(() => tally(), 20);
   }, []);
 
   const tally = async () => {
@@ -33,6 +43,7 @@ const End = (props) => {
       }
     } catch (e) {
       feedback.give(handleError(e), 3000, "error");
+      unauthorized(e)
     }
   };
 
@@ -62,6 +73,14 @@ const End = (props) => {
     }
   };
 
+
+  const unauthorized = (error) => {
+    if (error.response.status === 401 || error.response.status === 404) {
+      localStorage.removeItem("nobody_is_perfect_token");
+      localStorage.removeItem("pin");
+      navigate("/login");
+    }
+  }
 
   return (
     <>

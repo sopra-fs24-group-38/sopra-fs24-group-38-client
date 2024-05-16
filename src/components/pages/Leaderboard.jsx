@@ -22,9 +22,17 @@ const Leaderboard = () => {
       setAllstars(prev => [...prev, response.data]);
     } catch(e) {
       feedback.give(handleError(e), 3000, "error");
+      unauthorized(error);
     }
   };
 
+  const unauthorized = (error) => {
+    if (error.response.status === 401 || error.response.status === 404) {
+      localStorage.removeItem("nobody_is_perfect_token");
+      localStorage.removeItem("pin");
+      navigate("/login");
+    }
+  }
 
   return(
     <>
