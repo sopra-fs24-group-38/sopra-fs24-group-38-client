@@ -119,7 +119,7 @@ const LobbyWaiting = () => {
         navigate("/lobby");
       }
     } catch (e) {
-      if (e.response.status === 401 || e.response.status === 404) {
+      if (e.response.status === 401) {
         localStorage.removeItem("nobody_is_perfect_token");
         localStorage.removeItem("pin");
         navigate("/login");
