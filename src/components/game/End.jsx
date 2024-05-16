@@ -75,10 +75,14 @@ const End = (props) => {
 
 
   const unauthorized = (error) => {
-    if (error.response.status === 401 || error.response.status === 404) {
+    if (error.response.status === 401) {
       localStorage.removeItem("nobody_is_perfect_token");
       localStorage.removeItem("pin");
       navigate("/login");
+    }
+    if (error.response.status === 404 || error.response.status === 400) {
+      localStorage.removeItem("pin");
+      navigate("/lobby");
     }
   }
 
