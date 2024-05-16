@@ -38,16 +38,16 @@ const LobbyWaiting = () => {
         "lobbyId": `${pin}`
       }
     );
-    playerDelta(true);
+    setTimeout(() => playerDelta(true), 20);
   }, []);
 
   useEffect(() => {
     console.log("Received message: ", lastMessage);
-    if(lastMessage?.data && players.length !== 0){
-      if(lastMessage.data === "user_joined"){
+    if (lastMessage?.data && players.length !== 0) {
+      if (lastMessage.data === "user_joined") {
         playerDelta();
 
-      } else if(lastMessage.data.includes("ai_removed")){
+      } else if (lastMessage.data.includes("ai_removed")) {
         const sus = players.filter(player => player.avatar.includes(JSON.parse(lastMessage.data).ai_removed));
         playerNamesRef.current.delete(sus[0].name);
         setAiCount(prev => prev - 1);
@@ -55,17 +55,17 @@ const LobbyWaiting = () => {
 
         feedback.give("A robo was sent to a farm upstate", 2000, "info");
 
-      } else if(lastMessage.data.includes("user_left")){
+      } else if (lastMessage.data.includes("user_left")) {
         goodbye(JSON.parse(lastMessage.data).user_left);
 
-      } else if(lastMessage.data.includes("gamehost_left")){
+      } else if (lastMessage.data.includes("gamehost_left")) {
         goodbye(JSON.parse(lastMessage.data).gamehost_left, true);
 
-      } else if(lastMessage.data === "game_preparing"){
+      } else if (lastMessage.data === "game_preparing") {
         setStarting(true);
         prep.current = toast.loading("The game is starting soon")
 
-      } else if(lastMessage.data === "game_start"){
+      } else if (lastMessage.data === "game_start") {
 
         toast.update(prep.current, {
           render: "Let's gooo ╰( ^o^)╮╰( ^o^)╮",
@@ -80,10 +80,10 @@ const LobbyWaiting = () => {
   }, [lastMessage]);
 
 
-  const playerDelta = async(defineMaster=false) => {
-    try{
+  const playerDelta = async (defineMaster = false) => {
+    try {
       const response = await api.get(`/lobbies/${pin}`, { headers });
-      if(defineMaster){
+      if (defineMaster) {
         response.data.game_details.game_master_username === localStorage.getItem("username") ?
           setIsGameMaster(localStorage.getItem("username"))
           : setIsGameMaster(response.data.game_details.game_master_username);
@@ -95,7 +95,7 @@ const LobbyWaiting = () => {
       }
 
       // 1st statement checks for update need, 2nd statement is sessionGuard
-      if (response.data.game_details.players.length > players.length && response.data.game_details.players.some(obj => obj.username.includes(localStorage.getItem("username")))){
+      if (response.data.game_details.players.length > players.length && response.data.game_details.players.some(obj => obj.username.includes(localStorage.getItem("username")))) {
         const newPlayers = response.data.game_details.players.slice(players.length)
           .filter(player => !playerNamesRef.current.has(player.username))
           .map(player => ({
@@ -104,7 +104,7 @@ const LobbyWaiting = () => {
           }));
 
         newPlayers.forEach(element => {
-          if(element.avatar.match(/10[0-9]/g)){
+          if (element.avatar.match(/10[0-9]/g)) {
             setAiCount(prev => prev + 1);
             feedback.give("The host has recruited some help", 1500, "info");
           } else {
@@ -115,76 +115,78 @@ const LobbyWaiting = () => {
         });
 
         setPlayers(prevPlayers => [...prevPlayers, ...newPlayers]);
-      } else{
+      } else {
         navigate("/lobby");
       }
-    } catch(e){
-      if(e.response.status === 401 || e.response.status === 404){
+    } catch (e) {
+      if (e.response.status === 401 || e.response.status === 404) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("pin");
         navigate("/login");
       }
       feedback.give(handleError(e), 3000, "error");
     }
   };
 
-  const goodbye = async(username, hostLeft=false) => {
-    try{
+  const goodbye = async (username, hostLeft = false) => {
+    try {
       setPlayers(prevPlayers => prevPlayers.filter(player => player.name !== username));
       playerNamesRef.current.delete(username);
 
-      if(hostLeft){
+      if (hostLeft) {
         playerDelta(true);
         feedback.give(`${username} has left the party,\nthere is a new host`, 3000, "info");
       } else {
         feedback.give(`${username} has left the party`, 2000, "warning");
       }
-    } catch(e){
+    } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
   };
 
-  const addAI = async() => {
+  const addAI = async () => {
     try {
       await api.put(`/lobbies/users/${pin}/ai`, {}, { headers });
-    } catch(e) {
+    } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
   };
 
-  const removeRobo = async(playerIndex) => {
+  const removeRobo = async (playerIndex) => {
     try {
       const avaId = players[playerIndex].avatar.substr(11, 3);
-      await api.delete(`/lobbies/users/${pin}/ai`, { data: {avatarId: avaId}, headers });
-    } catch(e) {
+      await api.delete(`/lobbies/users/${pin}/ai`, { data: { avatarId: avaId }, headers });
+    } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
   };
 
-  const startGame = async() => {
-    try{
+  const startGame = async () => {
+    try {
       await api.post("/lobbies/start", {}, { headers });
       setStarting(true);
 
-    } catch(e){
+    } catch (e) {
       feedback.give(handleError(e), 3000, "error");
     }
   };
 
-  const leaveLobby = async() => {
-    try{
+  const leaveLobby = async () => {
+    try {
       await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
       localStorage.removeItem("pin");
       navigate("/lobby");
-    } catch(error){
+    } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
   };
 
-  const copyPIN = async() => {
+  const copyPIN = async () => {
     try {
       await navigator.clipboard.writeText(pin);
       feedback.give("PIN copied to clipboard", 1000, "info");
-    } catch(e) {
+    } catch (e) {
       feedback.give(handleError(e), 2000, "error");
     }
   };

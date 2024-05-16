@@ -92,6 +92,11 @@ const Game = () => {
       }
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
+      if (error.response.status === 401 || error.response.status === 404) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("pin");
+        navigate("/login");
+      }
     }
   }
 

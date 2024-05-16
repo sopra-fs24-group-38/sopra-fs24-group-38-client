@@ -10,7 +10,7 @@ const Information = (props) => {
       <div className="bg-neutral-100 flex flex-col shadow-md max-w-sexy rounded-xl" id="infofield">
         <div className="flex flex-col py-1 px-24 bg-supporange-200 rounded-md justify-center items-center">
           <p className="text-center text-1xl p-1">
-            Rounds: {lobby.game_details.game_master_id} 
+            Rounds: {lobby.game_details.round_number} / {lobby.game_details.max_round_numbers} 
             {/* change game_master_id to Rounds if the endpoint changes */}
           </p>
           <p className="text-center text-1xl break-words">
