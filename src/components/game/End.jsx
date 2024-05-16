@@ -43,6 +43,7 @@ const End = (props) => {
       }
     } catch (e) {
       feedback.give(handleError(e), 3000, "error");
+      unauthorized(e)
     }
   };
 
@@ -72,6 +73,14 @@ const End = (props) => {
     }
   };
 
+
+  const unauthorized = (error) => {
+    if (error.response.status === 401 || error.response.status === 404) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("pin");
+      navigate("/login");
+    }
+  }
 
   return (
     <>
