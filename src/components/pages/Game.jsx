@@ -72,7 +72,7 @@ const Game = () => {
   // Use Effect to render new Lobbyinformation
   useEffect(() => {
     // console.log("Received message:", lastMessage);
-    setTimeout(() => getLobby(), 20);
+    setTimeout(() => getLobby(), 100);
     if(lastMessage?.data?.includes("user_left")){
       goodbye(JSON.parse(lastMessage?.data).user_left);
 

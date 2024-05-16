@@ -38,7 +38,7 @@ const LobbyWaiting = () => {
         "lobbyId": `${pin}`
       }
     );
-    setTimeout(() => playerDelta(true), 20);
+    setTimeout(() => playerDelta(true), 100);
   }, []);
 
   useEffect(() => {
