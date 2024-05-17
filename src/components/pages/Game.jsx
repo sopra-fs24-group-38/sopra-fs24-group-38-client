@@ -30,7 +30,8 @@ const Game = () => {
       "solution": "",
       "players": [],
       "game_state": "DEFINITION",
-      "game_over": false
+      "game_over": false,
+      "hide_mode": false,
     }
   });
 

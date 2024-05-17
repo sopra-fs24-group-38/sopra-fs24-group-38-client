@@ -11,7 +11,7 @@ const AnswerBlock = ({answer="-", votingPlayers=[], func, style={}}) => {
           </div>
         ))}
       </div>
-      <div className="flex grow bg-supporange-200 rounded-md p-5 items-center justify-center text-xl text-center" style={style} id="answer-text">
+      <div className="flex grow bg-supporange-200 rounded-md p-6 items-center justify-center text-xl text-center" style={style} id="answer-text">
         {answer}
       </div>
     </div>
