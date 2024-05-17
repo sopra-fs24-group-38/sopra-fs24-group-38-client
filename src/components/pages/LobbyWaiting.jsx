@@ -22,6 +22,7 @@ const LobbyWaiting = () => {
   const [settingsData, setSettingsData] = useState({
     rounds: 10,
     modes: ["BIZARRE"],
+    hide: false,
   });
 
   const [isGameMaster, setIsGameMaster] = useState("");
@@ -87,6 +88,14 @@ const LobbyWaiting = () => {
         response.data.game_details.game_master_username === localStorage.getItem("username") ?
           setIsGameMaster(localStorage.getItem("username"))
           : setIsGameMaster(response.data.game_details.game_master_username);
+        
+        // update settings
+        setSettingsData(before => ({
+          ...before,
+          modes: response.data.game_details.lobbymodes,
+          rounds: response.data.game_details.max_round_numbers,
+          hide: response.data.game_details.hide_mode,
+        }))
       }
 
       // Routes the player to the right mode of the game
