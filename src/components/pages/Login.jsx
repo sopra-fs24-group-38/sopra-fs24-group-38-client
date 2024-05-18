@@ -61,6 +61,7 @@ const Login = () => {
                   label="Password"
                   value={password}
                   color={"#ebe4d7"}
+                  maxLength={15}
                   placeholder="very secret"
                   type={passwordType ? "password" : "text"}
                   func={(n) => setPassword(n)}
