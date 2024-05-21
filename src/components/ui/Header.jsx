@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { api, handleError } from "../../utils/api";
 import useFeedback from "../../hooks/useFeedback";
 import Rules from "./Rules";
+import { toast } from "react-toastify";
 
 import "../../styles/Header.scss";
 
@@ -34,6 +35,7 @@ const Header = ({ leave = false, quit = false }) => {
       await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
       localStorage.removeItem("pin");
+      toast.dismiss();
       navigate("/lobby");
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
@@ -62,7 +64,7 @@ const Header = ({ leave = false, quit = false }) => {
         </div>
         : <div />}
       {quit ?
-        <div id="logout">
+        <div id="logout" className="z-50">
           <SxyButton
             text="Quit"
             color={"#CC1F1D"}

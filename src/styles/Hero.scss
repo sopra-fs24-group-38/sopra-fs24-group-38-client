@@ -69,6 +69,11 @@
   }
 }
 
+#gameQuestion {
+  width: 80vw;
+  height: 85%;
+}
+
 
 // MEDIA QUERIES
 
@@ -84,8 +89,8 @@
     background-image: url("../../public/assets/2xbg.png");
   }
 
-  #gameQuestion, #gameVoting {
-  margin: 10px;
+  #definition, #gameVoting {
+    margin: 10px;
   }
 
   #answer-text {
@@ -181,7 +186,7 @@
     top: 20px;
   }
 
-  #gameQuestion {
+  #definition {
     max-height: 290px;
     margin: 0;
 
@@ -222,6 +227,12 @@
     & img {
       max-width: 50px;
     }
+  }
+
+  #foolmap {
+    flex-direction: row;
+    width: 75%;
+    flex-wrap: wrap;
   }
 
   #endScreen {

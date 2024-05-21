@@ -5,7 +5,7 @@ import useFeedback from "../../hooks/useFeedback";
 import { api, handleError } from "../../utils/api";
 import { toast } from "react-toastify";
 
-import "../../styles/Boards.scss";
+import "../../styles/Cards.scss";
 
 const View = (props) => {
   const { player, playerIndex } = props;
