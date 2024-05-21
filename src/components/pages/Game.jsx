@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import Information from "../game/Information";
 import useFeedback from "../../hooks/useFeedback";
-
 import { toast } from "react-toastify";
 import WebSocketContext from "../../context/WebSocketContext";
 import { api, handleError } from "../../utils/api";
@@ -72,7 +71,6 @@ const Game = () => {
 
   // Use Effect to render new Lobbyinformation
   useEffect(() => {
-    // console.log("Received message:", lastMessage);
     setTimeout(() => getLobby(), 100);
     if(lastMessage?.data?.includes("user_left")){
       goodbye(JSON.parse(lastMessage?.data).user_left);
@@ -139,7 +137,7 @@ const Game = () => {
 
   return (
     <>
-      <Header quit={true} />
+      <Header quit={gameState === "DEFINITION" || gameState === "VOTE" || gameState === "OUTCOME" || gameState === "FOOLED" ? false : true} />
       <Information lobby={lobby} prep={prep} />
       {gameState === "DEFINITION" && <Definition lobby={lobby} prep={prep} player={player} />}
       {gameState === "VOTE" && <Voting lobby={lobby} solution={solution} prep={prep} player={player} />}

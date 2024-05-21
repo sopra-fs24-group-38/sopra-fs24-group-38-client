@@ -116,15 +116,18 @@ const Voting = (props) => {
         <div className="grow grid grid-cols-2 gap-5 mt-6" id="answers" >
           {answers.map((answer, index) => {
             return (
-              <AnswerBlock key={answer.id} answer={answer.solution} votingPlayers={answer.voting} func={() => handleClick(answer.id)}
+              <AnswerBlock
+                key={answer.id}
+                answer={answer.solution}
+                votingPlayers={answer.voting}
+                func={() => handleClick(answer.id)}
                 style={answer.id === player.id ? ownAnswerStyle :
                   (chosenOne === answer.id && solution && answer.id === 0) ?
                     selectSolutionStyle : chosenOne === answer.id ?
                       selectedStyle : (solution && answer.id === 0) ?
                         solutionStyle : null} />
             )
-          }
-          )}
+          })}
         </div>
       </div>
     </div>

@@ -34,8 +34,7 @@ const Definition = (props) => {
     if (submission.replace(" ", "") !== "") {
       try {
         const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
-        const response = await api.put("/lobbies/users/definitions", { definition: submission }, { headers }); //${localStorage.getItem("pin")}
-        console.log(response.data)
+        await api.put("/lobbies/users/definitions", { definition: submission }, { headers });
         setDefinition(true);
       } catch (error) {
         feedback.give(handleError(error), 3000, "error");
@@ -47,7 +46,7 @@ const Definition = (props) => {
 
   return (
     <div className="bg-neutral-400 justify-center" id="hero">
-      <div className="bg-neutral-100 flex flex-col shadow-md max-w-sexy rounded-xl p-5" id="gameQuestion">
+      <div className="bg-neutral-100 flex flex-col shadow-md rounded-xl p-5" id="definition">
         <div className="flex flex-col mb-8 py-12 px-24 bg-supporange-200 rounded-md justify-center items-center">
           <p className="text-center text-2xl p-3">
             who or what is...

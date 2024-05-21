@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { api, handleError } from "../../utils/api";
 import useFeedback from "../../hooks/useFeedback";
 import Rules from "./Rules";
+import { toast } from "react-toastify";
 
 import "../../styles/Header.scss";
 
@@ -31,9 +32,10 @@ const Header = ({ leave = false, quit = false }) => {
   const leaveLobby = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
-      const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
+      await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
       localStorage.removeItem("pin");
+      toast.dismiss();
       navigate("/lobby");
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
@@ -42,7 +44,7 @@ const Header = ({ leave = false, quit = false }) => {
 
   return (
     <div className="flex px-6 py-6" id="header">
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2 z-50">
         <SxyButton
           text="?"
           color={"#C2B199"}
@@ -51,27 +53,26 @@ const Header = ({ leave = false, quit = false }) => {
         <h1 className="text-xl font-medium">Rules</h1>
       </div>
       {leave ?
-        <>
-          <div id="logout">
-            <SxyButton
-              text="Logout"
-              color={"#CC1F1D"}
-              func={logout}
-              width="100px"
-              position={"row-reverse"}
-            />
-          </div>
-        </>
+        <div id="logout">
+          <SxyButton
+            text="Logout"
+            color={"#CC1F1D"}
+            func={logout}
+            width="100px"
+            position={"row-reverse"}
+          />
+        </div>
         : <div />}
       {quit ?
-        <><div id="logout">
+        <div id="logout" className="z-50">
           <SxyButton
             text="Quit"
             color={"#CC1F1D"}
             func={leaveLobby}
             width="100px"
             position={"row-reverse"} />
-        </div></> : <div />}
+        </div>
+        : <div />}
 
       {seeRules ? <Rules close={() => setSeeRules(false)} /> : null}
     </div>

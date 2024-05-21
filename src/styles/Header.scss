@@ -41,7 +41,7 @@
     border-radius: 8px;
     border: solid black 2px;
     position: absolute;
-    right: 1vw;
+    right: 2vw;
   }
 
   > p{
@@ -61,6 +61,10 @@
     li {
       font-size: large;
     }
+  }
+
+  @media (width <= 700px) {
+    width: 250px;
   }
 }
 
