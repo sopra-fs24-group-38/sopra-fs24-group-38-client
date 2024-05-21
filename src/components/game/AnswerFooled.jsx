@@ -13,8 +13,15 @@ const AnswerFooled = ({ fooler }) => {
             <>
               <h1 className="font-bold text-3xl text-center">You have fooled:<br /><br /></h1>
               <div key={1} className="flex flex-col justify-center items-center">
-                {fooler.foolers.map((p, index) => {
-                  return (<>{p && <div key={p.id} id="fooled"> <h1 className="font-bold text-3xl text-center">{p.username}</h1><img src={`/assets/Ava${p.avatarId}.jpg`} alt="go" className="w-20 aspect-square rounded-xl" /> </div>} </>)
+                {fooler.foolers.map((player, index) => {
+                  return (
+                    <>
+                      {player &&
+                        <div key={player.id} id="fooled" className="flex flex-col items-center gap-y-1">
+                          <h1 className="font-bold text-3xl text-center">{player.username}</h1>
+                          <img src={`/assets/Ava${player.avatarId}.jpg`} alt="go" className="w-20 aspect-square rounded-xl" />
+                        </div>}
+                    </>)
                 })}
               </div>
             </>

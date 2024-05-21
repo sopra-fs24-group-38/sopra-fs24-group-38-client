@@ -62,7 +62,7 @@ const Lobby = () => {
   };
 
   const unauthorized = (error) => {
-    if (error.response.status === 401 || error.response.status === 404) {
+    if (error.response.status === 401) {
       localStorage.removeItem("nobody_is_perfect_token");
       localStorage.removeItem("pin");
       navigate("/login");
@@ -107,10 +107,9 @@ const Lobby = () => {
                     <SxyInput
                       value={pin}
                       color={"#ebe4d7"}
-                      inputMode={"numeric"}
                       maxLength={4}
                       placeholder="1234"
-                      func={(n) => setPin(n)}
+                      func={(n) => /^\d*$/.test(n) ? setPin(n) : null}
                       enterKey={joinLobby} />
                   </div>
                   :
