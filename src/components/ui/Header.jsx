@@ -42,7 +42,7 @@ const Header = ({ leave = false, quit = false }) => {
 
   return (
     <div className="flex px-6 py-6" id="header">
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2 z-50">
         <SxyButton
           text="?"
           color={"#C2B199"}

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import SxyButton from "../ui/SxyButton";
 import useFeedback from "../../hooks/useFeedback";
@@ -15,31 +14,30 @@ const View = (props) => {
   };
 
   return (
-    <>{player && (
-      <div key={playerIndex} className="grid grid-cols-4 w-96 pb-2 gap-y-2">
-        <div key={`${playerIndex}-avatar`} className="p-2 border border-gray-300 rounded " style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-          <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`${player.name}"s pic`} />
+    <>
+      {player && (
+        <div key={playerIndex} className="grid pb-2 gap-y-2" id="view">
+          <div key={`${playerIndex}-avatar`} className="p-2 border border-gray-300 rounded " style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+            <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`${player.name}"s pic`} />
+          </div>
+          <div key={`${playerIndex}-name`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+            <p>{player.username}</p>
+          </div>
+          <div key={`${player.avatarId}-ppr`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+            <p>+{player.ppr}</p>
+          </div>
+          <div key={`${playerIndex}-score`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
+            <p>{player.score}</p>
+          </div>
         </div>
-        <div key={`${playerIndex}-name`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-          <p>{player.username}</p>
-        </div>
-        <div key={`${player.avatarId}-ppr`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-          <p>+{player.ppr}</p>
-        </div>
-        <div key={`${playerIndex}-score`} className="p-2" style={player.id === parseInt(localStorage.getItem("id")) ? selectedStyle : null}>
-          <p>{player.score}</p>
-        </div>
-      </div>
-    )
-    }
+      )}
     </>
-  )
-}
+  );
+};
 
 
 const Score = (props) => {
   const { lobby, prep } = props;
-  const navigate = useNavigate();
   const feedback = useFeedback();
   const [players, setPlayers] = useState([]);
   const [ready, setReady] = useState(false);
@@ -77,7 +75,7 @@ const Score = (props) => {
       const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
       await api.post("/lobbies/rounds/start", {}, { headers });
       setReady(true);
-      prep.current = toast.loading("Waiting for other players");
+      prep.current = toast.loading("Waiting for other players", { position: "top-center"});
     } catch (error) {
       feedback.give(handleError(error), 3000, "error");
     }
@@ -86,9 +84,9 @@ const Score = (props) => {
 
   return (
     <div className="bg-neutral-400 justify-center" id="hero">
-      <div className="bg-neutral-100 shadow-md max-w-sexy p-10 rounded-lg" id="gameScores">
+      <div className="bg-neutral-100 shadow-md p-10 rounded-lg" id="gameScores">
         <h1 className="mb-6 font-semibold text-xl hover:cursor-pointer">Leaderboard</h1>
-        <div key={-1} className="grid grid-cols-4 w-96 pb-2 gap-y-2">
+        <div key={-1} className="grid pb-2 gap-y-2">
           <div key={`${-1}-avatar`} className="p-2"></div>
           <div key={`${-1}-name`} className="p-2">
             <b>Username</b>
@@ -100,7 +98,7 @@ const Score = (props) => {
             <b>Total score</b>
           </div>
         </div>
-        <div className="mb-4" id="scorePlayers">
+        <div className="mb-4 overflow-y-auto" id="scorePlayers">
           {players.flatMap((player, playerIndex) => {
             return (<View key={`player-${player.id}`} player={player} playerIndex={playerIndex} />)
           })

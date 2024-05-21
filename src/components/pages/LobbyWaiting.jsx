@@ -5,6 +5,7 @@ import LobbySettings from "../ui/LobbySettings";
 import SxyButton from "../ui/SxyButton";
 import { api, handleError } from "../../utils/api";
 import "../../styles/Hero.scss";
+import "../../styles/LobbyWaiting.scss";
 import useFeedback from "../../hooks/useFeedback";
 import WebSocketContext from "../../context/WebSocketContext";
 import { toast } from "react-toastify";
@@ -43,7 +44,6 @@ const LobbyWaiting = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Received message: ", lastMessage);
     if (lastMessage?.data && players.length !== 0) {
       if (lastMessage.data === "user_joined") {
         playerDelta();

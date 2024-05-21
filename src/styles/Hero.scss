@@ -21,13 +21,6 @@
     background-position: top;
   }
 }
-
-#info {
-  position: absolute;
-  justify-content: center;
-  width: 100%;
-  display: flex;
-}
   
 // lobby
 #lobbypin {
@@ -45,78 +38,6 @@
   }
 }
 
-#settings {
-  width: clamp(550px, 40vw, 800px);
-  height: 95%;
-  border-radius: 8px;
-  border: solid black 2px;
-  z-index: 9001;
-}
-
-// intricate shit for player pics in lobbyWaiting
-#lobbyplayas {
-  --size: 75px;
-  display: grid;
-  grid-template-columns: repeat(4, var(--size));
-  grid-auto-rows: var(--size);
-  margin-bottom: var(--size);
-  place-items: start center;
-  gap: 5px;
-
-  img {
-    object-fit: cover;
-    aspect-ratio: 1/1;
-    width: calc(var(--size) * 2);
-    clip-path: path("M 67.5 7.5 C 75 0 75 0 82.5 7.5 C 142.5 67.5 142.5 67.5 142.5 67.5 C 150 75 150 75 142.5 82.5 C 142.5 82.5 82.5 142.5 82.5 142.5 C 75 150 75 150 67.5 142.5 C 67.5 142.5 7.5 82.5 7.5 82.5 C 0 75 0 75 7.5 67.5 Z");
-    transition: clip-path 0.25s, filter 0.75s;
-    grid-column: auto / span 2;
-    border-radius: 5px;
-
-    &:hover,
-    &:focus {
-      clip-path: path("M 0 0 C 0 0 150 0 150 0 C 150 0 150 75 150 75 C 150 75 150 150 150 150 C 150 150 75 150 75 150 C 75 150 75 150 0 150 C 0 150 0 75 0 75 C 0 75 0 75 0 75 Z");
-      z-index: 10;
-      transition: clip-path 0.25s, filter 0.25s;
-
-      &#robo {
-        clip-path: path("M 67.5 7.5 C 75 0 75 0 82.5 7.5 C 142.5 67.5 142.5 67.5 142.5 67.5 C 150 75 150 75 142.5 82.5 C 142.5 82.5 82.5 142.5 82.5 142.5 C 75 150 75 150 67.5 142.5 C 67.5 142.5 7.5 82.5 7.5 82.5 C 0 75 0 75 7.5 67.5 Z");
-        filter: sepia(1) brightness(0.75) contrast(1.2) hue-rotate(286deg);
-        cursor: pointer;
-      }
-    }
-  }
-
-  :nth-child(3) {
-    grid-column: 2 / span 2;
-  }
-
-  &:has(img:hover) img:not(:hover) {
-    filter: brightness(0.75) contrast(0.75);
-  }
-
-  >img:hover {
-    filter: brightness(1) saturate(1);
-  }
-}
-
-#tooltip {
-  position: absolute;
-  left: 130px;
-  top: -25px;
-  padding: 5px 10px;
-  font-weight: 600;
-  color: white;
-  border: solid black 1px;
-  border-radius: 16px;
-  visibility: hidden;
-  background-color: #CC1F1D;
-
-}
-
-body:has(#robo:hover) #tooltip {
-  visibility: visible;
-}
-
 // leaderboard
 #leaderboard {
   width: clamp(500px, 40vw, 800px);
@@ -131,13 +52,29 @@ body:has(#robo:hover) #tooltip {
   }
 }
 
+#infofield {
+  border: black 3px inset;
+}
+
+#view, #gameScores>div:nth-child(2) {
+  grid-template-columns: 25% 30% 20% 25%;
+}
+
+#gameScores {
+  width: clamp(500px, 40vw, 800px);
+  max-height: 85%;
+
+  #scorePlayers {
+    max-height: 47dvh;
+  }
+}
 
 
 // MEDIA QUERIES
 
 // WIDTH
 
-@media (width <=699px) {
+@media (width < 700px) {
 
   #hero {
     &.login-bg {
@@ -145,16 +82,6 @@ body:has(#robo:hover) #tooltip {
     }
 
     background-image: url("../../public/assets/2xbg.png");
-  }
-
-  #lobbywaiting {
-    margin-bottom: 20px;
-
-    > div:nth-child(3) {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
   }
 
   #gameQuestion, #gameVoting {
@@ -166,8 +93,9 @@ body:has(#robo:hover) #tooltip {
    word-break: break-word;
   }
 
-  #settings {
-    width: clamp(430px, 80vw, 600px);
+  #gameScores {
+    padding: 15px;
+    width: clamp(350px, 60vw, 550px);
   }
 
   #leaderboard {
@@ -183,21 +111,12 @@ body:has(#robo:hover) #tooltip {
     }
   }
 
-  #lobbywaiting{
-    margin-bottom: 10px;
-    padding: 18px;
-
-    & ~ div {
-      scale: 0.85;
-    }
-  }
-
-  #settings {
-    width: clamp(310px, 90vw, 400px);
-  }
-
   #endScreen {
     scale: 0.9;
+  }
+
+  #gameScores {
+    width: clamp(310px, 90vw, 410px);
   }
 
   #answer-text {
@@ -206,6 +125,10 @@ body:has(#robo:hover) #tooltip {
 
   #leaderboard {
     padding: 20px;
+  }
+
+  #votingQuestion {
+    padding: 4px;
   }
 }
 
@@ -216,19 +139,6 @@ body:has(#robo:hover) #tooltip {
     &.login-bg {
       background-size: 40%;
     }
-  }
-
-  #lobbywaiting{
-    margin-bottom: 10px;
-    padding: 18px;
-
-    & ~ div {
-      scale: 0.80;
-    }
-  }
-
-  #settings {
-    width: clamp(310px, 90vw, 400px);
   }
 
   #endScreen {
@@ -250,22 +160,6 @@ body:has(#robo:hover) #tooltip {
 
 // HEIGHT
 
-@media (height <=775px) {
-
-  #lobbywaiting {
-    margin-bottom: 20px;
-    padding: 20px;
-
-    > h1:nth-child(1){
-      margin-bottom: 4px;
-    }
-
-    > :nth-child(3) {
-      column-gap: 15px;
-    }
-  }
-}
-
 @media (orientation: landscape) and (height<=625px) {
 
   #hero {
@@ -283,66 +177,51 @@ body:has(#robo:hover) #tooltip {
     column-gap: 20px;
   }
 
-  #lobbywaiting {
-    margin-right: 50px;
-
-    > div:nth-child(3) {
-      display: flex;
-      flex-direction: column;
-      row-gap: 15px;
-    }
-
-    @media (height < 500px) {
-      display: grid;
-      margin-bottom: 0;
-      margin-right: 0;
-      margin-left: 10px;
-
-      & ~ div {
-        scale: 0.80;
-      }
-    }
+  #info {
+    top: 20px;
   }
 
-  #settings {
-    min-width: 725px;
+  #gameQuestion {
+    max-height: 290px;
+    margin: 0;
 
-    #settingsBtn {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      padding: 10px;
+    > div:nth-child(1) {
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
   }
 
   #gameVoting {
     padding: 10px;
+    margin: 0;
   }
 
   #votingQuestion {
     margin-bottom: 5px;
+    padding: 4px;
   }
 
   #answers {
     gap: 10px;
     margin-top: 5px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  #scorePlayers {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 10px;
-    width: 100%;
-
-    > div {
-      width: 100%;
+    
+    > div > div:nth-child(2) {
+      font-size: medium;
+      padding: 12px;
     }
   }
 
   #gameScores {
-    padding: 20px;
-    max-width: 780px;
+    padding: 15px;
+
+    #scorePlayers {
+      height: clamp(100px, 20dvh, 290px);
+    }
+
+    & img {
+      max-width: 50px;
+    }
   }
 
   #endScreen {
