@@ -43,7 +43,7 @@
     }
   }
 
-  @media (height < 625px), (orientation: landscape) {
+  @media (height < 625px) and (orientation: landscape) {
     margin-right: 50px;
 
     > div:nth-child(3) {
@@ -87,7 +87,7 @@
     width: clamp(310px, 90vw, 400px);
   }
 
-  @media (height < 625px), (orientation: landscape) {
+  @media (height < 625px) and (orientation: landscape) {
     min-width: 725px;
     padding: 20px;
     > h1 {
