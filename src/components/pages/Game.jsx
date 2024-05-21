@@ -139,7 +139,7 @@ const Game = () => {
 
   return (
     <>
-      <Header quit={true} />
+      <Header quit={gameState === "DEFINITION" || gameState === "VOTE" ? false : true} />
       <Information lobby={lobby} prep={prep} />
       {gameState === "DEFINITION" && <Definition lobby={lobby} prep={prep} player={player} />}
       {gameState === "VOTE" && <Voting lobby={lobby} solution={solution} prep={prep} player={player} />}

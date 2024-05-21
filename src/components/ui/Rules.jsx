@@ -5,7 +5,7 @@ import SxyButton from "../ui/SxyButton";
 const Rules = ({ close }) => {
 
   return (
-    <div id="rules" onClick={close}>
+    <div id="rules">
       <SxyButton
         func={close}
         text="X"
@@ -52,6 +52,8 @@ const Rules = ({ close }) => {
       </ul>
       <br />
       <p>You can mix and match the modes to your liking. They will be evenly distributed across the selected modes divided by the round count.</p>
+      <br />
+      <p>You can hide the origin of the challenge word (which mode it came from) to increase the difficulty.</p>
     </div>
   );
 };

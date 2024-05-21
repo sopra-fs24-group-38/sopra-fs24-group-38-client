@@ -91,14 +91,13 @@ This is how we envisioned to extend this application:
 For the FrontEnd part:
 * **Cédric Styner** - *Main contributor* - [glt-cs](https://github.com/glt-cs)
 * **Markus Senn** - *Main contributor* - [iKusii](https://github.com/iKusii)
-* **Samuel Frank** - *QA and main connection for backend coordination*
 
 * **Stefan Schuler** - *Responsible TA* - [Steesch](https://github.com/Steesch)
 * **Roy Rutishauser** - *template provider* - [royru](https://github.com/royru)
 * **Luis Torrejón** - *template provider* - [luis-tm](https://github.com/luis-tm)
 * **Marco Leder** - *template provider* - [marcoleder](https://github.com/marcoleder)
 
-Continuous team work and BackEnd authors:
+Continuous teamwork and BackEnd authors:
 * **Harris Alem** - *Main contributor* - [so-ri](https://github.com/so-ri)
 * **Elia Aeberhard** - *Main contributor* - [Elyisha](https://github.com/Elyisha)
 * **Samuel Frank** - *Main contributor* - [samuelfrnk](https://github.com/samuelfrnk)

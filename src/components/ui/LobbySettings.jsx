@@ -77,7 +77,7 @@ const LobbySettings = ({out, config, setConfig}) => {
             checked={hide}
             onChange={() => setHide(!hide)}
           />
-          Hide mode origin<br/>for definition
+          Hide mode information
         </label>
       </div>
 

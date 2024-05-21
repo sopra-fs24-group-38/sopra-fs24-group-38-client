@@ -264,11 +264,11 @@ const LobbyWaiting = () => {
             {players.length < 4 ? <p></p> : <img src={players[3].avatar} alt="player 4" id={(players[3].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? "robo" : ""} onClick={(players[3].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? () => removeRobo(3) : null} />}
             {players.length < 5 ? <p></p> : <img src={players[4].avatar} alt="player 5" id={(players[4].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? "robo" : ""} onClick={(players[4].avatar.match(/10[0-9]/g) && isGameMaster === localStorage.getItem("username") && !starting) ? () => removeRobo(4) : null} />}
           </div>
-          {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name}</p>}
-          {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name}</p>}
-          {players.length < 1 ? null : <p className="absolute top-52 left-4 font-bold text-lg z-20">{players[0].name}</p>}
-          {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">{players[3].name}</p>}
-          {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">{players[4].name}</p>}
+          {players.length < 2 ? null : <p className="absolute top-2 left-4 font-bold text-lg z-20">{players[1].name === localStorage.getItem("username") ? <u className="text-red-600">{players[1].name}</u> : players[1].name}</p>}
+          {players.length < 3 ? null : <p className="absolute top-2 right-4 font-bold text-lg z-20">{players[2].name === localStorage.getItem("username") ? <u className="text-red-600">{players[2].name}</u> : players[2].name}</p>}
+          {players.length < 1 ? null : <p className="absolute top-52 left-4 font-bold text-lg z-20">{players[0].name === localStorage.getItem("username") ? <u className="text-red-600">{players[0].name}</u> : players[0].name}</p>}
+          {players.length < 4 ? null : <p className="absolute bottom-2 left-4 font-bold text-lg z-20">{players[3].name === localStorage.getItem("username") ? <u className="text-red-600">{players[3].name}</u> : players[3].name}</p>}
+          {players.length < 5 ? null : <p className="absolute bottom-2 right-4 font-bold text-lg z-20">{players[4].name === localStorage.getItem("username") ? <u className="text-red-600">{players[4].name}</u> : players[4].name}</p>}
           <div id="tooltip">Remove AI player</div>
         </div>
 

@@ -132,16 +132,121 @@ body:has(#robo:hover) #tooltip {
 }
 
 
-// login
-#login {
-  z-index: 3;
-  padding: 44px 30px;
-  background: #ffffff;
+
+// MEDIA QUERIES
+
+// WIDTH
+
+@media (width <=699px) {
+
+  #hero {
+    &.login-bg {
+      background-size: 35%;
+    }
+
+    background-image: url("../../public/assets/2xbg.png");
+  }
+
+  #lobbywaiting {
+    margin-bottom: 20px;
+
+    > div:nth-child(3) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+  }
+
+  #gameQuestion, #gameVoting {
+  margin: 10px;
+  }
+
+  #answer-text {
+   font-size: 1rem;
+   word-break: break-word;
+  }
+
+  #settings {
+    width: clamp(430px, 80vw, 600px);
+  }
+
+  #leaderboard {
+    width: clamp(430px, 80vw, 600px);
+  }
+}
+
+@media (width < 450px) {
+
+  #hero {
+    &.login-bg {
+      background-size: 40%;
+    }
+  }
+
+  #lobbywaiting{
+    margin-bottom: 10px;
+    padding: 18px;
+
+    & ~ div {
+      scale: 0.85;
+    }
+  }
+
+  #settings {
+    width: clamp(310px, 90vw, 400px);
+  }
+
+  #endScreen {
+    scale: 0.9;
+  }
+
+  #answer-text {
+    font-size: 0.8rem;
+  }
+
+  #leaderboard {
+    padding: 20px;
+  }
 }
 
 
+@media (width < 350px) {
 
-// MEDIA QUERIES
+  #hero {
+    &.login-bg {
+      background-size: 40%;
+    }
+  }
+
+  #lobbywaiting{
+    margin-bottom: 10px;
+    padding: 18px;
+
+    & ~ div {
+      scale: 0.80;
+    }
+  }
+
+  #settings {
+    width: clamp(310px, 90vw, 400px);
+  }
+
+  #endScreen {
+    scale: 0.8;
+  }
+
+  #answer-text {
+    font-size: 0.75rem;
+  }
+}
+
+
+@media (width >=1200px) {
+  #hero button:hover {
+    transform: none;
+  }
+}
+
 
 // HEIGHT
 
@@ -155,7 +260,7 @@ body:has(#robo:hover) #tooltip {
       margin-bottom: 4px;
     }
 
-    > div {
+    > :nth-child(3) {
       column-gap: 15px;
     }
   }
@@ -169,6 +274,10 @@ body:has(#robo:hover) #tooltip {
     align-items: center;
   }
 
+  #lobby{
+    padding: 15px;
+  }
+
   #lobbyButtons {
     flex-direction: row;
     column-gap: 20px;
@@ -177,9 +286,21 @@ body:has(#robo:hover) #tooltip {
   #lobbywaiting {
     margin-right: 50px;
 
-    > div {
+    > div:nth-child(3) {
+      display: flex;
       flex-direction: column;
       row-gap: 15px;
+    }
+
+    @media (height < 500px) {
+      display: grid;
+      margin-bottom: 0;
+      margin-right: 0;
+      margin-left: 10px;
+
+      & ~ div {
+        scale: 0.80;
+      }
     }
   }
 
@@ -244,152 +365,5 @@ body:has(#robo:hover) #tooltip {
     > div:nth-child(2) {
       margin-top: 20px;
     }
-  }
-}
-
-// WIDTH
-
-@media (width <=699px) {
-
-  #login {
-    width: 380px;
-  }
-
-  #hero {
-    &.login-bg {
-      background-image: url("../../public/assets/nbp.png");
-      background-repeat: repeat;
-      background-size: 35%;
-      background-position: top;
-    }
-  }
-
-  #lobbywaiting {
-    margin-bottom: 20px;
-
-    > div:nth-child(3) {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-  }
-
-  #gameQuestion, #gameVoting {
-  margin: 10px;
-  }
-
-  #answer-text {
-   font-size: 1rem;
-   word-break: break-word;
-  }
-
-  #settings {
-    width: clamp(430px, 80vw, 600px);
-  }
-
-  #leaderboard {
-    width: clamp(430px, 80vw, 600px);
-  }
-}
-
-@media (width < 450px) {
-
-  #login {
-    width: 250px;
-
-    #login-btn {
-      flex-direction: column;
-      align-items: center;
-      height: 90px;
-    }
-  }
-
-  #hero {
-    &.login-bg {
-      background-size: 40%;
-    }
-  }
-
-  #lobbywaiting{
-    margin-bottom: 10px;
-    padding: 18px;
-
-    & ~ div {
-      scale: 0.85;
-    }
-  }
-
-  #settings {
-    width: clamp(310px, 90vw, 400px);
-  }
-
-  #endScreen {
-    scale: 0.9;
-  }
-
-  #answer-text {
-    font-size: 0.8rem;
-  }
-}
-
-
-@media (width < 350px) {
-
-  #login {
-    width: 200px;
-
-    #login-btn {
-      flex-direction: column;
-      align-items: center;
-      height: 90px;
-    }
-  }
-
-  #hero {
-    &.login-bg {
-      background-size: 40%;
-    }
-  }
-
-  #lobbywaiting{
-    margin-bottom: 10px;
-    padding: 18px;
-
-    & ~ div {
-      scale: 0.80;
-    }
-  }
-
-  #settings {
-    width: clamp(310px, 90vw, 400px);
-  }
-
-  #endScreen {
-    scale: 0.8;
-  }
-
-  #answer-text {
-    font-size: 0.75rem;
-  }
-}
-@media (width >=700px) {
-  #login {
-    top: 0;
-    right: 0;
-    height: 100%;
-    border-radius: 0;
-    padding-top: 150px;
-    width: 380px;
-  }
-}
-
-@media (width >=1200px) {
-
-  #login {
-    width: 470px;
-  }
-
-  #hero button:hover {
-    transform: none;
   }
 }

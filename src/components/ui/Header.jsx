@@ -31,7 +31,7 @@ const Header = ({ leave = false, quit = false }) => {
   const leaveLobby = async () => {
     try {
       const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
-      const response = await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
+      await api.delete(`/lobbies/users/${localStorage.getItem("pin")}`, { headers });
 
       localStorage.removeItem("pin");
       navigate("/lobby");
@@ -51,27 +51,26 @@ const Header = ({ leave = false, quit = false }) => {
         <h1 className="text-xl font-medium">Rules</h1>
       </div>
       {leave ?
-        <>
-          <div id="logout">
-            <SxyButton
-              text="Logout"
-              color={"#CC1F1D"}
-              func={logout}
-              width="100px"
-              position={"row-reverse"}
-            />
-          </div>
-        </>
+        <div id="logout">
+          <SxyButton
+            text="Logout"
+            color={"#CC1F1D"}
+            func={logout}
+            width="100px"
+            position={"row-reverse"}
+          />
+        </div>
         : <div />}
       {quit ?
-        <><div id="logout">
+        <div id="logout">
           <SxyButton
             text="Quit"
             color={"#CC1F1D"}
             func={leaveLobby}
             width="100px"
             position={"row-reverse"} />
-        </div></> : <div />}
+        </div>
+        : <div />}
 
       {seeRules ? <Rules close={() => setSeeRules(false)} /> : null}
     </div>

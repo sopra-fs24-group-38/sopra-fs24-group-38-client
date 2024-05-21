@@ -6,6 +6,7 @@ import { api, handleError } from "../../utils/api";
 import Header from "../ui/Header";
 import useFeedback from "../../hooks/useFeedback";
 import "../../styles/Hero.scss";
+import "../../styles/Login.scss";
 
 const Login = () => {
   const navigate = useNavigate();
