@@ -10,9 +10,8 @@ import WebSocketContext from "../../context/WebSocketContext";
 import "../../styles/Winners.scss";
 
 
-const End = (props) => {
-  const { prep } = props;
-  const { lastMessage, sendJsonMessage } = useContext(WebSocketContext);
+const End = () => {
+  const { sendJsonMessage } = useContext(WebSocketContext);
   const feedback = useFeedback();
   const navigate = useNavigate();
   const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
@@ -36,7 +35,7 @@ const End = (props) => {
     try {
       const response = await api.get(`/lobbies/${localStorage.getItem("pin")}`, { headers });
       // ordering
-      setPlayers(response.data.game_details.players.slice().sort((a, b) => b.score - a.score));
+      setPlayers(response.data.game_details.static_stats.slice().sort((a, b) => b.score - a.score));
       // check host
       if(response.data.game_details.game_master_username === localStorage.getItem("username")){
         isHost.current = true;
@@ -124,9 +123,9 @@ const End = (props) => {
             {/* places 4+ */}
             {players.length > 3 ?
               <div className="grid grid-cols-3 gap-y-3 w-80 items-start">
-                {players.slice(3).flatMap((player) => [
+                {players.slice(3).flatMap((player, index) => [
                   <div key={`ava-${player.username}`} >
-                    <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`player-${player.id}`} className="w-20 rounded-lg" />
+                    <img src={`/assets/Ava${player.avatarId}.jpg`} alt={`player-${index}`} className="w-20 rounded-lg" />
                   </div>,
                   <div key={`name-${player.username}`} className="pt-1" >
                     <p>{player.username}</p>
