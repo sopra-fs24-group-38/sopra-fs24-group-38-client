@@ -42,9 +42,6 @@ const Lobby = () => {
   };
 
   const joinLobby = async () => {
-    if(pin.length !== 4){
-      return;
-    }
     try {
       const response = await api.put(`/lobbies/users/${pin}`, {}, { headers });
       sendJsonMessage(
@@ -114,7 +111,7 @@ const Lobby = () => {
                       maxLength={4}
                       placeholder="1234"
                       func={(n) => /^\d*$/.test(n) ? setPin(n) : null}
-                      enterKey={joinLobby} />
+                      enterKey={pin.length === 4 ? joinLobby : null} />
                   </div>
                   :
                   <SxyButton
