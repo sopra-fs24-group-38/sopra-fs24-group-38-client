@@ -11,12 +11,13 @@ import "../../styles/Winners.scss";
 
 
 const End = () => {
-  const { sendJsonMessage } = useContext(WebSocketContext);
+  const { sendJsonMessage, lastMessage } = useContext(WebSocketContext);
   const feedback = useFeedback();
   const navigate = useNavigate();
   const headers = { "Authorization": localStorage.getItem("nobody_is_perfect_token") };
   const [players, setPlayers] = useState([]);
   const isHost = useRef(false);
+  const [go, setGo] = useState(false);
 
   useEffect(() => {
     toast.dismiss()
@@ -30,6 +31,14 @@ const End = () => {
     
     setTimeout(() => tally(), 100);
   }, []);
+
+  useEffect(() => {
+    if(lastMessage?.data){
+      if(lastMessage.data === "gamemaster_newround"){
+        setGo(true);
+      }
+    }
+  }, [lastMessage])
 
   const tally = async () => {
     try {
@@ -142,6 +151,7 @@ const End = () => {
               text="New Game"
               width="100px"
               color={"#731224"}
+              disabled={!isHost.current && !go}
               func={anotherOne}
             />
             <SxyButton
