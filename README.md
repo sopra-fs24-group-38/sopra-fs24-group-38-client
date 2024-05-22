@@ -1,8 +1,29 @@
 # Group 38 - Nobody's Perfect
 
-A fun and engaging web application in which you can creatively fool your friends and have a good time. Each round, the game presents an unknown, difficult, technical or “slang” word. Each player then types in a wrong, but possible explanation for this word. Then, the game shows all the players’ wrong and one correct explanation and lets the players vote for what they think is correct. Successfully tricking others into choosing your wrong explanation earns you points.
+## Introduction 
 
-## Main Components
+This is a fun and engaging web application in which you can creatively fool your
+friends and have a good time. In combination with competitive aspects we want to solve the
+problem of finding a cool game to play with your friends. Thus we want to create a multiplayer
+game derived from the concept of the board game “Nobody’s Perfect”. Each round, the game
+presents an unknown, difficult word related to Dutch, Programming, Foods or Bizarre. Each player then types in a wrong, but
+possible explanation for this word. Then, the game shows all the player’s wrong and one correct
+explanation and lets the players vote for what they think is correct. Successfully tricking others
+into choosing your wrong explanation earns you points. There is also the possibility to further customize the gaming experience 
+using (a combination) of game modes and adding AI players to have an engaging experience with fewer friends available. 
+
+### Technologies used
+
+* [React](https://react.dev/) - JS library
+* [react-use-websocket](https://www.npmjs.com/package/react-use-websocket) - for websockets
+* [Tailwind CSS](https://tailwindcss.com/) - for styling
+* [react-toastify](https://fkhadra.github.io/react-toastify/introduction) - for neat feedback toasts
+
+The application has been CSS adjusted for Google Chrome (but also works fine for other browsers). We do expect a browser version that is compliant with the CSS Baseline 2023.
+Also please note that this was developed as a desktop-first application. We did pay attention to the mobile appearance but it was not the major focus.
+
+
+## High-level components
 
 These are the main files necessary to get a good grasp of the application:
 
@@ -10,7 +31,7 @@ These are the main files necessary to get a good grasp of the application:
 2. [Game](https://github.com/sopra-fs24-group-38/sopra-fs24-group-38-client/tree/main/src/components/pages/Game.jsx) holds the full logic for the game cycle.
 3. [AppRouter](https://github.com/sopra-fs24-group-38/sopra-fs24-group-38-client/tree/main/src/components/router/AppRouter.jsx) displays the layout of the application.
 
-## Getting started
+## Launch & Deployment:
 
 The game can be played here: http://sopra-fs24-group-38-client.oa.r.appspot.com/
 
@@ -25,16 +46,6 @@ Then set it all up with the respective set-up instructions.
 Be sure to have the following programs installed:
 
 [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) - for package management, all other dependencies will get installed with it
-
-### Technologies used
-
-* [React](https://react.dev/) - JS library
-* [react-use-websocket](https://www.npmjs.com/package/react-use-websocket) - for websockets
-* [Tailwind CSS](https://tailwindcss.com/) - for styling
-* [react-toastify](https://fkhadra.github.io/react-toastify/introduction) - for neat feedback toasts
-
-The application has been CSS adjusted for Google Chrome (but also works fine for other browsers). We do expect a browser version that is compliant with the CSS Baseline 2023.
-Also please note that this was developed as a desktop-first application. We did pay attention to the mobile appearance but it was not the major focus.
 
 ### Set-up
 
@@ -54,6 +65,12 @@ You can now see the application at http://localhost:3000 in your browser of choi
 
 Be sure to have the server side running as well! Otherwise you won't be able to get very far.
 Check this at http://localhost:8080, we have a Swagger page for ease of access and readability.
+
+### External Dependencies 
+No further external dependencies needed as node takes care.
+### Releases 
+For further releases we refer to [this tutorial](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
+
 
 ## Illustrations
 
@@ -88,6 +105,10 @@ This is how we envisioned to extend this application:
 * Extend on the user side by introducing a profile page and a chatroom to improve the community feeling between players and giving them a possibility to exchange PINs easily
 * Letting the users choose their own avatar from our pool, being able to play with more than 5 players
 * Adding even more game modes
+
+
+## Releases 
+For further releases we refer to [this tutorial](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
 
 ## Authors
 
