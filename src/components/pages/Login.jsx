@@ -53,9 +53,9 @@ const Login = () => {
                 label="Username"
                 value={username}
                 color={"#ebe4d7"}
-                maxLength={12}
+                maxLength={10}
                 placeholder="TheLegend27"
-                func={(un) => setUsername(un)}
+                func={(un) => /^(?!(?:[^wm]*[wm]){5})[\s\S]*$/i.test(un) ? setUsername(un) : null}
               />
               <div className="relative">
                 <SxyInput

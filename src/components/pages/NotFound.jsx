@@ -11,8 +11,8 @@ const NotFound = () => {
     <div>
       <Header />
       <div className="bg-neutral-400 justify-center" id="hero">
-        <div className="p-10 bg-neutral-400 rounded-lg flex flex-col items-center border-black border-2 border-solid">
-          <h1 className="text-2xl mb-6">Whoops, that did not work out.</h1>
+        <div className="p-10 bg-brand-500 rounded-lg flex flex-col items-center border-black border-2 border-solid">
+          <h1 className="text-2xl mb-6 text-center">Whoops, that did not work out<br />( ͡° ͜ʖ ͡° )</h1>
           <SxyButton
             text="Back Home"
             color={"#72171D"}
