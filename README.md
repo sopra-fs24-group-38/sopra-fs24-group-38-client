@@ -122,7 +122,7 @@ For the FrontEnd part:
 * **Marco Leder** - *template provider* - [marcoleder](https://github.com/marcoleder)
 
 Continuous teamwork and BackEnd authors:
-* **Harris Alem** - *Main contributor* - [so-ri](https://github.com/so-ri)
+* **Harris A** - *Main contributor* - [so-ri](https://github.com/so-ri)
 * **Elia Aeberhard** - *Main contributor* - [Elyisha](https://github.com/Elyisha)
 * **Samuel Frank** - *Main contributor* - [samuelfrnk](https://github.com/samuelfrnk)
 
