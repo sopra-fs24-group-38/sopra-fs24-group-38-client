@@ -42,6 +42,9 @@ const Lobby = () => {
   };
 
   const joinLobby = async () => {
+    if(pin.length !== 4){
+      return;
+    }
     try {
       const response = await api.put(`/lobbies/users/${pin}`, {}, { headers });
       sendJsonMessage(
@@ -98,6 +101,7 @@ const Lobby = () => {
                       text="Send"
                       color={"#72171D"}
                       func={joinLobby}
+                      disabled={pin.length !== 4}
                       width="50px" />
                     <SxyButton
                       text="Cancel"
