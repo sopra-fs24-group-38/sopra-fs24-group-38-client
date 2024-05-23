@@ -98,6 +98,7 @@ const Lobby = () => {
                       text="Send"
                       color={"#72171D"}
                       func={joinLobby}
+                      disabled={pin.length !== 4}
                       width="50px" />
                     <SxyButton
                       text="Cancel"
@@ -110,7 +111,7 @@ const Lobby = () => {
                       maxLength={4}
                       placeholder="1234"
                       func={(n) => /^\d*$/.test(n) ? setPin(n) : null}
-                      enterKey={joinLobby} />
+                      enterKey={pin.length === 4 ? joinLobby : null} />
                   </div>
                   :
                   <SxyButton
